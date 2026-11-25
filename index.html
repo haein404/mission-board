@@ -734,6 +734,7 @@
         <div class="w-full h-2.5 rounded-full bg-purple-100/80 overflow-hidden border border-purple-200/80">
           <div id="child-checklist-bar" class="h-full rounded-full bg-gradient-to-r from-pink-400 via-amber-300 to-emerald-400 transition-all duration-300" style="width: 0%;"></div>
         </div>
+        <div id="child-weekly-summary-box" class="flex items-center justify-between gap-2 flex-wrap px-3 py-2 rounded-2xl bg-white/75 border border-purple-100 text-xs"></div>
         <div id="child-checklist-container" class="space-y-2.5"></div>
       </section>
 
@@ -1067,6 +1068,18 @@
       const m = String(now.getMonth() + 1).padStart(2, "0");
       const d = String(now.getDate()).padStart(2, "0");
       return `${y}-${m}-${d}`;
+    }
+
+    function getCurrentWeekKey() {
+      const now = new Date();
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const day = d.getDay();
+      const diffToMon = day === 0 ? -6 : 1 - day;
+      d.setDate(d.getDate() + diffToMon);
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const dateNum = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${dateNum}`;
     }
 
     function getStarTierLabel(starCount) {
@@ -1610,12 +1623,30 @@
         const allDone =
           myTodayMissions.length > 0 &&
           myTodayMissions.every(m => Boolean(state.checks[getSlotKey(m.id, todayKey)]));
+        const weeklyBonusKey = `${getCurrentWeekKey()}::${child}::weekly_all_bonus`;
+        const weeklyAllDone =
+          myTodayMissions.length > 0 &&
+          ALL_DAYS.every(dk =>
+            myTodayMissions.every(m => Boolean(state.checks[getSlotKey(m.id, dk)]))
+          );
+
+        let bonusMessages = [];
         if (allDone && !state.rewardedSlots[dailyBonusKey]) {
           state.rewardedSlots[dailyBonusKey] = true;
           state.stars[child] = (Number(state.stars[child]) || 0) + 5;
           addStarHistory(child, 5, "오늘의 미션 전체 완료 보너스");
-          spawnStarSparkles(16);
-          showToast(`🌟 ${childLabel} 오늘의 미션 올클리어! 보너스 +5★ 적립!`);
+          bonusMessages.push("오늘의 미션 올클리어 +5★");
+        }
+        if (weeklyAllDone && !state.rewardedSlots[weeklyBonusKey]) {
+          state.rewardedSlots[weeklyBonusKey] = true;
+          state.stars[child] = (Number(state.stars[child]) || 0) + 10;
+          addStarHistory(child, 10, "주간 미션 전체 완료 보너스");
+          bonusMessages.push("주간 올체크 보너스 +10★");
+        }
+
+        if (bonusMessages.length > 0) {
+          spawnStarSparkles(18);
+          showToast(`🌟 ${childLabel} ${bonusMessages.join(" & ")} 적립!`);
         } else {
           showToast(`⭐ ${childLabel} +${reward}★ 적립! (${mission.title})`);
         }
@@ -1624,8 +1655,25 @@
           state.rewardedSlots[slotKey] = false;
           state.stars[child] = Math.max(0, (Number(state.stars[child]) || 0) - reward);
           addStarHistory(child, -reward, `미션 체크 해제: ${mission.title}`);
-          showToast(`체크를 해제해 ${reward}★가 차감되었어요.`);
         }
+        const dailyBonusKey = `${getTodayDateStr()}::${child}::daily_all_bonus`;
+        const weeklyBonusKey = `${getCurrentWeekKey()}::${child}::weekly_all_bonus`;
+        let revokedList = [`${reward}★`];
+
+        if (state.rewardedSlots[dailyBonusKey]) {
+          state.rewardedSlots[dailyBonusKey] = false;
+          state.stars[child] = Math.max(0, (Number(state.stars[child]) || 0) - 5);
+          addStarHistory(child, -5, "오늘의 미션 전체 완료 보너스 취소");
+          revokedList.push("오늘 올클리어 보너스 5★");
+        }
+        if (state.rewardedSlots[weeklyBonusKey]) {
+          state.rewardedSlots[weeklyBonusKey] = false;
+          state.stars[child] = Math.max(0, (Number(state.stars[child]) || 0) - 10);
+          addStarHistory(child, -10, "주간 미션 전체 완료 보너스 취소");
+          revokedList.push("주간 올체크 보너스 10★");
+        }
+
+        showToast(`체크를 해제해 ${revokedList.join(" · ")}가 차감되었어요.`);
       }
 
       saveState();
@@ -2104,6 +2152,7 @@
 
         document.getElementById("haein-today-label").textContent = `${getTodayDateStr()} (${todayLabel})`;
         const achContainer = document.getElementById("haein-achievement-container");
+        const shortDayNames = { mon: "월", tue: "화", wed: "수", thu: "목", fri: "금", sat: "토", sun: "일" };
         achContainer.innerHTML = ["ayeon", "siyeol"]
           .map(child => {
             const label = child === "ayeon" ? "🩷 아연" : "🩵 시연";
@@ -2111,6 +2160,12 @@
             const doneCount = childMissions.filter(m => Boolean(state.checks[getSlotKey(m.id, todayKey)])).length;
             const totalCount = childMissions.length;
             const rate = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
+            const weekDotsHtml = ALL_DAYS.map(dk => {
+              const dayAll = childMissions.length > 0 && childMissions.every(m => Boolean(state.checks[getSlotKey(m.id, dk)]));
+              return `<span class="px-1.5 py-0.5 rounded-md text-[11px] font-bold ${
+                dayAll ? "bg-emerald-100 text-emerald-800" : "bg-purple-100/80 text-purple-600"
+              }">${shortDayNames[dk]}</span>`;
+            }).join("");
             return `
               <div class="unicorn-subcard p-3.5 space-y-2">
                 <div class="flex items-center justify-between">
@@ -2119,6 +2174,10 @@
                 </div>
                 <div class="w-full h-2 rounded-full bg-purple-100 overflow-hidden">
                   <div class="h-full rounded-full bg-gradient-to-r from-pink-400 to-amber-400" style="width: ${rate}%;"></div>
+                </div>
+                <div class="flex items-center justify-between gap-1 flex-wrap pt-0.5">
+                  <span class="text-[11px] font-bold text-purple-700">주간</span>
+                  <div class="flex items-center gap-1">${weekDotsHtml}</div>
                 </div>
                 <div class="text-xs text-purple-700 font-semibold">보유 별: ${Number(state.stars[child]) || 0}★</div>
               </div>
@@ -2197,6 +2256,32 @@
         document.getElementById("child-checklist-rate").textContent = `${rate}%`;
         document.getElementById("child-checklist-progress").textContent = `${doneCount} / ${totalCount} 완료`;
         document.getElementById("child-checklist-bar").style.width = `${rate}%`;
+
+        const weeklyBoxEl = document.getElementById("child-weekly-summary-box");
+        if (weeklyBoxEl) {
+          const shortDayNames = { mon: "월", tue: "화", wed: "수", thu: "목", fri: "금", sat: "토", sun: "일" };
+          const completedDaysCount = ALL_DAYS.filter(dk =>
+            myMissions.length > 0 && myMissions.every(m => Boolean(state.checks[getSlotKey(m.id, dk)]))
+          ).length;
+          const dayChipsHtml = ALL_DAYS.map(dk => {
+            const isDayDone = myMissions.length > 0 && myMissions.every(m => Boolean(state.checks[getSlotKey(m.id, dk)]));
+            const isTodayChip = dk === todayKey;
+            return `<span class="px-2 py-0.5 rounded-full font-bold ${
+              isDayDone
+                ? "bg-emerald-100 text-emerald-800"
+                : isTodayChip
+                ? "bg-amber-100 text-amber-800"
+                : "bg-purple-100/80 text-purple-600"
+            }">${shortDayNames[dk]}${isDayDone ? "✓" : ""}</span>`;
+          }).join("");
+          weeklyBoxEl.innerHTML = `
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="font-bold text-purple-950">📅 주간 체크 (${completedDaysCount}/7일)</span>
+              <span class="text-[11px] font-bold text-amber-700">올체크 +10★</span>
+            </div>
+            <div class="flex items-center gap-1 flex-wrap">${dayChipsHtml}</div>
+          `;
+        }
 
         const listEl = document.getElementById("child-checklist-container");
         if (!myMissions.length) {
