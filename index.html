@@ -2211,7 +2211,11 @@
     const myDeviceId = typeof window.getDeviceId === "function" ? window.getDeviceId() : "dev_local";
 
     const appId = typeof __app_id !== "undefined" ? __app_id : "ayeon-siyeol-mission-board";
-    const rawConfig = typeof __firebase_config !== "undefined" ? __firebase_config : "";
+    const rawConfig =
+      (typeof window.__SHARED_BOARD_CONFIG__ !== "undefined" && window.__SHARED_BOARD_CONFIG__) ||
+      (typeof __firebase_config !== "undefined" ? __firebase_config : "");
+    let firebaseApp = null;
+    let auth = null;
     let db = null;
     let sharedDocRef = null;
     let currentUser = null;
@@ -2301,13 +2305,15 @@
 
     (async () => {
       try {
-        if (!rawConfig) return;
+        if (!rawConfig) {
+          console.info("외부 기기 동기화 설정(window.__SHARED_BOARD_CONFIG__)이 아직 없어 로컬 저장소만 사용합니다.");
+          return;
+        }
         const firebaseConfig = typeof rawConfig === "string" ? JSON.parse(rawConfig) : rawConfig;
-        if (!firebaseConfig || !firebaseConfig.apiKey) return;
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        db = getFirestore(app);
+        if (!firebaseConfig || !firebaseConfig.apiKey || !firebaseConfig.projectId) return;
+        firebaseApp = initializeApp(firebaseConfig);
+        auth = getAuth(firebaseApp);
+        db = getFirestore(firebaseApp);
 
         if (typeof __initial_auth_token !== "undefined" && __initial_auth_token) {
           await signInWithCustomToken(auth, __initial_auth_token);
