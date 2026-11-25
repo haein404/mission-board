@@ -906,6 +906,7 @@
     }
 
     let state = loadState();
+    window.state = state;
     window.__boardState = state;
     let hasEnteredModeThisSession = false;
     let toastTimer = null;
@@ -1119,6 +1120,7 @@
 
     function saveState() {
       state.updatedAt = Date.now();
+      window.state = state;
       window.__boardState = state;
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -1799,6 +1801,7 @@
     }
 
     function renderAll() {
+      window.state = state;
       window.__boardState = state;
       const introScreen = document.getElementById("intro-mode-screen");
       const mainWrapper = document.getElementById("main-board-wrapper");
@@ -2206,14 +2209,23 @@
     import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // 엄마가 외부 Firebase 프로젝트를 연결할 때 아래 객체에 설정값을 채워 넣으면 폰·PC 실시간 동기화가 활성화돼요.
-    const SHARED_BOARD_CONFIG = null;
+    const SHARED_BOARD_CONFIG = {
+      apiKey: "AIzaSyAuntFmC020mSCdQKDxPAAemKmdaDsnetQ",
+      authDomain: "lilith-s-house.firebaseapp.com",
+      databaseURL: "https://lilith-s-house-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "lilith-s-house",
+      storageBucket: "lilith-s-house.firebasestorage.app",
+      messagingSenderId: "583780578450",
+      appId: "1:583780578450:web:61bc5bf73ecf5398d1a24b",
+      measurementId: "G-2RW7L9K0M9"
+    };
 
+    window.__SHARED_BOARD_CONFIG__ = SHARED_BOARD_CONFIG;
     window.__isRemoteSyncing = false;
     const channelName = "ayeon_siyeol_mission_board_sync_v1";
     const bc = typeof BroadcastChannel !== "undefined" ? new BroadcastChannel(channelName) : null;
     const myDeviceId = typeof window.getDeviceId === "function" ? window.getDeviceId() : "dev_local";
 
-    const appId = typeof __app_id !== "undefined" ? __app_id : "ayeon-siyeol-mission-board";
     const rawConfig =
       (typeof window.__SHARED_BOARD_CONFIG__ !== "undefined" && window.__SHARED_BOARD_CONFIG__) ||
       SHARED_BOARD_CONFIG ||
@@ -2226,17 +2238,35 @@
     let lastAppliedRemoteSignature = "";
 
     function getCurrentBoardState() {
+      if (typeof window.state !== "undefined" && window.state) return window.state;
       if (typeof state !== "undefined" && state) return state;
       if (window.__boardState && typeof window.__boardState === "object") return window.__boardState;
       if (typeof createDefaultState === "function") return createDefaultState();
       return { mode: "ayeon", activeTab: "daily", updatedAt: Date.now() };
     }
 
+    function buildStateSignature(s) {
+      if (!s || typeof s !== "object") return "";
+      return JSON.stringify({
+        stars: s.stars || {},
+        missions: s.missions || [],
+        checks: s.checks || {},
+        rewardedSlots: s.rewardedSlots || {},
+        surpriseMissions: s.surpriseMissions || [],
+        starHistory: s.starHistory || [],
+        lastWheelDateByChild: s.lastWheelDateByChild || {},
+        coupons: s.coupons || [],
+        ownedCoupons: s.ownedCoupons || [],
+        couponUsageHistory: s.couponUsageHistory || [],
+        couponSuggestions: s.couponSuggestions || []
+      });
+    }
+
     function applyIncomingBoardState(remoteBoardState, forceApply = false) {
       if (!remoteBoardState || typeof remoteBoardState !== "object") return;
       const currentBoardState = getCurrentBoardState();
       const incomingUpdatedAt = Number(remoteBoardState.updatedAt) || Date.now();
-      const signature = `${incomingUpdatedAt}_${JSON.stringify(remoteBoardState.stars || {})}_${(remoteBoardState.missions || []).length}_${Object.keys(remoteBoardState.checks || {}).length}_${(remoteBoardState.ownedCoupons || []).length}_${(remoteBoardState.surpriseMissions || []).length}_${(remoteBoardState.couponSuggestions || []).length}`;
+      const signature = buildStateSignature(remoteBoardState);
 
       if (!forceApply && signature === lastAppliedRemoteSignature) return;
 
@@ -2257,6 +2287,7 @@
         if (typeof state !== "undefined") {
           state = mergedState;
         }
+        window.state = mergedState;
         window.__boardState = mergedState;
 
         try {
@@ -2277,6 +2308,7 @@
     window.__pushSharedBoardState = async function (nextState) {
       const stateToPush = nextState || getCurrentBoardState();
       const pushTimestamp = Number(stateToPush?.updatedAt) || Date.now();
+      lastAppliedRemoteSignature = buildStateSignature(stateToPush);
       try {
         if (bc) {
           bc.postMessage({
@@ -2331,22 +2363,36 @@
         auth = getAuth(firebaseApp);
         db = getFirestore(firebaseApp);
 
+        currentUser = null;
         if (typeof __initial_auth_token !== "undefined" && __initial_auth_token) {
-          await signInWithCustomToken(auth, __initial_auth_token);
+          try {
+            const cred = await signInWithCustomToken(auth, __initial_auth_token);
+            currentUser = cred?.user || auth.currentUser;
+          } catch (authErr) {
+            try {
+              const anonCred = await signInAnonymously(auth);
+              currentUser = anonCred?.user || auth.currentUser;
+            } catch (anonErr) {
+              console.warn("익명 인증 없이 Firestore 공유 저장소로 전환합니다.", anonErr?.code || anonErr);
+            }
+          }
         } else {
-          await signInAnonymously(auth);
+          try {
+            const anonCred = await signInAnonymously(auth);
+            currentUser = anonCred?.user || auth.currentUser;
+          } catch (anonErr) {
+            console.warn("익명 인증 없이 Firestore 공유 저장소로 전환합니다.", anonErr?.code || anonErr);
+          }
         }
 
-        currentUser = auth.currentUser;
-        if (!currentUser) return;
-
-        sharedDocRef = doc(db, "artifacts", appId, "public", "data", "missionBoardShared", "mainBoard");
+        sharedDocRef = doc(db, "missionBoardShared", "mainBoard");
 
         onSnapshot(sharedDocRef, (snapshot) => {
           const currentBoardState = getCurrentBoardState();
           if (!snapshot.exists()) {
             const { mode, activeTab, editingMissionId, ...initialSyncData } = currentBoardState;
             const nowTs = Number(currentBoardState.updatedAt) || Date.now();
+            lastAppliedRemoteSignature = buildStateSignature(initialSyncData);
             setDoc(sharedDocRef, {
               sourceDeviceId: myDeviceId,
               updatedAt: nowTs,
@@ -2365,7 +2411,7 @@
           applyIncomingBoardState({
             ...docData.boardState,
             updatedAt: remoteTs
-          }, true);
+          }, false);
         }, (err) => {
           console.error("공유 저장소 수신 오류:", err);
         });
