@@ -1014,6 +1014,9 @@
 
         <div id="coupon-suggestions-container" class="space-y-2"></div>
       </div>
+
+    <!-- ================= 쿠폰 건의함 ================= -->
+    <section class="unicorn-card p-4 sm:p-5 space-y-3 hidden" id="legacy-coupon-suggest-placeholder">
     </section>
   </div>
 
@@ -1045,6 +1048,7 @@
     const PIN_STORAGE_KEY = "ayeon_siyeol_haein_pin_v1";
     const STORAGE_KEY = "ayeon_siyeol_weekly_mission_board_v1";
     const THEME_STORAGE_KEY = "ayeon_siyeol_theme_tone_v1";
+    const DEVICE_ID_KEY = "ayeon_siyeol_device_id_v1";
     const ALL_DAYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
     const DAY_LABELS = {
       mon: "월요일",
@@ -1161,13 +1165,60 @@
 
     let state = loadState();
     let toastTimer = null;
+    let isRemoteSyncing = false;
     const lastRenderedTierByMode = { ayeon: null, siyeol: null, haein: null };
+
+    function getDeviceId() {
+      try {
+        let id = localStorage.getItem(DEVICE_ID_KEY);
+        if (!id) {
+          id = `dev_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+          localStorage.setItem(DEVICE_ID_KEY, id);
+        }
+        return id;
+      } catch (err) {
+        return "dev_fallback";
+      }
+    }
+
+    function normalizeSharedState(parsed) {
+      const def = createDefaultState();
+      if (!parsed || typeof parsed !== "object") return def;
+      return {
+        ...def,
+        mode: state?.mode || def.mode,
+        activeTab: state?.activeTab || def.activeTab,
+        editingMissionId: null,
+        couponFilter: state?.couponFilter || def.couponFilter,
+        seenSections: state?.seenSections && typeof state.seenSections === "object" ? state.seenSections : {},
+        stars: {
+          ayeon: Number(parsed.stars?.ayeon) || 0,
+          siyeol: Number(parsed.stars?.siyeol) || 0
+        },
+        lastWheelDateByChild: {
+          ayeon: parsed.lastWheelDateByChild?.ayeon || null,
+          siyeol: parsed.lastWheelDateByChild?.siyeol || null
+        },
+        missions: Array.isArray(parsed.missions) ? parsed.missions : def.missions,
+        checks: parsed.checks && typeof parsed.checks === "object" ? parsed.checks : {},
+        rewardedSlots: parsed.rewardedSlots && typeof parsed.rewardedSlots === "object" ? parsed.rewardedSlots : {},
+        surpriseMissions: Array.isArray(parsed.surpriseMissions) ? parsed.surpriseMissions : [],
+        starHistory: Array.isArray(parsed.starHistory) ? parsed.starHistory : [],
+        coupons: Array.isArray(parsed.coupons) ? parsed.coupons : def.coupons,
+        ownedCoupons: Array.isArray(parsed.ownedCoupons) ? parsed.ownedCoupons : [],
+        couponUsageHistory: Array.isArray(parsed.couponUsageHistory) ? parsed.couponUsageHistory : [],
+        couponSuggestions: Array.isArray(parsed.couponSuggestions) ? parsed.couponSuggestions : []
+      };
+    }
 
     function saveState() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (err) {
         console.error("상태 저장 오류:", err);
+      }
+      if (!isRemoteSyncing && typeof window.__pushSharedBoardState === "function") {
+        window.__pushSharedBoardState(state);
       }
     }
 
@@ -2570,6 +2621,7 @@
       }
 
       const suggestContainer = document.getElementById("coupon-suggestions-container");
+      if (!suggestContainer) return;
       if (!state.couponSuggestions.length) {
         suggestContainer.innerHTML = `<p class="text-xs text-purple-600 py-1">아직 등록된 쿠폰 건의가 없어요.</p>`;
       } else {
@@ -2629,6 +2681,71 @@
 
     applyThemeTone(loadThemeTone());
     renderAll();
+  </script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAuntFmC020mSCdQKDxPAAemKmdaDsnetQ",
+      authDomain: "lilith-s-house.firebaseapp.com",
+      databaseURL: "https://lilith-s-house-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "lilith-s-house",
+      storageBucket: "lilith-s-house.firebasestorage.app",
+      messagingSenderId: "583780578450",
+      appId: "1:583780578450:web:61bc5bf73ecf5398d1a24b",
+      measurementId: "G-2RW7L9K0M9"
+    };
+
+    try {
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const boardRef = ref(db, "ayeonSiyeolWeeklyBoard/v1");
+      const myDeviceId = getDeviceId();
+
+      window.__pushSharedBoardState = function (currentState) {
+        const payload = {
+          sourceDeviceId: myDeviceId,
+          updatedAt: Date.now(),
+          missions: currentState.missions,
+          checks: currentState.checks,
+          rewardedSlots: currentState.rewardedSlots,
+          surpriseMissions: currentState.surpriseMissions,
+          stars: currentState.stars,
+          starHistory: currentState.starHistory,
+          lastWheelDateByChild: currentState.lastWheelDateByChild,
+          coupons: currentState.coupons,
+          ownedCoupons: currentState.ownedCoupons,
+          couponUsageHistory: currentState.couponUsageHistory,
+          couponSuggestions: currentState.couponSuggestions
+        };
+        set(boardRef, payload).catch((err) => {
+          console.error("공유 저장소 업로드 오류:", err);
+        });
+      };
+
+      onValue(boardRef, (snapshot) => {
+        const data = snapshot.val();
+        if (!data) {
+          window.__pushSharedBoardState(state);
+          return;
+        }
+        if (data.sourceDeviceId === myDeviceId) return;
+
+        isRemoteSyncing = true;
+        try {
+          state = normalizeSharedState(data);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          renderAll();
+        } finally {
+          isRemoteSyncing = false;
+        }
+      }, (err) => {
+        console.error("공유 저장소 수신 오류:", err);
+      });
+    } catch (err) {
+      console.error("공유 저장소 초기화 오류:", err);
+    }
   </script>
 </body>
 </html>
