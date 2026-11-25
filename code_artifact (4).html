@@ -1,0 +1,2405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>아연·시연 주간 미션 보드</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      font-family: "Jua", "Gowun Dodum", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+      box-sizing: border-box;
+      letter-spacing: 0.01em;
+    }
+
+    button,
+    [role="button"],
+    select,
+    input {
+      font-family: "Jua", "Gowun Dodum", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+      line-height: 1.25;
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      white-space: nowrap;
+      word-break: keep-all;
+    }
+
+    .unicorn-card p,
+    .unicorn-card span,
+    .unicorn-card div {
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    @keyframes heartopiaBreeze {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes twinkleGlow {
+      0%, 100% {
+        box-shadow: 0 14px 30px -10px rgba(255, 118, 152, 0.28), 0 0 0 2px rgba(255, 255, 255, 0.92) inset;
+      }
+      50% {
+        box-shadow: 0 18px 34px -8px rgba(56, 189, 248, 0.26), 0 0 0 2px rgba(255, 255, 255, 1) inset;
+      }
+    }
+
+    @keyframes checkPopBounce {
+      0% { transform: scale(0.72); }
+      55% { transform: scale(1.22); }
+      80% { transform: scale(0.92); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes rowCompletePulse {
+      0% { transform: scale(1); }
+      45% { transform: scale(1.015); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes wheelSpinBurst {
+      0% { transform: rotate(0deg) scale(1); }
+      45% { transform: rotate(540deg) scale(1.16); }
+      100% { transform: rotate(720deg) scale(1); }
+    }
+
+    @keyframes starSparklePop {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(0.4) rotate(0deg);
+      }
+      65% {
+        opacity: 1;
+        transform: translate(var(--tx, 0px), var(--ty, -48px)) scale(1.18) rotate(120deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--tx, 0px), calc(var(--ty, -48px) - 18px)) scale(0.3) rotate(220deg);
+      }
+    }
+
+    @keyframes starBadgePop {
+      0% { transform: scale(0.92); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes tierUpgradeBounce {
+      0% { transform: scale(0.84) rotate(-5deg); }
+      45% { transform: scale(1.2) rotate(4deg); }
+      75% { transform: scale(0.95) rotate(-2deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    .star-tier-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff3b0 0%, #ffd6e0 55%, #cbf3f0 100%);
+      color: #5c3a4d;
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 10px -4px rgba(255, 126, 165, 0.35);
+      animation: starBadgePop 2.4s ease-in-out infinite;
+    }
+
+    .star-tier-chip.tier-changed {
+      animation: tierUpgradeBounce 0.68s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    body.theme-tone-b .star-tier-chip,
+    body.theme-tone-sunset .star-tier-chip {
+      background: linear-gradient(135deg, #fef08a 0%, #fbcfe8 100%);
+      color: #2e1065;
+      border-color: #ffffff;
+    }
+
+    .wheel-spinning .rainbow-wheel-inner svg {
+      animation: wheelSpinBurst 0.68s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .sparkle-burst-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 95;
+      overflow: hidden;
+    }
+
+    .sparkle-particle {
+      position: absolute;
+      font-size: 1.25rem;
+      line-height: 1;
+      animation: starSparklePop 0.82s cubic-bezier(0.2, 0.85, 0.3, 1) forwards;
+      filter: drop-shadow(0 3px 6px rgba(255, 140, 66, 0.45));
+    }
+
+    body {
+      background: linear-gradient(145deg, #fff8ef 0%, #fff0f5 46%, #eefbf6 100%);
+      background-size: 200% 200%;
+      animation: heartopiaBreeze 16s ease infinite;
+      color: #4a3544;
+      min-height: 100vh;
+    }
+
+    .check-box-anim {
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .check-box-anim.is-checked {
+      animation: checkPopBounce 0.36s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .mission-row-checked {
+      animation: rowCompletePulse 0.32s ease-out;
+    }
+
+    .unicorn-card {
+      background: linear-gradient(165deg, #fffdf9 0%, #fff3f7 52%, #effcf6 100%);
+      backdrop-filter: blur(12px);
+      border: 2.5px solid #ffc6da;
+      border-radius: 32px;
+      box-shadow: 0 12px 26px -10px rgba(244, 114, 182, 0.24), 0 0 0 2px rgba(255, 255, 255, 0.94) inset;
+      animation: twinkleGlow 5.5s ease-in-out infinite;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .unicorn-subcard {
+      background: linear-gradient(135deg, #fffaf0 0%, #fff1f6 55%, #eefcf5 100%);
+      border: 2px solid #ffd8e6;
+      border-radius: 24px;
+      box-shadow: 0 6px 14px -6px rgba(244, 114, 182, 0.18);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .unicorn-subcard:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px -8px rgba(251, 113, 133, 0.25);
+    }
+
+    .unicorn-btn {
+      background: linear-gradient(135deg, #ff7ea5 0%, #ff9b6a 58%, #ffc454 100%);
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 6px 15px -4px rgba(255, 126, 165, 0.45);
+      transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .unicorn-btn:hover:not(:disabled) {
+      opacity: 0.98;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 20px -4px rgba(251, 146, 60, 0.5);
+    }
+
+    .unicorn-btn:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    .soft-btn {
+      background: #fff7ed;
+      color: #9a3412;
+      border: 1.5px solid #fed7aa;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: background-color 0.12s ease;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .soft-btn:hover {
+      background: #ffedd5;
+    }
+
+    .danger-pill-btn {
+      background: #fff1f2;
+      color: #be123c;
+      border: 1.5px solid #fecdd3;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: background-color 0.12s ease;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .danger-pill-btn:hover {
+      background: #ffe4e6;
+    }
+
+    .new-update-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.15rem 0.48rem;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      background: linear-gradient(135deg, #ff758f 0%, #fb923c 100%);
+      color: #ffffff;
+      box-shadow: 0 3px 8px -2px rgba(251, 113, 133, 0.45);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .mode-pill-active {
+      background: linear-gradient(135deg, #ff758f 0%, #fb923c 100%);
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 5px 14px -3px rgba(251, 113, 133, 0.45);
+    }
+
+    .mode-pill-inactive {
+      background: #fffdf9;
+      color: #6b3e56;
+      border: 1.5px solid #ffd6e5;
+    }
+
+    .tab-active {
+      background: linear-gradient(135deg, #34d399 0%, #38bdf8 100%);
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 6px 14px -4px rgba(52, 211, 153, 0.45);
+    }
+
+    .tab-inactive {
+      background: rgba(255, 253, 249, 0.92);
+      color: #5c3a4d;
+      border: 1.5px solid #fde2e4;
+    }
+
+    body.theme-tone-b {
+      background:
+        radial-gradient(circle at 18% 15%, rgba(167, 139, 250, 0.34) 0%, transparent 45%),
+        radial-gradient(circle at 82% 20%, rgba(56, 189, 248, 0.28) 0%, transparent 46%),
+        radial-gradient(circle at 50% 90%, rgba(244, 114, 182, 0.24) 0%, transparent 50%),
+        linear-gradient(155deg, #17153b 0%, #241b4e 52%, #1b2845 100%);
+      background-size: 200% 200%;
+      animation: heartopiaBreeze 16s ease infinite;
+      color: #f8f5ff;
+    }
+
+    body.theme-tone-b .unicorn-card {
+      background: linear-gradient(165deg, rgba(28, 22, 66, 0.96) 0%, rgba(40, 28, 82, 0.95) 55%, rgba(22, 36, 68, 0.96) 100%);
+      border: 2.5px solid #c4b5fd;
+      box-shadow: 0 14px 30px -10px rgba(10, 15, 35, 0.75), 0 0 0 2px rgba(255, 255, 255, 0.16) inset;
+      animation: twinkleGlow 5.5s ease-in-out infinite;
+    }
+
+    body.theme-tone-b .unicorn-subcard {
+      background: linear-gradient(135deg, rgba(44, 34, 92, 0.95) 0%, rgba(58, 40, 108, 0.94) 55%, rgba(28, 48, 86, 0.95) 100%);
+      border: 2px solid #ddd6fe;
+      box-shadow: 0 8px 18px -6px rgba(10, 15, 35, 0.6);
+    }
+
+    body.theme-tone-b #child-checklist-container > div {
+      background-color: rgba(48, 36, 98, 0.95) !important;
+      border: 1.5px solid #c4b5fd !important;
+      color: #ffffff !important;
+    }
+
+    body.theme-tone-b #child-checklist-container > div.mission-row-checked {
+      background-color: rgba(25, 20, 56, 0.92) !important;
+      border-color: #818cf8 !important;
+      color: #c7d2fe !important;
+    }
+
+    body.theme-tone-b #child-checklist-container > div.mission-row-checked span.line-through {
+      color: #c4b5fd !important;
+    }
+
+    body.theme-tone-b .unicorn-btn {
+      background: linear-gradient(135deg, #f472b6 0%, #a855f7 56%, #38bdf8 100%);
+      border: 2px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 8px 20px -4px rgba(168, 85, 247, 0.55);
+    }
+
+    body.theme-tone-b .soft-btn {
+      background: rgba(55, 43, 104, 0.92);
+      color: #fde68a;
+      border: 1.5px solid #c4b5fd;
+    }
+
+    body.theme-tone-b .danger-pill-btn {
+      background: rgba(91, 27, 54, 0.9);
+      color: #fecdd3;
+      border: 1.5px solid #fda4af;
+    }
+
+    body.theme-tone-b h1,
+    body.theme-tone-b h2,
+    body.theme-tone-b h3,
+    body.theme-tone-b .text-purple-950,
+    body.theme-tone-b .text-purple-900,
+    body.theme-tone-b .text-purple-800 {
+      color: #ffffff !important;
+    }
+
+    body.theme-tone-b .text-purple-700,
+    body.theme-tone-b .text-purple-600,
+    body.theme-tone-b .text-purple-500 {
+      color: #e9d5ff !important;
+    }
+
+    body.theme-tone-b .new-update-badge {
+      padding: 0.15rem 0.48rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.03em;
+      background: linear-gradient(135deg, #ff3b7f 0%, #ff7b00 100%) !important;
+      color: #ffffff !important;
+      border: 1.5px solid #ffffff !important;
+      box-shadow: 0 3px 10px -2px rgba(255, 59, 127, 0.75) !important;
+    }
+
+    body.theme-tone-sunset {
+      background:
+        radial-gradient(circle at 14% 16%, rgba(255, 138, 92, 0.42) 0%, transparent 45%),
+        radial-gradient(circle at 86% 20%, rgba(251, 191, 36, 0.34) 0%, transparent 46%),
+        radial-gradient(circle at 52% 90%, rgba(192, 132, 252, 0.28) 0%, transparent 50%),
+        linear-gradient(150deg, #3b1c32 0%, #6b2d46 48%, #a84b3e 100%);
+      background-size: 200% 200%;
+      animation: heartopiaBreeze 16s ease infinite;
+      color: #fff6ee;
+    }
+
+    body.theme-tone-sunset .unicorn-card {
+      background: linear-gradient(165deg, rgba(78, 34, 58, 0.94) 0%, rgba(108, 46, 62, 0.92) 55%, rgba(124, 62, 54, 0.94) 100%);
+      border: 2.5px solid #fdba74;
+      box-shadow: 0 14px 30px -10px rgba(42, 14, 28, 0.6), 0 0 0 2px rgba(255, 237, 213, 0.16) inset;
+      animation: twinkleGlow 5.5s ease-in-out infinite;
+    }
+
+    body.theme-tone-sunset .unicorn-subcard {
+      background: linear-gradient(135deg, rgba(92, 41, 66, 0.92) 0%, rgba(120, 54, 68, 0.9) 55%, rgba(134, 70, 58, 0.92) 100%);
+      border: 2px solid #fed7aa;
+      box-shadow: 0 8px 18px -6px rgba(42, 14, 28, 0.45);
+    }
+
+    body.theme-tone-sunset .unicorn-btn {
+      background: linear-gradient(135deg, #fb7185 0%, #f97316 56%, #facc15 100%);
+      border: 2px solid rgba(255, 255, 255, 0.75);
+      box-shadow: 0 8px 20px -4px rgba(249, 115, 22, 0.55);
+    }
+
+    body.theme-tone-sunset .soft-btn {
+      background: rgba(98, 44, 66, 0.92);
+      color: #fde68a;
+      border: 1.5px solid #fdba74;
+    }
+
+    body.theme-tone-sunset .danger-pill-btn {
+      background: rgba(127, 29, 54, 0.9);
+      color: #fecdd3;
+      border: 1.5px solid #fda4af;
+    }
+
+    body.theme-tone-sunset .new-update-badge {
+      padding: 0.15rem 0.48rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.03em;
+      background: linear-gradient(135deg, #ff4d6d 0%, #ff9e00 100%) !important;
+      color: #ffffff !important;
+      border: 1.5px solid #ffffff !important;
+      box-shadow: 0 3px 10px -2px rgba(255, 158, 0, 0.65) !important;
+    }
+
+    body.theme-tone-sunset h1,
+    body.theme-tone-sunset h2,
+    body.theme-tone-sunset h3,
+    body.theme-tone-sunset .text-purple-950,
+    body.theme-tone-sunset .text-purple-900,
+    body.theme-tone-sunset .text-purple-800 {
+      color: #fff7ed !important;
+    }
+
+    body.theme-tone-sunset .text-purple-700,
+    body.theme-tone-sunset .text-purple-600,
+    body.theme-tone-sunset .text-purple-500 {
+      color: #fed7aa !important;
+    }
+
+    body.theme-tone-sunset [class*="purple"] {
+      border-color: rgba(253, 186, 116, 0.72) !important;
+    }
+
+    body.theme-tone-sunset .bg-purple-100 {
+      background-color: #fed7aa !important;
+      color: #7c2d12 !important;
+      border-color: #fdba74 !important;
+    }
+
+    body.theme-tone-sunset input:not([type="checkbox"]),
+    body.theme-tone-sunset select {
+      background-color: rgba(58, 25, 44, 0.92) !important;
+      color: #fff7ed !important;
+      border-color: #fdba74 !important;
+    }
+
+    body.theme-tone-sunset .bg-white {
+      background-color: rgba(86, 38, 62, 0.9) !important;
+      border-color: #e08e6d !important;
+    }
+
+    body.theme-tone-sunset .bg-purple-50,
+    body.theme-tone-sunset .bg-purple-50\/80,
+    body.theme-tone-sunset .bg-purple-50\/70,
+    body.theme-tone-sunset .bg-purple-50\/60,
+    body.theme-tone-sunset .bg-pink-50\/70,
+    body.theme-tone-sunset .bg-amber-50\/80 {
+      background-color: rgba(98, 43, 66, 0.86) !important;
+      border-color: #e08e6d !important;
+    }
+
+    #theme-btn-a {
+      color: #6b3553 !important;
+    }
+
+    #theme-btn-b {
+      color: #3730a3 !important;
+    }
+
+    #theme-btn-sunset {
+      color: #9a3412 !important;
+    }
+
+    #theme-btn-a.is-theme-active {
+      background: linear-gradient(135deg, #ff7ea5 0%, #ff9b6a 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 3px 10px -2px rgba(255, 126, 165, 0.55);
+    }
+
+    #theme-btn-b.is-theme-active {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 3px 10px -2px rgba(124, 58, 237, 0.55);
+    }
+
+    #theme-btn-sunset.is-theme-active {
+      background: linear-gradient(135deg, #f43f5e 0%, #f97316 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 3px 10px -2px rgba(249, 115, 22, 0.55);
+    }
+
+    body.theme-tone-b .mode-pill-inactive,
+    body.theme-tone-b .tab-inactive {
+      background-color: rgba(45, 36, 92, 0.94) !important;
+      color: #fdf8ff !important;
+      border-color: #9f8ce6 !important;
+    }
+
+    body.theme-tone-sunset .mode-pill-inactive,
+    body.theme-tone-sunset .tab-inactive {
+      background-color: rgba(84, 38, 60, 0.94) !important;
+      color: #fff7ed !important;
+      border-color: #fdba74 !important;
+    }
+
+    body.theme-tone-b .mode-pill-active,
+    body.theme-tone-b .tab-active,
+    body.theme-tone-sunset .mode-pill-active,
+    body.theme-tone-sunset .tab-active {
+      color: #ffffff !important;
+    }
+
+    body.theme-tone-b header .bg-white\/80,
+    body.theme-tone-sunset header .bg-white\/80 {
+      background-color: rgba(255, 253, 249, 0.96) !important;
+      border-color: rgba(255, 255, 255, 0.85) !important;
+    }
+
+    body.theme-tone-b .bg-amber-100,
+    body.theme-tone-sunset .bg-amber-100 {
+      background-color: #fef08a !important;
+      color: #451a03 !important;
+      border-color: #fde047 !important;
+    }
+
+    body.theme-tone-b .bg-pink-100,
+    body.theme-tone-sunset .bg-pink-100 {
+      background-color: #fbcfe8 !important;
+      color: #500724 !important;
+      border-color: #f9a8d4 !important;
+    }
+
+    body.theme-tone-b .bg-purple-100,
+    body.theme-tone-sunset .bg-purple-100 {
+      background-color: #e9d5ff !important;
+      color: #2e1065 !important;
+      border-color: #d8b4fe !important;
+    }
+
+    body.theme-tone-b .bg-emerald-100,
+    body.theme-tone-sunset .bg-emerald-100 {
+      background-color: #a7f3d0 !important;
+      color: #064e3b !important;
+      border-color: #6ee7b7 !important;
+    }
+
+    body.theme-tone-b .bg-rose-100,
+    body.theme-tone-sunset .bg-rose-100 {
+      background-color: #fecdd3 !important;
+      color: #4c0519 !important;
+      border-color: #fda4af !important;
+    }
+
+    .rainbow-wheel-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      background: #fffdf9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .accordion-panel {
+      display: none;
+    }
+
+    .accordion-panel.open {
+      display: block;
+    }
+
+    .toast-box {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      z-index: 90;
+      background: rgba(92, 58, 77, 0.95);
+      color: #fffdf9;
+      border: 1.5px solid #ffd6e5;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(92, 58, 77, 0.25);
+      max-width: 92vw;
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="p-3 sm:p-6">
+  <div class="max-w-2xl mx-auto space-y-4 pb-16">
+    <!-- 상단 헤더 & 모드 선택 -->
+    <header class="unicorn-card p-4 sm:p-5 space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h1 id="header-title" class="text-xl sm:text-2xl font-bold text-purple-950">🦄 아연·시연 주간 미션 보드</h1>
+          <p id="header-subtitle" class="text-xs sm:text-sm text-purple-700 mt-0.5">오늘도 차근차근 미션을 완료하고 별을 모아 봐요!</p>
+        </div>
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <div class="inline-flex items-center rounded-full p-0.5 bg-white/80 border border-pink-200">
+            <button type="button" id="theme-btn-a" onclick="setThemeTone('a')" class="px-2.5 py-0.5 rounded-full text-xs font-bold transition">
+              ☀️ 낮
+            </button>
+            <button type="button" id="theme-btn-b" onclick="setThemeTone('b')" class="px-2.5 py-0.5 rounded-full text-xs font-bold transition">
+              🌙 밤
+            </button>
+            <button type="button" id="theme-btn-sunset" onclick="setThemeTone('sunset')" class="px-2.5 py-0.5 rounded-full text-xs font-bold transition">
+              🌅 노을
+            </button>
+          </div>
+          <span class="px-3 py-1 rounded-full text-xs sm:text-sm font-bold bg-amber-100 text-amber-800 border border-amber-200" id="header-star-badge">
+            ⭐ 아연 0 · 시연 0
+          </span>
+        </div>
+      </div>
+
+      <!-- 모드 선택 (아연 / 시연 / 해인) -->
+      <div class="grid grid-cols-3 gap-2 pt-1">
+        <button type="button" id="mode-btn-ayeon" onclick="setMode('ayeon')" class="w-full py-2.5 px-2 sm:px-3 rounded-2xl text-xs sm:text-sm font-bold transition">
+          🩷 아연
+        </button>
+        <button type="button" id="mode-btn-siyeol" onclick="setMode('siyeol')" class="w-full py-2.5 px-2 sm:px-3 rounded-2xl text-xs sm:text-sm font-bold transition">
+          🩵 시연
+        </button>
+        <button type="button" id="mode-btn-haein" onclick="setMode('haein')" class="w-full py-2.5 px-2 sm:px-3 rounded-2xl text-xs sm:text-sm font-bold transition">
+          👑 해인
+        </button>
+      </div>
+
+      <!-- 메인 탭 (데일리체크 / 행운별) -->
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <button type="button" id="tab-daily" onclick="switchTab('daily')" class="py-2.5 px-4 rounded-2xl text-sm font-bold transition">
+          ✅ 데일리체크
+        </button>
+        <button type="button" id="tab-stars" onclick="switchTab('stars')" class="py-2.5 px-4 rounded-2xl text-sm font-bold transition">
+          🌟 행운별
+        </button>
+      </div>
+    </header>
+
+    <!-- ================= 데일리체크 탭 ================= -->
+    <main id="view-daily" class="space-y-4">
+      <!-- [해인 모드 전용] 새 미션 등록 박스 -->
+      <section id="haein-mission-form-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <h2 id="mission-form-heading" class="text-base sm:text-lg font-bold text-purple-950">✏️ 새 미션 등록 (매일 반복)</h2>
+            <span id="new-badge-mission-form" class="new-update-badge hidden">NEW</span>
+          </div>
+          <button type="button" id="cancel-edit-mission-btn" onclick="cancelEditMission()" class="hidden text-xs font-bold px-3 py-1 rounded-full bg-purple-100 text-purple-700">
+            수정 취소
+          </button>
+        </div>
+
+        <form onsubmit="handleMissionSubmit(event)" class="space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
+            <div class="sm:col-span-3">
+              <label class="block text-xs font-bold text-purple-800 mb-1">대상</label>
+              <select id="mission-owner-select" class="w-full px-3 py-2.5 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950">
+                <option value="ayeon">🩷 아연</option>
+                <option value="siyeol">🩵 시연</option>
+              </select>
+            </div>
+            <div class="sm:col-span-6">
+              <label class="block text-xs font-bold text-purple-800 mb-1">미션 이름</label>
+              <input id="mission-title-input" type="text" placeholder="예: 양치 & 세수 스스로 하기" class="w-full px-3 py-2.5 rounded-xl border border-purple-200 bg-white text-sm text-purple-950" />
+            </div>
+            <div class="sm:col-span-3">
+              <label class="block text-xs font-bold text-purple-800 mb-1">보상 별</label>
+              <input id="mission-star-input" type="number" min="1" max="50" value="1" class="w-full px-3 py-2.5 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950" />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+            <span class="text-xs text-purple-600 font-semibold">🔄 매일(월~일) 반복으로 자동 등록돼요.</span>
+            <button type="submit" id="mission-submit-btn" class="unicorn-btn px-5 py-2.5 text-sm shrink-0">
+              미션 등록
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- [해인 모드 전용] 주간 미션 목록 (아코디언) -->
+      <section id="haein-mission-list-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+        <button type="button" onclick="toggleAccordion('haein-mission-list-panel', 'haein-mission-list-arrow'); markSectionSeen('mission-list');" class="w-full flex items-center justify-between text-left">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <h2 class="text-base sm:text-lg font-bold text-purple-950">📋 주간 미션 목록</h2>
+            <span id="new-badge-mission-list" class="new-update-badge hidden">NEW</span>
+            <span id="haein-mission-count-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-800">0개</span>
+          </div>
+        </button>
+
+        <div id="haein-mission-list-panel" class="accordion-panel pt-2 space-y-2">
+          <div id="haein-mission-list-container" class="space-y-2"></div>
+        </div>
+      </section>
+
+      <!-- [아연·시연 모드] 깜짝미션 섹션 -->
+      <section id="child-surprise-section" onclick="markSectionSeen('child-surprise')" class="unicorn-card p-4 sm:p-5 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h2 class="text-base sm:text-lg font-bold text-purple-950">⚡ 깜짝미션</h2>
+            <span id="new-badge-child-surprise" class="new-update-badge hidden">NEW</span>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">선착순 1명</span>
+          </div>
+        </div>
+        <div id="child-surprise-container" class="space-y-2"></div>
+      </section>
+
+      <!-- [아연·시연 모드 전용] 당일 미션 체크리스트 -->
+      <section id="child-checklist-section" class="unicorn-card p-4 sm:p-5 space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 id="child-checklist-title" class="text-base sm:text-lg font-bold text-purple-950">✨ 오늘의 미션</h2>
+            <p id="child-checklist-date-sub" class="text-xs text-purple-600"></p>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <span id="child-checklist-rate" class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">
+              0%
+            </span>
+            <span id="child-checklist-progress" class="px-3 py-1 rounded-full text-xs font-bold bg-pink-100 text-pink-800">
+              0 / 0 완료
+            </span>
+          </div>
+        </div>
+        <div class="w-full h-2.5 rounded-full bg-purple-100/80 overflow-hidden border border-purple-200/80">
+          <div id="child-checklist-bar" class="h-full rounded-full bg-gradient-to-r from-pink-400 via-amber-300 to-emerald-400 transition-all duration-300" style="width: 0%;"></div>
+        </div>
+        <div id="child-checklist-container" class="space-y-2.5"></div>
+      </section>
+
+      <!-- [해인 모드 전용] 아연·시연 달성 현황 -->
+      <section id="haein-achievement-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+        <div class="flex items-center justify-between">
+          <h2 class="text-base sm:text-lg font-bold text-purple-950">📊 아연·시연 달성 현황</h2>
+          <span id="haein-today-label" class="text-xs font-bold px-2.5 py-1 rounded-full bg-purple-100 text-purple-700"></span>
+        </div>
+        <div id="haein-achievement-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      </section>
+
+      <!-- [해인 모드 전용] 깜짝미션 등록/삭제 박스 -->
+      <section id="haein-surprise-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <button type="button" onclick="toggleAccordion('haein-surprise-panel', 'haein-surprise-arrow'); markSectionSeen('haein-surprise');" class="flex items-center gap-1.5 flex-wrap text-left">
+            <h2 class="text-base sm:text-lg font-bold text-purple-950">⚡ 깜짝미션 등록 · 관리</h2>
+            <span id="new-badge-haein-surprise" class="new-update-badge hidden">NEW</span>
+          </button>
+          <button type="button" onclick="clearAllSurpriseMissions()" class="danger-pill-btn px-3 py-1 text-xs">
+            전체내역 삭제
+          </button>
+        </div>
+
+        <div id="haein-surprise-panel" class="accordion-panel pt-2 space-y-3">
+          <form onsubmit="handleAddSurpriseMission(event)" class="unicorn-subcard p-3 space-y-2.5">
+            <div class="text-xs font-bold text-purple-900">새 깜짝미션 등록 (아연·시연 중 1명만 체크 가능)</div>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input id="surprise-title-input" type="text" placeholder="예: 지금 바로 물 한 잔 마셔오기!" class="flex-1 min-w-0 px-3 py-2 rounded-xl border border-purple-200 bg-white text-sm text-purple-950" />
+              <div class="flex items-center gap-2 shrink-0">
+                <input id="surprise-star-input" type="number" min="1" max="50" value="2" class="w-20 px-3 py-2 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950" />
+                <span class="text-xs font-bold text-purple-800">★</span>
+                <button type="submit" class="unicorn-btn px-4 py-2 text-xs sm:text-sm">
+                  깜짝 등록
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div id="haein-surprise-list-container" class="space-y-2"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= 행운별 탭 ================= -->
+    <section id="view-stars" class="space-y-4 hidden">
+      <!-- 1. 보유 별 현황 카드 -->
+      <div id="star-balance-card" class="unicorn-card p-4 sm:p-5 space-y-3">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-purple-950">⭐ 보유 별 현황</h2>
+            <p class="text-xs text-purple-600">미션·룰렛·선물로 모은 별을 확인해 보세요.</p>
+          </div>
+          <span id="star-tier-badge" class="star-tier-chip">🌱 새싹 별지기</span>
+        </div>
+
+        <div id="star-balances-container" class="grid grid-cols-1 gap-3"></div>
+
+        <!-- [해인 모드 전용] 아연·시연 별 개수 수정 아코디언 -->
+        <div id="haein-star-edit-box" class="unicorn-subcard p-3 space-y-2.5 hidden">
+          <button type="button" onclick="toggleAccordion('haein-star-edit-panel', 'haein-star-edit-arrow'); markSectionSeen('star-edit');" class="w-full flex items-center justify-between text-left">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-xs sm:text-sm font-bold text-purple-950">✏️ 아연·시연 별 개수 수정</span>
+              <span id="new-badge-star-edit" class="new-update-badge hidden">NEW</span>
+            </div>
+          </button>
+          <div id="haein-star-edit-panel" class="accordion-panel pt-2 space-y-2.5">
+            <div class="flex items-center justify-between gap-2 bg-white p-2.5 rounded-xl border border-purple-100">
+              <span class="text-sm font-bold text-purple-950">🩷 아연 별 개수</span>
+              <div class="flex items-center gap-2">
+                <input id="edit-star-ayeon-input" type="number" min="0" max="999" class="w-24 px-2.5 py-1.5 rounded-lg border border-purple-200 text-sm font-bold text-purple-950" />
+                <button type="button" onclick="saveChildStarCount('ayeon')" class="unicorn-btn px-3 py-1.5 text-xs">저장</button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between gap-2 bg-white p-2.5 rounded-xl border border-purple-100">
+              <span class="text-sm font-bold text-purple-950">🩵 시연 별 개수</span>
+              <div class="flex items-center gap-2">
+                <input id="edit-star-siyeol-input" type="number" min="0" max="999" class="w-24 px-2.5 py-1.5 rounded-lg border border-purple-200 text-sm font-bold text-purple-950" />
+                <button type="button" onclick="saveChildStarCount('siyeol')" class="unicorn-btn px-3 py-1.5 text-xs">저장</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 별 적립/사용 내역 (아코디언 + 전체내역 삭제) -->
+        <div class="unicorn-subcard p-3 space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <button type="button" onclick="toggleAccordion('star-history-panel', 'star-history-arrow')" class="flex items-center gap-1.5 text-left">
+              <span class="text-xs sm:text-sm font-bold text-purple-950">📜 별 적립 · 사용 내역</span>
+            </button>
+            <button type="button" id="clear-star-history-btn" onclick="clearAllStarHistory()" class="danger-pill-btn px-2.5 py-1 text-xs hidden">
+              전체내역 삭제
+            </button>
+          </div>
+          <div id="star-history-panel" class="accordion-panel pt-1">
+            <div id="star-history-container" class="space-y-1.5 max-h-60 overflow-y-auto pr-1"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 행운의 룰렛 (아연·시연 모드 전용 / 하루 1회 / 1~5★) -->
+      <div id="lucky-wheel-section" class="unicorn-card p-4 sm:p-5 space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-purple-950">🎡 행운의 별 룰렛</h2>
+            <p class="text-xs text-purple-600">하루 한 번 돌려서 1★ ~ 5★ 행운을 받아 보세요!</p>
+          </div>
+          <span id="wheel-status-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">
+            오늘 도전 가능
+          </span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white/75 p-4 rounded-2xl border border-purple-100">
+          <div id="rainbow-wheel-visual" class="w-24 h-24 rounded-full p-1.5 shrink-0 shadow-md" style="background: conic-gradient(#ff758f, #ffb347, #ffe66d, #7bed9f, #70a1ff, #c56cf0, #ff758f);">
+            <div class="rainbow-wheel-inner">
+              <svg viewBox="0 0 64 64" class="w-14 h-14" aria-hidden="true">
+                <defs>
+                  <linearGradient id="luckyStarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffd43b" />
+                    <stop offset="55%" stop-color="#ff922b" />
+                    <stop offset="100%" stop-color="#ff6b6b" />
+                  </linearGradient>
+                </defs>
+                <polygon points="32,6 39.8,22.2 57.6,24.7 44.6,37.2 47.8,54.9 32,46.4 16.2,54.9 19.4,37.2 6.4,24.7 24.2,22.2" fill="url(#luckyStarGrad)" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" />
+                <circle cx="25" cy="27" r="2.3" fill="#4a3544" />
+                <circle cx="39" cy="27" r="2.3" fill="#4a3544" />
+                <path d="M28,33 Q32,37 36,33" fill="none" stroke="#4a3544" stroke-width="2.3" stroke-linecap="round" />
+              </svg>
+            </div>
+          </div>
+          <div class="flex-1 text-center sm:text-left space-y-1">
+            <div id="wheel-result-text" class="text-sm font-bold text-purple-950">오늘의 행운 별을 뽑아 보세요!</div>
+            <div class="text-xs text-purple-600">당첨 구간: 1★ · 2★ · 3★ · 4★ · 5★</div>
+          </div>
+          <button type="button" id="spin-wheel-btn" onclick="spinWheel()" class="unicorn-btn px-5 py-3 text-sm shrink-0">
+            룰렛 돌리기
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. 자매끼리 별 선물하기 (아연·시연 모드 전용) -->
+      <div id="star-gift-section" class="unicorn-card p-4 sm:p-5 space-y-3">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <h2 class="text-base sm:text-lg font-bold text-purple-950">💝 자매끼리 별 선물하기</h2>
+            <span id="new-badge-star-gift" class="new-update-badge hidden">NEW</span>
+          </div>
+          <span class="text-xs font-bold text-pink-600">내 별을 동생/언니에게 선물!</span>
+        </div>
+
+        <form onsubmit="handleSendStarGift(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 items-end">
+          <div class="sm:col-span-4">
+            <label class="block text-xs font-bold text-purple-800 mb-1">보냄</label>
+            <select id="gift-from-select" onchange="syncGiftRecipient()" class="w-full px-3 py-2.5 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950">
+              <option value="ayeon">🩷 아연</option>
+              <option value="siyeol">🩵 시연</option>
+            </select>
+          </div>
+          <div class="sm:col-span-4">
+            <label class="block text-xs font-bold text-purple-800 mb-1">받는 사람</label>
+            <select id="gift-to-select" class="w-full px-3 py-2.5 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950">
+              <option value="siyeol">🩵 시연</option>
+              <option value="ayeon">🩷 아연</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-bold text-purple-800 mb-1">별 개수</label>
+            <input id="gift-amount-input" type="number" min="1" max="100" value="1" class="w-full px-3 py-2.5 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950" />
+          </div>
+          <div class="sm:col-span-2">
+            <button type="submit" class="unicorn-btn w-full py-2.5 px-3 text-sm">
+              선물
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 4. 쿠폰 교환소 -->
+      <div class="unicorn-card p-4 sm:p-5 space-y-3">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-purple-950">🎟️ 쿠폰 교환소</h2>
+            <p class="text-xs text-purple-600">모은 별로 원하는 쿠폰을 교환해 보세요!</p>
+          </div>
+          <span id="coupon-buyer-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-pink-100 text-pink-800"></span>
+        </div>
+
+        <!-- [해인 모드 전용] 새 쿠폰 등록 아코디언 -->
+        <div id="haein-coupon-create-box" class="unicorn-subcard p-3 space-y-2.5 hidden">
+          <button type="button" onclick="toggleAccordion('haein-coupon-create-panel', 'haein-coupon-create-arrow')" class="w-full flex items-center justify-between text-left">
+            <span class="text-xs sm:text-sm font-bold text-purple-950">➕ 새 쿠폰 직접 등록</span>
+          </button>
+          <div id="haein-coupon-create-panel" class="accordion-panel pt-1">
+            <form onsubmit="handleCreateCoupon(event)" class="flex flex-col sm:flex-row gap-2">
+              <input id="new-coupon-title-input" type="text" placeholder="예: 아이스크림 하나 더 먹기" class="flex-1 min-w-0 px-3 py-2 rounded-xl border border-purple-200 bg-white text-sm text-purple-950" />
+              <div class="flex items-center gap-2 shrink-0">
+                <input id="new-coupon-cost-input" type="number" min="1" max="200" value="5" class="w-20 px-3 py-2 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950" />
+                <span class="text-xs font-bold text-purple-800">★</span>
+                <button type="submit" class="unicorn-btn px-4 py-2 text-xs sm:text-sm">등록</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="coupon-shop-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+      </div>
+
+      <!-- 5. 보유쿠폰함 (아연·시연 모드 전용) -->
+      <div id="child-owned-coupons-section" class="unicorn-card p-4 sm:p-5 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <h2 class="text-base sm:text-lg font-bold text-purple-950">👜 보유쿠폰함</h2>
+            <span id="new-badge-owned-coupons" class="new-update-badge hidden">NEW</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button type="button" id="coupon-filter-unused" onclick="setCouponFilter('unused')" class="px-3 py-1 rounded-full text-xs font-bold transition"></button>
+            <button type="button" id="coupon-filter-used" onclick="setCouponFilter('used')" class="px-3 py-1 rounded-full text-xs font-bold transition"></button>
+          </div>
+        </div>
+        <div id="owned-coupons-container" class="space-y-2"></div>
+      </div>
+
+      <!-- 6. [해인 모드 전용] 전체 쿠폰 사용 내역 (아코디언 + 내역전체삭제) -->
+      <div id="haein-coupon-usage-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <button type="button" onclick="toggleAccordion('haein-coupon-usage-panel', 'haein-coupon-usage-arrow')" class="flex items-center gap-1.5 text-left">
+            <h2 class="text-base sm:text-lg font-bold text-purple-950">🧾 전체 쿠폰 사용 내역</h2>
+          </button>
+          <button type="button" onclick="clearCouponUsageHistory()" class="danger-pill-btn px-3 py-1 text-xs">
+            내역전체삭제
+          </button>
+        </div>
+        <div id="haein-coupon-usage-panel" class="accordion-panel pt-1">
+          <div id="haein-coupon-usage-container" class="space-y-2"></div>
+        </div>
+      </div>
+
+      <!-- 7. 쿠폰 건의함 -->
+      <div class="unicorn-card p-4 sm:p-5 space-y-3">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <h2 class="text-base sm:text-lg font-bold text-purple-950">💌 쿠폰 건의함</h2>
+            <span id="new-badge-coupon-suggest" class="new-update-badge hidden">NEW</span>
+          </div>
+          <button type="button" id="clear-decided-suggestions-btn" onclick="clearDecidedCouponSuggestions()" class="danger-pill-btn px-2.5 py-1 text-xs hidden">
+            전체내역 삭제
+          </button>
+        </div>
+
+        <form id="coupon-suggest-form" onsubmit="handleCouponSuggestion(event)" class="unicorn-subcard p-3 space-y-2.5">
+          <div class="text-xs font-bold text-purple-900">갖고 싶은 쿠폰을 해인에게 건의해 보세요!</div>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input id="suggest-coupon-title-input" type="text" placeholder="예: 주말에 보드게임 같이 하기" class="flex-1 min-w-0 px-3 py-2 rounded-xl border border-purple-200 bg-white text-sm text-purple-950" />
+            <div class="flex items-center gap-2 shrink-0">
+              <input id="suggest-coupon-cost-input" type="number" min="1" max="200" value="5" class="w-20 px-3 py-2 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950" />
+              <span class="text-xs font-bold text-purple-800">★</span>
+              <button type="submit" class="unicorn-btn px-4 py-2 text-xs sm:text-sm">
+                건의 보내기
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div id="coupon-suggestions-container" class="space-y-2"></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "ayeon_siyeol_weekly_mission_board_v1";
+    const THEME_STORAGE_KEY = "ayeon_siyeol_theme_tone_v1";
+    const ALL_DAYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+    const DAY_LABELS = {
+      mon: "월요일",
+      tue: "화요일",
+      wed: "수요일",
+      thu: "목요일",
+      fri: "금요일",
+      sat: "토요일",
+      sun: "일요일"
+    };
+    const DAY_SHORT = {
+      mon: "월",
+      tue: "화",
+      wed: "수",
+      thu: "목",
+      fri: "금",
+      sat: "토",
+      sun: "일"
+    };
+
+    function getTodayDayKey() {
+      const idx = new Date().getDay();
+      const map = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+      return map[idx] || "mon";
+    }
+
+    function getTodayDateStr() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, "0");
+      const d = String(now.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function getStarTierLabel(starCount) {
+      const n = Math.max(0, Number(starCount) || 0);
+      if (n >= 50) return "👑 은하수 별마스터";
+      if (n >= 25) return "무지개 별요정";
+      if (n >= 10) return "🌟 반짝 별탐험가";
+      return "🌱 새싹 별지기";
+    }
+
+    function createDefaultState() {
+      return {
+        mode: "ayeon",
+        activeTab: "daily",
+        editingMissionId: null,
+        couponFilter: "unused",
+        seenSections: {},
+        missions: [
+          { id: "m_ay_1", owner: "ayeon", title: "아침에 일어나 이불 정리하기", starReward: 1, days: ALL_DAYS.slice() },
+          { id: "m_ay_2", owner: "ayeon", title: "양치 & 세수 스스로 하기", starReward: 1, days: ALL_DAYS.slice() },
+          { id: "m_ay_3", owner: "ayeon", title: "장난감·책 제자리에 정리하기", starReward: 2, days: ALL_DAYS.slice() },
+          { id: "m_si_1", owner: "siyeol", title: "아침에 일어나 이불 정리하기", starReward: 1, days: ALL_DAYS.slice() },
+          { id: "m_si_2", owner: "siyeol", title: "양치 & 세수 스스로 하기", starReward: 1, days: ALL_DAYS.slice() },
+          { id: "m_si_3", owner: "siyeol", title: "장난감·책 제자리에 정리하기", starReward: 2, days: ALL_DAYS.slice() }
+        ],
+        checks: {},
+        rewardedSlots: {},
+        surpriseMissions: [],
+        stars: { ayeon: 0, siyeol: 0 },
+        starHistory: [],
+        lastWheelDateByChild: { ayeon: null, siyeol: null },
+        coupons: [
+          { id: "cp_1", title: "아이스크림 하나 먹기", cost: 5 },
+          { id: "cp_2", title: "엄마랑 단둘이 데이트 30분", cost: 8 },
+          { id: "cp_3", title: "주말 간식 내가 고르기", cost: 6 },
+          { id: "cp_4", title: "자기 전 동화책 2권 더 읽기", cost: 4 }
+        ],
+        ownedCoupons: [],
+        couponUsageHistory: [],
+        couponSuggestions: []
+      };
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return createDefaultState();
+        const parsed = JSON.parse(raw);
+        const def = createDefaultState();
+        return {
+          ...def,
+          ...parsed,
+          seenSections: parsed.seenSections && typeof parsed.seenSections === "object" ? parsed.seenSections : {},
+          stars: {
+            ayeon: Number(parsed.stars?.ayeon) || 0,
+            siyeol: Number(parsed.stars?.siyeol) || 0
+          },
+          lastWheelDateByChild: {
+            ayeon: parsed.lastWheelDateByChild?.ayeon || null,
+            siyeol: parsed.lastWheelDateByChild?.siyeol || null
+          },
+          missions: Array.isArray(parsed.missions) ? parsed.missions : def.missions,
+          checks: parsed.checks && typeof parsed.checks === "object" ? parsed.checks : {},
+          rewardedSlots: parsed.rewardedSlots && typeof parsed.rewardedSlots === "object" ? parsed.rewardedSlots : {},
+          surpriseMissions: Array.isArray(parsed.surpriseMissions) ? parsed.surpriseMissions : [],
+          starHistory: Array.isArray(parsed.starHistory) ? parsed.starHistory : [],
+          coupons: Array.isArray(parsed.coupons) ? parsed.coupons : def.coupons,
+          ownedCoupons: Array.isArray(parsed.ownedCoupons) ? parsed.ownedCoupons : [],
+          couponUsageHistory: Array.isArray(parsed.couponUsageHistory) ? parsed.couponUsageHistory : [],
+          couponSuggestions: Array.isArray(parsed.couponSuggestions) ? parsed.couponSuggestions : []
+        };
+      } catch (err) {
+        console.error("상태 불러오기 오류:", err);
+        return createDefaultState();
+      }
+    }
+
+    let state = loadState();
+    let toastTimer = null;
+    const lastRenderedTierByMode = { ayeon: null, siyeol: null, haein: null };
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (err) {
+        console.error("상태 저장 오류:", err);
+      }
+    }
+
+    function loadThemeTone() {
+      try {
+        const saved = localStorage.getItem(THEME_STORAGE_KEY);
+        if (saved === "a" || saved === "b" || saved === "sunset") return saved;
+        return "a";
+      } catch (err) {
+        return "a";
+      }
+    }
+
+    function applyThemeTone(tone) {
+      const validTone = tone === "b" || tone === "sunset" || tone === "a" ? tone : "a";
+      document.body.classList.remove("theme-tone-b", "theme-tone-sunset");
+      if (validTone === "b") {
+        document.body.classList.add("theme-tone-b");
+      } else if (validTone === "sunset") {
+        document.body.classList.add("theme-tone-sunset");
+      }
+
+      const btnA = document.getElementById("theme-btn-a");
+      const btnB = document.getElementById("theme-btn-b");
+      const btnSunset = document.getElementById("theme-btn-sunset");
+      if (btnA) {
+        btnA.classList.toggle("is-theme-active", validTone === "a");
+        btnA.setAttribute("aria-pressed", String(validTone === "a"));
+      }
+      if (btnB) {
+        btnB.classList.toggle("is-theme-active", validTone === "b");
+        btnB.setAttribute("aria-pressed", String(validTone === "b"));
+      }
+      if (btnSunset) {
+        btnSunset.classList.toggle("is-theme-active", validTone === "sunset");
+        btnSunset.setAttribute("aria-pressed", String(validTone === "sunset"));
+      }
+    }
+
+    function setThemeTone(tone) {
+      const validTone = tone === "b" || tone === "sunset" || tone === "a" ? tone : "a";
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, validTone);
+      } catch (err) {
+        console.error("테마 저장 오류:", err);
+      }
+      applyThemeTone(validTone);
+      const labelMap = {
+        a: "☀️ 낮 테마로 변경했어요!",
+        b: "🌙 밤 테마로 변경했어요!",
+        sunset: "🌅 노을 테마로 변경했어요!"
+      };
+      showToast(labelMap[validTone] || "테마를 변경했어요!");
+    }
+
+    function showToast(message) {
+      try {
+        const existing = document.querySelector(".toast-box");
+        if (existing) existing.remove();
+        if (toastTimer) clearTimeout(toastTimer);
+
+        const el = document.createElement("div");
+        el.className = "toast-box";
+        el.textContent = message;
+        document.body.appendChild(el);
+
+        toastTimer = setTimeout(() => {
+          el.remove();
+        }, 2400);
+      } catch (err) {
+        console.error("알림 표시 오류:", err);
+      }
+    }
+
+    function spawnBurstAtPoint(x, y, glyphs = ["✨", "⭐", "💖", "🌸"], count = 8, spreadRadius = 52) {
+      try {
+        const layer = document.createElement("div");
+        layer.className = "sparkle-burst-layer";
+        const cx = Number.isFinite(x) ? x : window.innerWidth * 0.5;
+        const cy = Number.isFinite(y) ? y : window.innerHeight * 0.45;
+        const safeGlyphs = Array.isArray(glyphs) && glyphs.length ? glyphs : ["✨", "⭐"];
+
+        for (let i = 0; i < count; i++) {
+          const el = document.createElement("span");
+          el.className = "sparkle-particle";
+          el.textContent = safeGlyphs[i % safeGlyphs.length];
+          const angle = (Math.PI * 2 * i) / count + (Math.random() * 0.45 - 0.225);
+          const dist = Math.max(24, spreadRadius * 0.55) + Math.random() * (spreadRadius * 0.65);
+          const tx = `${Math.round(Math.cos(angle) * dist)}px`;
+          const ty = `${Math.round(Math.sin(angle) * dist - 14)}px`;
+          el.style.left = `${cx + (Math.random() * 16 - 8)}px`;
+          el.style.top = `${cy + (Math.random() * 14 - 7)}px`;
+          el.style.setProperty("--tx", tx);
+          el.style.setProperty("--ty", ty);
+          layer.appendChild(el);
+        }
+
+        document.body.appendChild(layer);
+        setTimeout(() => layer.remove(), 900);
+      } catch (err) {
+        console.error("위치 파티클 효과 오류:", err);
+      }
+    }
+
+    function spawnStarSparkles(count = 10) {
+      spawnBurstAtPoint(
+        window.innerWidth * 0.5,
+        window.innerHeight * 0.45,
+        ["⭐", "✨", "🌟", "💖", "🍬"],
+        count,
+        85
+      );
+    }
+
+    function getTierThemeEffect(tierLabel) {
+      const label = String(tierLabel || "");
+      if (label.includes("은하수 별마스터")) {
+        return { glyphs: ["👑", "✨", "🌟", "💫", "💛"], count: 16, spread: 96 };
+      }
+      if (label.includes("무지개 별요정")) {
+        return { glyphs: ["🦄", "🌈", "💖", "✨", "🍬"], count: 14, spread: 88 };
+      }
+      if (label.includes("반짝 별탐험가")) {
+        return { glyphs: ["🌟", "⭐", "✨", "🩵", "💛"], count: 12, spread: 78 };
+      }
+      return { glyphs: ["🌱", "✨", "⭐", "💚"], count: 9, spread: 52 };
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function getSlotKey(missionId, dayKey) {
+      return `${missionId}__${dayKey}`;
+    }
+
+    function getActivityStamp(sectionKey) {
+      const today = getTodayDateStr();
+      if (sectionKey === "mission-form") {
+        return state.missions.length ? `${today}::missions:${state.missions.length}` : "";
+      }
+      if (sectionKey === "mission-list") {
+        const latestMission = state.missions[state.missions.length - 1];
+        return state.missions.length ? `${today}::list:${state.missions.length}:${latestMission?.id || ""}` : "";
+      }
+      if (sectionKey === "child-surprise" || sectionKey === "haein-surprise") {
+        const latestSurprise = state.surpriseMissions[0];
+        return latestSurprise ? `${today}::surprise:${latestSurprise.id}:${latestSurprise.claimedBy || "open"}` : "";
+      }
+      if (sectionKey === "star-edit") {
+        return `${today}::stars:${state.stars.ayeon}:${state.stars.siyeol}`;
+      }
+      if (sectionKey === "star-gift") {
+        const latestGift = state.starHistory.find(h => String(h.reason || "").includes("선물"));
+        return latestGift ? `${today}::gift:${latestGift.id}` : "";
+      }
+      if (sectionKey === "owned-coupons") {
+        const latestOwned = state.ownedCoupons[0];
+        return latestOwned ? `${today}::owned:${latestOwned.id}:${latestOwned.used ? "u" : "n"}` : "";
+      }
+      if (sectionKey === "coupon-suggest") {
+        const latestSuggest = state.couponSuggestions[0];
+        return latestSuggest ? `${today}::suggest:${latestSuggest.id}:${latestSuggest.status}` : "";
+      }
+      return "";
+    }
+
+    function markSectionSeen(sectionKey) {
+      const stamp = getActivityStamp(sectionKey);
+      if (!stamp) return;
+      if (state.seenSections[sectionKey] !== stamp) {
+        state.seenSections[sectionKey] = stamp;
+        saveState();
+        updateActivityNewBadges();
+      }
+    }
+
+    function updateActivityNewBadges() {
+      const badgeMap = {
+        "mission-form": "new-badge-mission-form",
+        "mission-list": "new-badge-mission-list",
+        "child-surprise": "new-badge-child-surprise",
+        "haein-surprise": "new-badge-haein-surprise",
+        "star-edit": "new-badge-star-edit",
+        "star-gift": "new-badge-star-gift",
+        "owned-coupons": "new-badge-owned-coupons",
+        "coupon-suggest": "new-badge-coupon-suggest"
+      };
+
+      Object.entries(badgeMap).forEach(([sectionKey, badgeId]) => {
+        const badgeEl = document.getElementById(badgeId);
+        if (!badgeEl) return;
+        const currentStamp = getActivityStamp(sectionKey);
+        const isNew = Boolean(currentStamp) && state.seenSections[sectionKey] !== currentStamp;
+        badgeEl.classList.toggle("hidden", !isNew);
+      });
+    }
+
+    function addStarHistory(child, delta, reason) {
+      const numDelta = Number(delta) || 0;
+      if (!numDelta) return;
+      state.starHistory.unshift({
+        id: `sh_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        child,
+        delta: numDelta,
+        reason,
+        date: getTodayDateStr()
+      });
+      if (state.starHistory.length > 120) {
+        state.starHistory = state.starHistory.slice(0, 120);
+      }
+    }
+
+    function setMode(nextMode) {
+      if (!["ayeon", "siyeol", "haein"].includes(nextMode)) return;
+      state.mode = nextMode;
+      state.editingMissionId = null;
+      saveState();
+      renderAll();
+    }
+
+    function switchTab(nextTab) {
+      if (!["daily", "stars"].includes(nextTab)) return;
+      state.activeTab = nextTab;
+      saveState();
+      renderAll();
+    }
+
+    function toggleAccordion(panelId, arrowId) {
+      const panel = document.getElementById(panelId);
+      if (!panel) return;
+      panel.classList.toggle("open");
+    }
+
+    function syncAccordionArrow(panelId, arrowId) {
+      return;
+    }
+
+    function handleMissionSubmit(event) {
+      event.preventDefault();
+      if (state.mode !== "haein") return;
+
+      const ownerEl = document.getElementById("mission-owner-select");
+      const titleEl = document.getElementById("mission-title-input");
+      const starEl = document.getElementById("mission-star-input");
+
+      const owner = ownerEl.value === "siyeol" ? "siyeol" : "ayeon";
+      const title = titleEl.value.trim();
+      const starReward = Math.max(1, Math.min(50, parseInt(starEl.value, 10) || 1));
+
+      if (!title) {
+        showToast("미션 이름을 입력해 주세요!");
+        titleEl.focus();
+        return;
+      }
+
+      if (state.editingMissionId) {
+        const target = state.missions.find(m => m.id === state.editingMissionId);
+        if (target) {
+          target.owner = owner;
+          target.title = title;
+          target.starReward = starReward;
+          target.days = ALL_DAYS.slice();
+          showToast("미션을 수정했어요!");
+        }
+        state.editingMissionId = null;
+      } else {
+        state.missions.push({
+          id: `m_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          owner,
+          title,
+          starReward,
+          days: ALL_DAYS.slice()
+        });
+        showToast("새 매일 반복 미션을 등록했어요!");
+      }
+
+      titleEl.value = "";
+      starEl.value = "1";
+      saveState();
+      renderAll();
+    }
+
+    function startEditMission(missionId) {
+      if (state.mode !== "haein") return;
+      const mission = state.missions.find(m => m.id === missionId);
+      if (!mission) return;
+
+      state.editingMissionId = mission.id;
+      document.getElementById("mission-owner-select").value = mission.owner;
+      document.getElementById("mission-title-input").value = mission.title;
+      document.getElementById("mission-star-input").value = String(mission.starReward || 1);
+      saveState();
+      renderAll();
+      document.getElementById("mission-title-input").focus();
+    }
+
+    function cancelEditMission() {
+      state.editingMissionId = null;
+      document.getElementById("mission-title-input").value = "";
+      document.getElementById("mission-star-input").value = "1";
+      saveState();
+      renderAll();
+    }
+
+    function deleteMission(missionId) {
+      if (state.mode !== "haein") return;
+      state.missions = state.missions.filter(m => m.id !== missionId);
+      if (state.editingMissionId === missionId) {
+        state.editingMissionId = null;
+      }
+      saveState();
+      renderAll();
+      showToast("미션을 삭제했어요.");
+    }
+
+    function toggleMissionCheck(missionId, triggerEl = null) {
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const mission = state.missions.find(m => m.id === missionId);
+      if (!mission || mission.owner !== state.mode) return;
+
+      const todayKey = getTodayDayKey();
+      const slotKey = getSlotKey(missionId, todayKey);
+      const nextChecked = !Boolean(state.checks[slotKey]);
+      state.checks[slotKey] = nextChecked;
+
+      const reward = Math.max(1, Number(mission.starReward) || 1);
+      const child = mission.owner;
+      const childLabel = child === "ayeon" ? "아연" : "시연";
+
+      if (nextChecked) {
+        if (!state.rewardedSlots[slotKey]) {
+          state.rewardedSlots[slotKey] = true;
+          state.stars[child] = (Number(state.stars[child]) || 0) + reward;
+          addStarHistory(child, reward, `미션 완료: ${mission.title}`);
+        }
+
+        let burstX = window.innerWidth * 0.5;
+        let burstY = window.innerHeight * 0.45;
+        if (triggerEl && typeof triggerEl.getBoundingClientRect === "function") {
+          const rect = triggerEl.getBoundingClientRect();
+          burstX = rect.left + Math.min(28, rect.width * 0.25);
+          burstY = rect.top + rect.height * 0.5;
+        }
+        spawnBurstAtPoint(burstX, burstY, ["✨", "⭐", "💖", "🌸"], 8, 52);
+
+        const dailyBonusKey = `${getTodayDateStr()}::${child}::daily_all_bonus`;
+        const myTodayMissions = state.missions.filter(m => m.owner === child);
+        const allDone =
+          myTodayMissions.length > 0 &&
+          myTodayMissions.every(m => Boolean(state.checks[getSlotKey(m.id, todayKey)]));
+        if (allDone && !state.rewardedSlots[dailyBonusKey]) {
+          state.rewardedSlots[dailyBonusKey] = true;
+          state.stars[child] = (Number(state.stars[child]) || 0) + 5;
+          addStarHistory(child, 5, "오늘의 미션 전체 완료 보너스");
+          spawnStarSparkles(16);
+          showToast(`🌟 ${childLabel} 오늘의 미션 올클리어! 보너스 +5★ 적립!`);
+        } else {
+          showToast(`⭐ ${childLabel} +${reward}★ 적립! (${mission.title})`);
+        }
+      } else {
+        if (state.rewardedSlots[slotKey]) {
+          state.rewardedSlots[slotKey] = false;
+          state.stars[child] = Math.max(0, (Number(state.stars[child]) || 0) - reward);
+          addStarHistory(child, -reward, `미션 체크 해제: ${mission.title}`);
+          showToast(`체크를 해제해 ${reward}★가 차감되었어요.`);
+        }
+      }
+
+      saveState();
+      renderAll();
+    }
+
+    function handleAddSurpriseMission(event) {
+      event.preventDefault();
+      if (state.mode !== "haein") return;
+      const titleEl = document.getElementById("surprise-title-input");
+      const starEl = document.getElementById("surprise-star-input");
+      const title = titleEl.value.trim();
+      const starReward = Math.max(1, Math.min(50, parseInt(starEl.value, 10) || 1));
+
+      if (!title) {
+        showToast("깜짝미션 내용을 입력해 주세요!");
+        titleEl.focus();
+        return;
+      }
+
+      state.surpriseMissions.unshift({
+        id: `sp_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        title,
+        starReward,
+        createdAt: getTodayDateStr(),
+        claimedBy: null,
+        claimedAt: null
+      });
+
+      titleEl.value = "";
+      starEl.value = "2";
+      saveState();
+      renderAll();
+      showToast("⚡ 새 깜짝미션을 등록했어요!");
+    }
+
+    function claimSurpriseMission(surpriseId) {
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const item = state.surpriseMissions.find(s => s.id === surpriseId);
+      if (!item) return;
+
+      if (item.claimedBy) {
+        const winner = item.claimedBy === "ayeon" ? "아연" : "시연";
+        showToast(`이미 ${winner}이가 선착순으로 완료했어요!`);
+        return;
+      }
+
+      const child = state.mode;
+      const childLabel = child === "ayeon" ? "아연" : "시연";
+      const reward = Math.max(1, Number(item.starReward) || 1);
+
+      item.claimedBy = child;
+      item.claimedAt = getTodayDateStr();
+      state.stars[child] = (Number(state.stars[child]) || 0) + reward;
+      addStarHistory(child, reward, `깜짝미션 선착순 완료: ${item.title}`);
+
+      saveState();
+      renderAll();
+      spawnStarSparkles(14);
+      showToast(`⚡ ${childLabel} 선착순 성공! +${reward}★ 적립!`);
+    }
+
+    function deleteSurpriseMission(surpriseId) {
+      if (state.mode !== "haein") return;
+      state.surpriseMissions = state.surpriseMissions.filter(s => s.id !== surpriseId);
+      saveState();
+      renderAll();
+      showToast("깜짝미션을 삭제했어요.");
+    }
+
+    function clearAllSurpriseMissions() {
+      if (state.mode !== "haein") return;
+      state.surpriseMissions = [];
+      saveState();
+      renderAll();
+      showToast("깜짝미션 전체내역을 삭제했어요.");
+    }
+
+    function saveChildStarCount(child) {
+      if (state.mode !== "haein") return;
+      if (child !== "ayeon" && child !== "siyeol") return;
+      const inputEl = document.getElementById(`edit-star-${child}-input`);
+      if (!inputEl) return;
+
+      const nextVal = Math.max(0, Math.min(999, parseInt(inputEl.value, 10) || 0));
+      const prevVal = Number(state.stars[child]) || 0;
+      const diff = nextVal - prevVal;
+      state.stars[child] = nextVal;
+
+      if (diff !== 0) {
+        const label = child === "ayeon" ? "아연" : "시연";
+        addStarHistory(child, diff, `해인 별 개수 조정 (${label}: ${prevVal}★ → ${nextVal}★)`);
+      }
+
+      saveState();
+      renderAll();
+      showToast("별 개수를 저장했어요!");
+    }
+
+    function clearAllStarHistory() {
+      if (state.mode !== "haein") return;
+      state.starHistory = [];
+      saveState();
+      renderAll();
+      showToast("별 적립·사용 전체내역을 삭제했어요.");
+    }
+
+    function spinWheel() {
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const child = state.mode;
+      const childLabel = child === "ayeon" ? "아연" : "시연";
+      const today = getTodayDateStr();
+
+      if (state.lastWheelDateByChild[child] === today) {
+        showToast(`${childLabel}이는 오늘 이미 룰렛을 돌렸어요! 내일 다시 도전해요.`);
+        return;
+      }
+
+      const wheelEl = document.getElementById("rainbow-wheel-visual");
+      if (wheelEl) {
+        wheelEl.classList.remove("wheel-spinning");
+        void wheelEl.offsetWidth;
+        wheelEl.classList.add("wheel-spinning");
+        setTimeout(() => wheelEl.classList.remove("wheel-spinning"), 720);
+      }
+
+      const prizes = [1, 2, 3, 4, 5];
+      const won = prizes[Math.floor(Math.random() * prizes.length)];
+
+      state.lastWheelDateByChild[child] = today;
+      state.stars[child] = (Number(state.stars[child]) || 0) + won;
+      addStarHistory(child, won, `행운의 룰렛 당첨 (+${won}★)`);
+
+      saveState();
+      renderAll();
+      spawnStarSparkles(12 + won * 2);
+      showToast(`🎡 ${childLabel} 룰렛 당첨! +${won}★ 적립!`);
+    }
+
+    function syncGiftRecipient() {
+      const fromEl = document.getElementById("gift-from-select");
+      const toEl = document.getElementById("gift-to-select");
+      if (!fromEl || !toEl) return;
+      toEl.value = fromEl.value === "ayeon" ? "siyeol" : "ayeon";
+    }
+
+    function handleSendStarGift(event) {
+      event.preventDefault();
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+
+      const fromEl = document.getElementById("gift-from-select");
+      const toEl = document.getElementById("gift-to-select");
+      const amountEl = document.getElementById("gift-amount-input");
+
+      const fromChild = fromEl.value === "siyeol" ? "siyeol" : "ayeon";
+      const toChild = toEl.value === "ayeol" ? "ayeon" : "siyeol";
+      const amount = Math.max(1, parseInt(amountEl.value, 10) || 1);
+
+      if (fromChild === toChild) {
+        showToast("보내는 사람과 받는 사람을 다르게 선택해 주세요!");
+        return;
+      }
+
+      const currentFromStars = Number(state.stars[fromChild]) || 0;
+      if (currentFromStars < amount) {
+        const fromLabel = fromChild === "ayeon" ? "아연" : "시연";
+        showToast(`${fromLabel}이의 보유 별(${currentFromStars}★)이 부족해요!`);
+        return;
+      }
+
+      const fromLabel = fromChild === "ayeon" ? "아연" : "시연";
+      const toLabel = toChild === "ayeon" ? "아연" : "시연";
+
+      state.stars[fromChild] = currentFromStars - amount;
+      state.stars[toChild] = (Number(state.stars[toChild]) || 0) + amount;
+
+      addStarHistory(fromChild, -amount, `${toLabel}에게 별 선물`);
+      addStarHistory(toChild, amount, `${fromLabel}에게서 받은 별 선물`);
+
+      amountEl.value = "1";
+      saveState();
+      renderAll();
+      spawnStarSparkles(10);
+      showToast(`💝 ${fromLabel} → ${toLabel} 별 ${amount}★ 선물 완료!`);
+    }
+
+    function handleCreateCoupon(event) {
+      event.preventDefault();
+      if (state.mode !== "haein") return;
+      const titleEl = document.getElementById("new-coupon-title-input");
+      const costEl = document.getElementById("new-coupon-cost-input");
+      const title = titleEl.value.trim();
+      const cost = Math.max(1, Math.min(200, parseInt(costEl.value, 10) || 1));
+
+      if (!title) {
+        showToast("쿠폰 이름을 입력해 주세요!");
+        titleEl.focus();
+        return;
+      }
+
+      state.coupons.push({
+        id: `cp_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        title,
+        cost
+      });
+
+      titleEl.value = "";
+      costEl.value = "5";
+      saveState();
+      renderAll();
+      showToast(`🎟️ [${title}] 쿠폰을 등록했어요!`);
+    }
+
+    function deleteShopCoupon(couponId) {
+      if (state.mode !== "haein") return;
+      state.coupons = state.coupons.filter(c => c.id !== couponId);
+      saveState();
+      renderAll();
+      showToast("쿠폰을 삭제했어요.");
+    }
+
+    function redeemCoupon(couponId) {
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const coupon = state.coupons.find(c => c.id === couponId);
+      if (!coupon) return;
+
+      const child = state.mode;
+      const childLabel = child === "ayeon" ? "아연" : "시연";
+      const cost = Math.max(1, Number(coupon.cost) || 1);
+      const currentStars = Number(state.stars[child]) || 0;
+
+      if (currentStars < cost) {
+        showToast(`별이 ${cost - currentStars}★ 더 필요해요!`);
+        return;
+      }
+
+      state.stars[child] = currentStars - cost;
+      state.ownedCoupons.unshift({
+        id: `oc_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        owner: child,
+        couponId: coupon.id,
+        title: coupon.title,
+        cost,
+        used: false,
+        redeemedAt: getTodayDateStr(),
+        usedAt: null
+      });
+      addStarHistory(child, -cost, `쿠폰 교환: ${coupon.title}`);
+
+      saveState();
+      renderAll();
+      spawnStarSparkles(12);
+      showToast(`🎁 ${childLabel} [${coupon.title}] 쿠폰 교환 완료!`);
+    }
+
+    function setCouponFilter(filterKey) {
+      state.couponFilter = filterKey === "used" ? "used" : "unused";
+      saveState();
+      renderStarsSection();
+    }
+
+    function useOwnedCoupon(ownedId) {
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const target = state.ownedCoupons.find(oc => oc.id === ownedId && oc.owner === state.mode);
+      if (!target || target.used) return;
+
+      const usedAt = getTodayDateStr();
+      target.used = true;
+      target.usedAt = usedAt;
+
+      state.couponUsageHistory.unshift({
+        id: `uh_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        ownedId: target.id,
+        owner: target.owner,
+        title: target.title,
+        cost: target.cost,
+        usedAt
+      });
+
+      saveState();
+      renderAll();
+      showToast(`✨ [${target.title}] 쿠폰을 사용했어요!`);
+    }
+
+    function deleteCouponUsageItem(usageId) {
+      if (state.mode !== "haein") return;
+      const target = state.couponUsageHistory.find(u => u.id === usageId);
+      state.couponUsageHistory = state.couponUsageHistory.filter(u => u.id !== usageId);
+      if (target && target.ownedId) {
+        state.ownedCoupons = state.ownedCoupons.filter(oc => oc.id !== target.ownedId);
+      }
+      saveState();
+      renderAll();
+      showToast("쿠폰 사용 내역을 삭제했어요.");
+    }
+
+    function clearCouponUsageHistory() {
+      if (state.mode !== "haein") return;
+      const removedIds = new Set(state.couponUsageHistory.map(u => u.ownedId).filter(Boolean));
+      state.couponUsageHistory = [];
+      state.ownedCoupons = state.ownedCoupons.filter(oc => !oc.used && !removedIds.has(oc.id));
+      saveState();
+      renderAll();
+      showToast("전체 쿠폰 사용 내역을 삭제했어요.");
+    }
+
+    function handleCouponSuggestion(event) {
+      event.preventDefault();
+      const titleEl = document.getElementById("suggest-coupon-title-input");
+      const costEl = document.getElementById("suggest-coupon-cost-input");
+      const title = titleEl.value.trim();
+      const cost = Math.max(1, Math.min(200, parseInt(costEl.value, 10) || 1));
+
+      if (!title) {
+        showToast("건의할 쿠폰 이름을 입력해 주세요!");
+        titleEl.focus();
+        return;
+      }
+
+      const proposer = state.mode === "siyeol" ? "siyeol" : state.mode === "haein" ? "haein" : "ayeon";
+      state.couponSuggestions.unshift({
+        id: `sg_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        proposer,
+        title,
+        cost,
+        status: "pending",
+        createdAt: getTodayDateStr()
+      });
+
+      titleEl.value = "";
+      costEl.value = "5";
+      saveState();
+      renderAll();
+      showToast("💌 쿠폰 건의를 보냈어요!");
+    }
+
+    function decideCouponSuggestion(suggestionId, decision) {
+      if (state.mode !== "haein") return;
+      const item = state.couponSuggestions.find(s => s.id === suggestionId);
+      if (!item || item.status !== "pending") return;
+
+      if (decision === "approve") {
+        item.status = "approved";
+        state.coupons.push({
+          id: `cp_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          title: item.title,
+          cost: Math.max(1, Number(item.cost) || 1)
+        });
+        showToast(`✅ [${item.title}] 건의를 승인하고 쿠폰 교환소에 등록했어요!`);
+      } else {
+        item.status = "rejected";
+        showToast(`[${item.title}] 건의를 반려했어요.`);
+      }
+
+      saveState();
+      renderAll();
+    }
+
+    function clearDecidedCouponSuggestions() {
+      if (state.mode !== "haein") return;
+      state.couponSuggestions = state.couponSuggestions.filter(s => s.status === "pending");
+      saveState();
+      renderAll();
+      showToast("처리된 쿠폰 건의 내역을 삭제했어요.");
+    }
+
+    function renderHeaderAndNav() {
+      const mode = state.mode;
+      const activeTab = state.activeTab;
+
+      const titleEl = document.getElementById("header-title");
+      const subtitleEl = document.getElementById("header-subtitle");
+      if (mode === "ayeon") {
+        titleEl.textContent = "🩷 아연 주간 미션 보드";
+        subtitleEl.textContent = "오늘 미션을 완료하고 별을 모아 봐요!";
+      } else if (mode === "siyeol") {
+        titleEl.textContent = "🩵 시연 주간 미션 보드";
+        subtitleEl.textContent = "오늘 미션을 완료하고 별을 모아 봐요!";
+      } else {
+        titleEl.textContent = "👑 해인 주간 미션 보드";
+        subtitleEl.textContent = "미션 · 깜짝미션 · 별 · 쿠폰 건의를 관리해 보세요.";
+      }
+
+      const starBadgeEl = document.getElementById("header-star-badge");
+      const aStars = Number(state.stars.ayeon) || 0;
+      const sStars = Number(state.stars.siyeol) || 0;
+      if (mode === "ayeon") {
+        starBadgeEl.textContent = `⭐ 아연 ${aStars}★`;
+      } else if (mode === "siyeol") {
+        starBadgeEl.textContent = `⭐ 시연 ${sStars}★`;
+      } else {
+        starBadgeEl.textContent = `⭐ 아연 ${aStars} · 시연 ${sStars}`;
+      }
+
+      ["ayeon", "siyeol", "haein"].forEach(m => {
+        const btn = document.getElementById(`mode-btn-${m}`);
+        if (!btn) return;
+        btn.classList.remove("mode-pill-active", "mode-pill-inactive");
+        btn.classList.add(mode === m ? "mode-pill-active" : "mode-pill-inactive");
+      });
+
+      const tabDailyBtn = document.getElementById("tab-daily");
+      const tabStarsBtn = document.getElementById("tab-stars");
+      tabDailyBtn.classList.remove("tab-active", "tab-inactive");
+      tabStarsBtn.classList.remove("tab-active", "tab-inactive");
+      tabDailyBtn.classList.add(activeTab === "daily" ? "tab-active" : "tab-inactive");
+      tabStarsBtn.classList.add(activeTab === "stars" ? "tab-active" : "tab-inactive");
+
+      document.getElementById("view-daily").classList.toggle("hidden", activeTab !== "daily");
+      document.getElementById("view-stars").classList.toggle("hidden", activeTab !== "stars");
+    }
+
+    function renderDailySection() {
+      const mode = state.mode;
+      const isChild = mode === "ayeon" || mode === "siyeol";
+      const isHaein = mode === "haein";
+      const todayKey = getTodayDayKey();
+      const todayLabel = DAY_LABELS[todayKey] || "오늘";
+
+      document.getElementById("haein-mission-form-section").classList.toggle("hidden", !isHaein);
+      document.getElementById("haein-mission-list-section").classList.toggle("hidden", !isHaein);
+      document.getElementById("child-surprise-section").classList.toggle("hidden", !isChild);
+      document.getElementById("child-checklist-section").classList.toggle("hidden", !isChild);
+      document.getElementById("haein-achievement-section").classList.toggle("hidden", !isHaein);
+      document.getElementById("haein-surprise-section").classList.toggle("hidden", !isHaein);
+
+      if (isHaein) {
+        const headingEl = document.getElementById("mission-form-heading");
+        const submitBtnEl = document.getElementById("mission-submit-btn");
+        const cancelBtnEl = document.getElementById("cancel-edit-mission-btn");
+        if (state.editingMissionId) {
+          headingEl.textContent = "✏️ 미션 수정하기 (매일 반복)";
+          submitBtnEl.textContent = "수정 완료";
+          cancelBtnEl.classList.remove("hidden");
+        } else {
+          headingEl.textContent = "✏️ 새 미션 등록 (매일 반복)";
+          submitBtnEl.textContent = "미션 등록";
+          cancelBtnEl.classList.add("hidden");
+        }
+
+        document.getElementById("haein-mission-count-badge").textContent = `${state.missions.length}개`;
+        const listContainer = document.getElementById("haein-mission-list-container");
+        if (!state.missions.length) {
+          listContainer.innerHTML = `<p class="text-xs text-purple-600 py-2">등록된 미션이 아직 없어요. 위에서 새 미션을 등록해 보세요!</p>`;
+        } else {
+          listContainer.innerHTML = state.missions
+            .map(m => {
+              const ownerBadge =
+                m.owner === "ayeon"
+                  ? `<span class="px-2 py-0.5 rounded-full text-xs font-bold bg-pink-100 text-pink-800">🩷 아연</span>`
+                  : `<span class="px-2 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-800">🩵 시연</span>`;
+              return `
+                <div class="flex items-center justify-between gap-2 p-3 rounded-2xl bg-white/85 border border-purple-100">
+                  <div class="min-w-0 space-y-0.5">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      ${ownerBadge}
+                      <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">+${Number(m.starReward) || 1}★</span>
+                      <span class="text-xs text-purple-600 font-semibold">매일</span>
+                    </div>
+                    <div class="text-sm font-bold text-purple-950 truncate">${escapeHtml(m.title)}</div>
+                  </div>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <button type="button" onclick="startEditMission('${m.id}')" class="soft-btn px-2.5 py-1 text-xs">수정</button>
+                    <button type="button" onclick="deleteMission('${m.id}')" class="danger-pill-btn px-2.5 py-1 text-xs">삭제</button>
+                  </div>
+                </div>
+              `;
+            })
+            .join("");
+        }
+        syncAccordionArrow("haein-mission-list-panel", "haein-mission-list-arrow");
+
+        document.getElementById("haein-today-label").textContent = `${getTodayDateStr()} (${todayLabel})`;
+        const achContainer = document.getElementById("haein-achievement-container");
+        achContainer.innerHTML = ["ayeon", "siyeol"]
+          .map(child => {
+            const label = child === "ayeon" ? "🩷 아연" : "🩵 시연";
+            const childMissions = state.missions.filter(m => m.owner === child);
+            const doneCount = childMissions.filter(m => Boolean(state.checks[getSlotKey(m.id, todayKey)])).length;
+            const totalCount = childMissions.length;
+            const rate = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
+            return `
+              <div class="unicorn-subcard p-3.5 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-bold text-purple-950">${label}</span>
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">${rate}% (${doneCount}/${totalCount})</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-purple-100 overflow-hidden">
+                  <div class="h-full rounded-full bg-gradient-to-r from-pink-400 to-amber-400" style="width: ${rate}%;"></div>
+                </div>
+                <div class="text-xs text-purple-700 font-semibold">보유 별: ${Number(state.stars[child]) || 0}★</div>
+              </div>
+            `;
+          })
+          .join("");
+
+        const haeinSurpriseList = document.getElementById("haein-surprise-list-container");
+        if (!state.surpriseMissions.length) {
+          haeinSurpriseList.innerHTML = `<p class="text-xs text-purple-600 py-1">등록된 깜짝미션이 없어요.</p>`;
+        } else {
+          haeinSurpriseList.innerHTML = state.surpriseMissions
+            .map(s => {
+              const statusBadge = s.claimedBy
+                ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">${s.claimedBy === "ayeon" ? "🩷 아연" : "🩵 시연"} 완료</span>`
+                : `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">대기 중</span>`;
+              return `
+                <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-white/85 border border-purple-100">
+                  <div class="min-w-0 flex items-center gap-2 flex-wrap">
+                    ${statusBadge}
+                    <span class="text-xs font-bold text-amber-700">+${Number(s.starReward) || 1}★</span>
+                    <span class="text-sm font-bold text-purple-950 truncate">${escapeHtml(s.title)}</span>
+                  </div>
+                  <button type="button" onclick="deleteSurpriseMission('${s.id}')" class="danger-pill-btn px-2.5 py-1 text-xs shrink-0">삭제</button>
+                </div>
+              `;
+            })
+            .join("");
+        }
+        syncAccordionArrow("haein-surprise-panel", "haein-surprise-arrow");
+      }
+
+      if (isChild) {
+        const childLabel = mode === "ayeon" ? "아연" : "시연";
+        const childEmoji = mode === "ayeon" ? "🩷" : "🩵";
+
+        const surpriseContainer = document.getElementById("child-surprise-container");
+        if (!state.surpriseMissions.length) {
+          surpriseContainer.innerHTML = `<p class="text-xs text-purple-600 py-1">진행 중인 깜짝미션이 없어요.</p>`;
+        } else {
+          surpriseContainer.innerHTML = state.surpriseMissions
+            .map(s => {
+              const reward = Number(s.starReward) || 1;
+              if (s.claimedBy) {
+                const winnerLabel = s.claimedBy === "ayeon" ? "🩷 아연" : "🩵 시연";
+                return `
+                  <div class="flex items-center justify-between gap-2 p-3 rounded-2xl bg-white/75 border border-purple-100">
+                    <span class="text-sm font-bold text-purple-950">${escapeHtml(s.title)}</span>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 shrink-0">${winnerLabel} 선착순 완료 (+${reward}★)</span>
+                  </div>
+                `;
+              }
+              return `
+                <div class="flex items-center justify-between gap-2 p-3 rounded-2xl bg-white/90 border border-amber-200">
+                  <div class="min-w-0">
+                    <div class="text-sm font-bold text-purple-950">${escapeHtml(s.title)}</div>
+                    <div class="text-xs font-bold text-amber-700">보상 +${reward}★ · 먼저 완료한 1명만 획득!</div>
+                  </div>
+                  <button type="button" onclick="claimSurpriseMission('${s.id}')" class="unicorn-btn px-3.5 py-2 text-xs shrink-0">
+                    내가 먼저 완료!
+                  </button>
+                </div>
+              `;
+            })
+            .join("");
+        }
+
+        document.getElementById("child-checklist-title").textContent = `✨ ${childEmoji} ${childLabel}의 오늘의 미션`;
+        document.getElementById("child-checklist-date-sub").textContent = `${getTodayDateStr()} (${todayLabel})`;
+
+        const myMissions = state.missions.filter(m => m.owner === mode);
+        const doneCount = myMissions.filter(m => Boolean(state.checks[getSlotKey(m.id, todayKey)])).length;
+        const totalCount = myMissions.length;
+        const rate = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
+
+        document.getElementById("child-checklist-rate").textContent = `${rate}%`;
+        document.getElementById("child-checklist-progress").textContent = `${doneCount} / ${totalCount} 완료`;
+        document.getElementById("child-checklist-bar").style.width = `${rate}%`;
+
+        const listEl = document.getElementById("child-checklist-container");
+        if (!myMissions.length) {
+          listEl.innerHTML = `<p class="text-xs text-purple-600 py-2">오늘 등록된 미션이 없어요.</p>`;
+        } else {
+          listEl.innerHTML = myMissions
+            .map(m => {
+              const checked = Boolean(state.checks[getSlotKey(m.id, todayKey)]);
+              const reward = Number(m.starReward) || 1;
+              return `
+                <div onclick="toggleMissionCheck('${m.id}', this)" role="checkbox" aria-checked="${checked}" tabindex="0" onkeydown="if(event.key===' '||event.key==='Enter'){event.preventDefault();toggleMissionCheck('${m.id}', this);}" class="flex items-center justify-between gap-3 p-3.5 rounded-2xl border cursor-pointer select-none transition ${
+                  checked
+                    ? "bg-purple-100/80 border-purple-300 mission-row-checked"
+                    : "bg-white border-purple-100 hover:bg-purple-50/50"
+                }">
+                  <div class="flex items-center gap-3 min-w-0">
+                    <span class="check-box-anim w-6 h-6 rounded-lg flex items-center justify-center border-2 text-xs font-bold shrink-0 ${
+                      checked
+                        ? "is-checked bg-gradient-to-br from-pink-500 to-amber-400 border-pink-400 text-white"
+                        : "bg-white border-purple-300 text-transparent"
+                    }">✓</span>
+                    <span class="text-sm sm:text-base font-bold ${checked ? "line-through text-purple-500" : "text-purple-950"}">${escapeHtml(m.title)}</span>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-full text-xs font-bold shrink-0 ${
+                    checked ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"
+                  }">+${reward}★</span>
+                </div>
+              `;
+            })
+            .join("");
+        }
+      }
+    }
+
+    function renderStarsSection() {
+      const mode = state.mode;
+      const isChild = mode === "ayeon" || mode === "siyeol";
+      const isHaein = mode === "haein";
+      const ayeonStars = Number(state.stars.ayeon) || 0;
+      const siyeolStars = Number(state.stars.siyeol) || 0;
+
+      const tierBadgeEl = document.getElementById("star-tier-badge");
+      if (tierBadgeEl) {
+        const targetStars = mode === "siyeol" ? siyeolStars : mode === "ayeon" ? ayeonStars : Math.max(ayeonStars, siyeolStars);
+        const nextTierLabel = getStarTierLabel(targetStars);
+        const prevTierLabel = lastRenderedTierByMode[mode];
+        tierBadgeEl.textContent = nextTierLabel;
+        if (prevTierLabel && prevTierLabel !== nextTierLabel) {
+          tierBadgeEl.classList.remove("tier-changed");
+          void tierBadgeEl.offsetWidth;
+          tierBadgeEl.classList.add("tier-changed");
+          setTimeout(() => tierBadgeEl.classList.remove("tier-changed"), 700);
+          const rect = tierBadgeEl.getBoundingClientRect();
+          const fx = getTierThemeEffect(nextTierLabel);
+          spawnBurstAtPoint(rect.left + rect.width * 0.5, rect.top + rect.height * 0.5, fx.glyphs, fx.count, fx.spread);
+        }
+        lastRenderedTierByMode[mode] = nextTierLabel;
+      }
+
+      const balancesEl = document.getElementById("star-balances-container");
+      if (mode === "ayeon") {
+        balancesEl.innerHTML = `
+          <div class="unicorn-subcard p-4 flex items-center justify-between">
+            <span class="text-base font-bold text-purple-950">🩷 아연 보유 별</span>
+            <span class="px-3.5 py-1 rounded-full text-base font-bold bg-amber-100 text-amber-800">${ayeonStars}★</span>
+          </div>
+        `;
+      } else if (mode === "siyeol") {
+        balancesEl.innerHTML = `
+          <div class="unicorn-subcard p-4 flex items-center justify-between">
+            <span class="text-base font-bold text-purple-950">🩵 시연 보유 별</span>
+            <span class="px-3.5 py-1 rounded-full text-base font-bold bg-amber-100 text-amber-800">${siyeolStars}★</span>
+          </div>
+        `;
+      } else {
+        balancesEl.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div class="unicorn-subcard p-3.5 flex items-center justify-between">
+              <span class="text-sm font-bold text-purple-950">🩷 아연 보유 별</span>
+              <span class="px-3 py-1 rounded-full text-sm font-bold bg-amber-100 text-amber-800">${ayeonStars}★</span>
+            </div>
+            <div class="unicorn-subcard p-3.5 flex items-center justify-between">
+              <span class="text-sm font-bold text-purple-950">🩵 시연 보유 별</span>
+              <span class="px-3 py-1 rounded-full text-sm font-bold bg-amber-100 text-amber-800">${siyeolStars}★</span>
+            </div>
+          </div>
+        `;
+      }
+
+      document.getElementById("haein-star-edit-box").classList.toggle("hidden", !isHaein);
+      if (isHaein) {
+        const aInput = document.getElementById("edit-star-ayeon-input");
+        const sInput = document.getElementById("edit-star-siyeol-input");
+        if (aInput && document.activeElement !== aInput) aInput.value = String(ayeonStars);
+        if (sInput && document.activeElement !== sInput) sInput.value = String(siyeolStars);
+        syncAccordionArrow("haein-star-edit-panel", "haein-star-edit-arrow");
+      }
+
+      const clearHistoryBtn = document.getElementById("clear-star-history-btn");
+      clearHistoryBtn.classList.toggle("hidden", !isHaein);
+
+      const filteredHistory = isChild
+        ? state.starHistory.filter(h => h.child === mode)
+        : state.starHistory;
+      const historyContainer = document.getElementById("star-history-container");
+      if (!filteredHistory.length) {
+        historyContainer.innerHTML = `<p class="text-xs text-purple-600 py-1">아직 별 적립·사용 내역이 없어요.</p>`;
+      } else {
+        historyContainer.innerHTML = filteredHistory
+          .map(h => {
+            const deltaNum = Number(h.delta) || 0;
+            const signText = deltaNum > 0 ? `+${deltaNum}★` : `${deltaNum}★`;
+            const badgeStyle = deltaNum > 0 ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800";
+            const whoTag = isHaein ? `<span class="text-xs font-bold text-purple-700">[${h.child === "ayeon" ? "아연" : "시연"}]</span>` : "";
+            return `
+              <div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-white/80 border border-purple-100 text-xs">
+                <div class="min-w-0 flex items-center gap-1.5 flex-wrap">
+                  ${whoTag}
+                  <span class="font-bold text-purple-950 truncate">${escapeHtml(h.reason)}</span>
+                  <span class="text-purple-500">${escapeHtml(h.date || "")}</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full font-bold shrink-0 ${badgeStyle}">${signText}</span>
+              </div>
+            `;
+          })
+          .join("");
+      }
+      syncAccordionArrow("star-history-panel", "star-history-arrow");
+
+      document.getElementById("lucky-wheel-section").classList.toggle("hidden", !isChild);
+      if (isChild) {
+        const today = getTodayDateStr();
+        const alreadySpun = state.lastWheelDateByChild[mode] === today;
+        const statusBadge = document.getElementById("wheel-status-badge");
+        const resultText = document.getElementById("wheel-result-text");
+        const spinBtn = document.getElementById("spin-wheel-btn");
+
+        if (alreadySpun) {
+          statusBadge.textContent = "오늘 참여 완료";
+          resultText.textContent = "오늘의 행운 룰렛을 이미 돌렸어요! 내일 다시 만나요.";
+          spinBtn.disabled = true;
+          spinBtn.classList.add("opacity-50", "cursor-not-allowed");
+        } else {
+          statusBadge.textContent = "오늘 도전 가능";
+          resultText.textContent = "오늘의 행운 별을 뽑아 보세요!";
+          spinBtn.disabled = false;
+          spinBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        }
+      }
+
+      document.getElementById("star-gift-section").classList.toggle("hidden", !isChild);
+      if (isChild) {
+        const fromEl = document.getElementById("gift-from-select");
+        const toEl = document.getElementById("gift-to-select");
+        if (fromEl) {
+          fromEl.value = mode;
+          fromEl.disabled = true;
+        }
+        if (toEl) {
+          toEl.value = mode === "ayeon" ? "siyeol" : "ayeon";
+        }
+      }
+
+      const buyerBadge = document.getElementById("coupon-buyer-badge");
+      if (mode === "ayeon") {
+        buyerBadge.textContent = `🩷 아연 보유: ${ayeonStars}★`;
+      } else if (mode === "siyeol") {
+        buyerBadge.textContent = `🩵 시연 보유: ${siyeolStars}★`;
+      } else {
+        buyerBadge.textContent = "👑 해인 관리 모드";
+      }
+
+      document.getElementById("haein-coupon-create-box").classList.toggle("hidden", !isHaein);
+      if (isHaein) {
+        syncAccordionArrow("haein-coupon-create-panel", "haein-coupon-create-arrow");
+      }
+
+      const shopContainer = document.getElementById("coupon-shop-container");
+      if (!state.coupons.length) {
+        shopContainer.innerHTML = `<p class="text-xs text-purple-600 py-2 col-span-full">등록된 쿠폰이 없어요.</p>`;
+      } else {
+        shopContainer.innerHTML = state.coupons
+          .map(cp => {
+            const cost = Number(cp.cost) || 1;
+            const myStars = mode === "ayeon" ? ayeonStars : mode === "siyeol" ? siyeolStars : 0;
+            const canAfford = isChild && myStars >= cost;
+            const actionBtn = isChild
+              ? `<button type="button" onclick="redeemCoupon('${cp.id}')" class="unicorn-btn px-3.5 py-1.5 text-xs ${
+                  canAfford ? "" : "opacity-50"
+                }">${canAfford ? "교환하기" : "별 부족"}</button>`
+              : `<button type="button" onclick="deleteShopCoupon('${cp.id}')" class="danger-pill-btn px-2.5 py-1 text-xs">삭제</button>`;
+
+            return `
+              <div class="unicorn-subcard p-3.5 flex items-center justify-between gap-2">
+                <div class="min-w-0">
+                  <div class="text-sm font-bold text-purple-950 truncate">${escapeHtml(cp.title)}</div>
+                  <div class="text-xs font-bold text-amber-700 mt-0.5">필요 별 ${cost}★</div>
+                </div>
+                <div class="shrink-0">${actionBtn}</div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      document.getElementById("child-owned-coupons-section").classList.toggle("hidden", !isChild);
+      if (isChild) {
+        const myCoupons = state.ownedCoupons.filter(oc => oc.owner === mode);
+        const unusedList = myCoupons.filter(oc => !oc.used);
+        const usedList = myCoupons.filter(oc => oc.used);
+
+        const unusedBtn = document.getElementById("coupon-filter-unused");
+        const usedBtn = document.getElementById("coupon-filter-used");
+        unusedBtn.textContent = `사용가능 (${unusedList.length})`;
+        usedBtn.textContent = `사용쿠폰완료 (${usedList.length})`;
+
+        const isUnusedFilter = state.couponFilter !== "used";
+        unusedBtn.className = `px-3 py-1 rounded-full text-xs font-bold transition ${
+          isUnusedFilter ? "mode-pill-active" : "mode-pill-inactive"
+        }`;
+        usedBtn.className = `px-3 py-1 rounded-full text-xs font-bold transition ${
+          !isUnusedFilter ? "mode-pill-active" : "mode-pill-inactive"
+        }`;
+
+        const visibleCoupons = isUnusedFilter ? unusedList : usedList;
+        const ownedContainer = document.getElementById("owned-coupons-container");
+        if (!visibleCoupons.length) {
+          ownedContainer.innerHTML = `<p class="text-xs text-purple-600 py-2">${
+            isUnusedFilter ? "사용 가능한 쿠폰이 없어요." : "사용 완료된 쿠폰이 없어요."
+          }</p>`;
+        } else {
+          ownedContainer.innerHTML = visibleCoupons
+            .map(oc => {
+              return `
+                <div class="flex items-center justify-between gap-2 p-3 rounded-2xl bg-white/85 border border-purple-100">
+                  <div class="min-w-0">
+                    <div class="text-sm font-bold text-purple-950 truncate">${escapeHtml(oc.title)}</div>
+                    <div class="text-xs text-purple-600">${
+                      oc.used ? `사용 완료 (${escapeHtml(oc.usedAt || "")})` : `교환일: ${escapeHtml(oc.redeemedAt || "")}`
+                    }</div>
+                  </div>
+                  ${
+                    oc.used
+                      ? `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-700 shrink-0">완료</span>`
+                      : `<button type="button" onclick="useOwnedCoupon('${oc.id}')" class="unicorn-btn px-3.5 py-1.5 text-xs shrink-0">사용하기</button>`
+                  }
+                </div>
+              `;
+            })
+            .join("");
+        }
+      }
+
+      document.getElementById("haein-coupon-usage-section").classList.toggle("hidden", !isHaein);
+      if (isHaein) {
+        const usageContainer = document.getElementById("haein-coupon-usage-container");
+        if (!state.couponUsageHistory.length) {
+          usageContainer.innerHTML = `<p class="text-xs text-purple-600 py-1">아직 사용된 쿠폰 내역이 없어요.</p>`;
+        } else {
+          usageContainer.innerHTML = state.couponUsageHistory
+            .map(u => {
+              const whoTag = u.owner === "ayeon" ? "🩷 아연" : "🩵 시연";
+              return `
+                <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-white/85 border border-purple-100">
+                  <div class="min-w-0 flex items-center gap-2 flex-wrap">
+                    <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-pink-100 text-pink-800">${whoTag}</span>
+                    <span class="text-sm font-bold text-purple-950 truncate">${escapeHtml(u.title)}</span>
+                    <span class="text-xs text-purple-600">${escapeHtml(u.usedAt || "")}</span>
+                  </div>
+                  <button type="button" onclick="deleteCouponUsageItem('${u.id}')" class="danger-pill-btn px-2.5 py-1 text-xs shrink-0">삭제</button>
+                </div>
+              `;
+            })
+            .join("");
+        }
+        syncAccordionArrow("haein-coupon-usage-panel", "haein-coupon-usage-arrow");
+      }
+
+      const clearDecidedBtn = document.getElementById("clear-decided-suggestions-btn");
+      const hasDecided = state.couponSuggestions.some(s => s.status !== "pending");
+      clearDecidedBtn.classList.toggle("hidden", !(isHaein && hasDecided));
+
+      const suggestFormEl = document.getElementById("coupon-suggest-form");
+      if (suggestFormEl) {
+        suggestFormEl.classList.toggle("hidden", isHaein);
+      }
+
+      const suggestContainer = document.getElementById("coupon-suggestions-container");
+      if (!state.couponSuggestions.length) {
+        suggestContainer.innerHTML = `<p class="text-xs text-purple-600 py-1">아직 등록된 쿠폰 건의가 없어요.</p>`;
+      } else {
+        suggestContainer.innerHTML = state.couponSuggestions
+          .map(sg => {
+            const whoLabel = sg.proposer === "ayeon" ? "🩷 아연" : sg.proposer === "siyeol" ? "🩵 시연" : "👑 해인";
+            let statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">검토 중</span>`;
+            if (sg.status === "approved") {
+              statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">승인됨</span>`;
+            } else if (sg.status === "rejected") {
+              statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800">반려됨</span>`;
+            }
+
+            const adminButtons =
+              isHaein && sg.status === "pending"
+                ? `
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <button type="button" onclick="decideCouponSuggestion('${sg.id}', 'approve')" class="unicorn-btn px-3 py-1 text-xs">승인</button>
+                    <button type="button" onclick="decideCouponSuggestion('${sg.id}', 'reject')" class="danger-pill-btn px-2.5 py-1 text-xs">반려</button>
+                  </div>
+                `
+                : "";
+
+            return `
+              <div class="flex items-center justify-between gap-2 p-3 rounded-2xl bg-white/85 border border-purple-100">
+                <div class="min-w-0 space-y-0.5">
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <span class="text-xs font-bold text-purple-700">${whoLabel}</span>
+                    ${statusBadge}
+                    <span class="text-xs font-bold text-amber-700">희망 ${Number(sg.cost) || 1}★</span>
+                  </div>
+                  <div class="text-sm font-bold text-purple-950 truncate">${escapeHtml(sg.title)}</div>
+                </div>
+                ${adminButtons}
+              </div>
+            `;
+          })
+          .join("");
+      }
+    }
+
+    function renderAll() {
+      renderHeaderAndNav();
+      renderDailySection();
+      renderStarsSection();
+      updateActivityNewBadges();
+    }
+
+    applyThemeTone(loadThemeTone());
+    renderAll();
+  </script>
+</body>
+</html>
