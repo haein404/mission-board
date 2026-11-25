@@ -54,13 +54,6 @@
       }
     }
 
-    @keyframes checkPopBounce {
-      0% { transform: scale(0.72); }
-      55% { transform: scale(1.22); }
-      80% { transform: scale(0.92); }
-      100% { transform: scale(1); }
-    }
-
     @keyframes rowCompletePulse {
       0% { transform: scale(1); }
       45% { transform: scale(1.015); }
@@ -768,7 +761,6 @@
   </div>
 
   <script>
-    // 기본 비밀번호 설정 (아연 1111, 시연 2222, 해인 1234)
     const DEFAULT_HAEIN_PIN = "1234";
     const DEFAULT_CHILD_PINS = { ayeon: "1111", siyeol: "2222" };
     const PIN_STORAGE_KEY = "ayeon_siyeol_haein_pin_v1";
@@ -833,6 +825,28 @@
       return "🌱 새싹 별지기";
     }
 
+    function getStoredHaeinPin() {
+      try {
+        const saved = localStorage.getItem(PIN_STORAGE_KEY);
+        return saved && String(saved).trim() ? String(saved).trim() : DEFAULT_HAEIN_PIN;
+      } catch (err) {
+        return DEFAULT_HAEIN_PIN;
+      }
+    }
+
+    function getStoredChildPins() {
+      try {
+        const raw = localStorage.getItem(CHILD_PINS_STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return {
+          ayeon: parsed && typeof parsed.ayeon === "string" && parsed.ayeon.trim() ? parsed.ayeon.trim() : DEFAULT_CHILD_PINS.ayeon,
+          siyeol: parsed && typeof parsed.siyeol === "string" && parsed.siyeol.trim() ? parsed.siyeol.trim() : DEFAULT_CHILD_PINS.siyeol
+        };
+      } catch (err) {
+        return { ...DEFAULT_CHILD_PINS };
+      }
+    }
+
     function createDefaultState() {
       return {
         mode: "ayeon",
@@ -841,6 +855,11 @@
         couponFilter: "unused",
         seenSections: {},
         updatedAt: Date.now(),
+        pins: {
+          haein: getStoredHaeinPin(),
+          ayeon: getStoredChildPins().ayeon,
+          siyeol: getStoredChildPins().siyeol
+        },
         missions: [
           { id: "m_ay_1", owner: "ayeon", title: "아침에 일어나 이불 정리하기", starReward: 1, days: ALL_DAYS.slice() },
           { id: "m_ay_2", owner: "ayeon", title: "양치 & 세수 스스로 하기", starReward: 1, days: ALL_DAYS.slice() },
@@ -867,6 +886,19 @@
       };
     }
 
+    function syncPinStorageFromState(targetState) {
+      if (!targetState || !targetState.pins || typeof targetState.pins !== "object") return;
+      const haeinPin = String(targetState.pins.haein || "").trim() || DEFAULT_HAEIN_PIN;
+      const ayeonPin = String(targetState.pins.ayeon || "").trim() || DEFAULT_CHILD_PINS.ayeon;
+      const siyeolPin = String(targetState.pins.siyeol || "").trim() || DEFAULT_CHILD_PINS.siyeol;
+      try {
+        localStorage.setItem(PIN_STORAGE_KEY, haeinPin);
+        localStorage.setItem(CHILD_PINS_STORAGE_KEY, JSON.stringify({ ayeon: ayeonPin, siyeol: siyeolPin }));
+      } catch (err) {
+        console.error("비밀번호 로컬 동기화 오류:", err);
+      }
+    }
+
     function loadState() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -874,13 +906,18 @@
         const parsed = JSON.parse(raw);
         const def = createDefaultState();
         const initialMode = parsed.mode === "haein" ? "ayeon" : (parsed.mode || def.mode);
-        return {
+        const merged = {
           ...def,
           ...parsed,
           mode: initialMode,
           couponFilter: parsed.couponFilter === "used" ? "used" : "unused",
           updatedAt: Number(parsed.updatedAt) || Date.now(),
           seenSections: parsed.seenSections && typeof parsed.seenSections === "object" ? parsed.seenSections : {},
+          pins: {
+            haein: String(parsed.pins?.haein || "").trim() || getStoredHaeinPin(),
+            ayeon: String(parsed.pins?.ayeon || "").trim() || getStoredChildPins().ayeon,
+            siyeol: String(parsed.pins?.siyeol || "").trim() || getStoredChildPins().siyeol
+          },
           stars: {
             ayeon: Number(parsed.stars?.ayeon) || 0,
             siyeol: Number(parsed.stars?.siyeol) || 0
@@ -899,6 +936,8 @@
           couponUsageHistory: Array.isArray(parsed.couponUsageHistory) ? parsed.couponUsageHistory : [],
           couponSuggestions: Array.isArray(parsed.couponSuggestions) ? parsed.couponSuggestions : []
         };
+        syncPinStorageFromState(merged);
+        return merged;
       } catch (err) {
         console.error("상태 불러오기 오류:", err);
         return createDefaultState();
@@ -914,53 +953,18 @@
     let isRemoteSyncing = false;
     let pendingChildPinTarget = null;
 
-    function getStoredHaeinPin() {
-      try {
-        const saved = localStorage.getItem(PIN_STORAGE_KEY);
-        return saved && String(saved).trim() ? String(saved).trim() : DEFAULT_HAEIN_PIN;
-      } catch (err) {
-        return DEFAULT_HAEIN_PIN;
-      }
-    }
-
-    function getStoredChildPins() {
-      try {
-        const raw = localStorage.getItem(CHILD_PINS_STORAGE_KEY);
-        const parsed = raw ? JSON.parse(raw) : {};
-        return {
-          ayeon: parsed && typeof parsed.ayeon === "string" && parsed.ayeon.trim() ? parsed.ayeon.trim() : DEFAULT_CHILD_PINS.ayeon,
-          siyeol: parsed && typeof parsed.siyeol === "string" && parsed.siyeol.trim() ? parsed.siyeol.trim() : DEFAULT_CHILD_PINS.siyeol
-        };
-      } catch (err) {
-        return { ...DEFAULT_CHILD_PINS };
-      }
-    }
-
-    function saveStoredChildPins(nextPins) {
-      const clean = {
-        ayeon: nextPins && typeof nextPins.ayeon === "string" && nextPins.ayeon.trim() ? nextPins.ayeon.trim() : DEFAULT_CHILD_PINS.ayeon,
-        siyeol: nextPins && typeof nextPins.siyeol === "string" && nextPins.siyeol.trim() ? nextPins.siyeol.trim() : DEFAULT_CHILD_PINS.siyeol
-      };
-      try {
-        localStorage.setItem(CHILD_PINS_STORAGE_KEY, JSON.stringify(clean));
-      } catch (err) {
-        console.error("아연·시연 비밀번호 저장 오류:", err);
-      }
-      return clean;
-    }
-
     function renderHaeinChildPinDisplay() {
       const box = document.getElementById("haein-child-pin-display");
       if (!box) return;
-      const pins = getStoredChildPins();
+      const pins = state.pins || getStoredChildPins();
       box.innerHTML = `
         <div class="bg-white/85 rounded-xl p-2.5 border border-purple-100 flex items-center justify-between gap-2">
           <span class="font-bold text-purple-900">🩷 아연 비밀번호</span>
-          <span class="font-bold text-pink-700">${escapeHtml(pins.ayeon)}</span>
+          <span class="font-bold text-pink-700">${escapeHtml(pins.ayeon || DEFAULT_CHILD_PINS.ayeon)}</span>
         </div>
         <div class="bg-white/85 rounded-xl p-2.5 border border-purple-100 flex items-center justify-between gap-2">
           <span class="font-bold text-purple-900">🩵 시연 비밀번호</span>
-          <span class="font-bold text-sky-700">${escapeHtml(pins.siyeol)}</span>
+          <span class="font-bold text-sky-700">${escapeHtml(pins.siyeol || DEFAULT_CHILD_PINS.siyeol)}</span>
         </div>
       `;
     }
@@ -974,12 +978,13 @@
         if (input) input.focus();
         return;
       }
-      try {
-        localStorage.setItem(PIN_STORAGE_KEY, nextPin);
-      } catch (err) {
-        console.error("비밀번호 저장 오류:", err);
-      }
+      state.pins = {
+        ...(state.pins || {}),
+        haein: nextPin
+      };
+      syncPinStorageFromState(state);
       if (input) input.value = "";
+      saveState();
       showToast("해인 모드 비밀번호가 변경됐어요!");
     }
 
@@ -993,15 +998,16 @@
         if (input) input.focus();
         return;
       }
-      const currentPins = getStoredChildPins();
-      const updated = saveStoredChildPins({
-        ...currentPins,
+      state.pins = {
+        ...(state.pins || {}),
         [targetChild]: nextPin
-      });
+      };
+      syncPinStorageFromState(state);
       if (input) input.value = "";
+      saveState();
       renderHaeinChildPinDisplay();
       const childLabel = targetChild === "siyeol" ? "시연" : "아연";
-      showToast(`${childLabel} 비밀번호가 (${updated[targetChild]})로 변경됐어요!`);
+      showToast(`${childLabel} 비밀번호가 (${nextPin})로 변경됐어요!`);
     }
 
     function openChildPinModal(childKey) {
@@ -1045,8 +1051,8 @@
       const input = document.getElementById("child-pin-input");
       const errEl = document.getElementById("child-pin-error");
       const entered = input ? String(input.value || "").trim() : "";
-      const pins = getStoredChildPins();
-      const expected = pins[targetChild];
+      const pins = state.pins || getStoredChildPins();
+      const expected = pins[targetChild] || DEFAULT_CHILD_PINS[targetChild];
       if (entered === expected) {
         closeChildPinModal();
         hasEnteredModeThisSession = true;
@@ -1092,7 +1098,8 @@
       const input = document.getElementById("haein-pin-input");
       const errEl = document.getElementById("haein-pin-error");
       const entered = input ? String(input.value || "").trim() : "";
-      if (entered === getStoredHaeinPin() || entered === DEFAULT_HAEIN_PIN) {
+      const currentHaeinPin = (state.pins && state.pins.haein) || getStoredHaeinPin();
+      if (entered === currentHaeinPin || entered === DEFAULT_HAEIN_PIN) {
         closeHaeinPinModal();
         hasEnteredModeThisSession = true;
         applyMode("haein");
@@ -1122,6 +1129,7 @@
       state.updatedAt = Date.now();
       window.state = state;
       window.__boardState = state;
+      syncPinStorageFromState(state);
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (err) {
@@ -2208,7 +2216,6 @@
     import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // 엄마가 외부 Firebase 프로젝트를 연결할 때 아래 객체에 설정값을 채워 넣으면 폰·PC 실시간 동기화가 활성화돼요.
     const SHARED_BOARD_CONFIG = {
       apiKey: "AIzaSyAuntFmC020mSCdQKDxPAAemKmdaDsnetQ",
       authDomain: "lilith-s-house.firebaseapp.com",
@@ -2248,6 +2255,7 @@
     function buildStateSignature(s) {
       if (!s || typeof s !== "object") return "";
       return JSON.stringify({
+        pins: s.pins || {},
         stars: s.stars || {},
         missions: s.missions || [],
         checks: s.checks || {},
@@ -2279,6 +2287,10 @@
         const mergedState = {
           ...baseState,
           ...remoteBoardState,
+          pins: {
+            ...(baseState.pins || {}),
+            ...(remoteBoardState.pins || {})
+          },
           mode: keepMode,
           activeTab: keepTab,
           updatedAt: Math.max(incomingUpdatedAt, Date.now())
@@ -2289,6 +2301,10 @@
         }
         window.state = mergedState;
         window.__boardState = mergedState;
+
+        if (typeof syncPinStorageFromState === "function") {
+          syncPinStorageFromState(mergedState);
+        }
 
         try {
           const storageKey = typeof STORAGE_KEY === "string" ? STORAGE_KEY : "ayeon_siyeol_weekly_board_v1";
@@ -2323,7 +2339,7 @@
         console.error("공유 저장소 전송 오류:", err);
       }
 
-      if (!sharedDocRef || !currentUser) return;
+      if (!sharedDocRef) return;
       try {
         const { mode, activeTab, editingMissionId, ...syncableData } = stateToPush || {};
         await setDoc(sharedDocRef, {
