@@ -1879,16 +1879,26 @@
       const toEl = document.getElementById("gift-to-select");
       const amountEl = document.getElementById("gift-amount-input");
 
-      const fromChild = fromEl.value === "siyeol" ? "siyeol" : "ayeon";
-      const toChild = toEl.value === "ayeol" ? "ayeon" : "siyeol";
-      const amount = Math.max(1, parseInt(amountEl.value, 10) || 1);
+      const fromChild = state.mode;
+      const defaultToChild = fromChild === "ayeon" ? "siyeol" : "ayeon";
+      const selectedToChild = toEl?.value === "ayeon" || toEl?.value === "siyeol" ? toEl.value : defaultToChild;
+      const toChild = selectedToChild === fromChild ? defaultToChild : selectedToChild;
+      const rawAmount = Number.parseInt(amountEl?.value ?? "1", 10);
+      const amount = Number.isFinite(rawAmount) ? Math.max(1, Math.min(999, rawAmount)) : 1;
+
+      if (fromEl) {
+        fromEl.value = fromChild;
+      }
+      if (toEl) {
+        toEl.value = toChild;
+      }
 
       if (fromChild === toChild) {
         showToast("보내는 사람과 받는 사람을 다르게 선택해 주세요!");
         return;
       }
 
-      const currentFromStars = Number(state.stars[fromChild]) || 0;
+      const currentFromStars = Math.max(0, Number(state.stars[fromChild]) || 0);
       if (currentFromStars < amount) {
         const fromLabel = fromChild === "ayeon" ? "아연" : "시연";
         showToast(`${fromLabel}이의 보유 별(${currentFromStars}★)이 부족해요!`);
@@ -1899,12 +1909,14 @@
       const toLabel = toChild === "ayeon" ? "아연" : "시연";
 
       state.stars[fromChild] = currentFromStars - amount;
-      state.stars[toChild] = (Number(state.stars[toChild]) || 0) + amount;
+      state.stars[toChild] = Math.max(0, Number(state.stars[toChild]) || 0) + amount;
 
       addStarHistory(fromChild, -amount, `${toLabel}에게 별 선물`);
       addStarHistory(toChild, amount, `${fromLabel}에게서 받은 별 선물`);
 
-      amountEl.value = "1";
+      if (amountEl) {
+        amountEl.value = "1";
+      }
       saveState();
       renderAll();
       spawnStarSparkles(10);
