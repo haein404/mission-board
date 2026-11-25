@@ -738,6 +738,20 @@
         <div id="child-checklist-container" class="space-y-2.5"></div>
       </section>
 
+      <!-- [아연·시연 모드 전용] 비밀번호 교체 박스 -->
+      <section id="child-pin-settings-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+        <div>
+          <h2 id="child-pin-settings-title" class="text-base sm:text-lg font-bold text-purple-950">🔐 내 비밀번호 변경</h2>
+          <p class="text-xs text-purple-600 mt-0.5">새 비밀번호를 입력하면 바로 변경돼요.</p>
+        </div>
+        <form id="child-pin-change-form" class="flex flex-col sm:flex-row gap-2">
+          <input id="child-pin-change-input" type="password" inputmode="numeric" autocomplete="off" placeholder="새 비밀번호 입력" class="flex-1 min-w-0 px-3.5 py-2.5 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950" />
+          <button type="submit" class="unicorn-btn px-4 py-2.5 text-xs sm:text-sm shrink-0">
+            비밀번호 변경
+          </button>
+        </form>
+      </section>
+
       <!-- [해인 모드 전용] 아연·시연 달성 현황 -->
       <section id="haein-achievement-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
         <div class="flex items-center justify-between">
@@ -1281,8 +1295,9 @@
 
     function handleChangeChildPin(event, childKey) {
       if (event) event.preventDefault();
-      const inputId = childKey === "siyeol" ? "new-siyeol-pin-input" : "new-ayeon-pin-input";
-      const input = document.getElementById(inputId);
+      const targetChild = childKey || (state.mode === "siyeol" ? "siyeol" : "ayeon");
+      const input = document.getElementById("child-pin-change-input")
+        || document.getElementById(targetChild === "siyeol" ? "new-siyeol-pin-input" : "new-ayeon-pin-input");
       const nextPin = input ? String(input.value || "").trim() : "";
       if (!nextPin) {
         showToast("새 비밀번호를 입력해 주세요.");
@@ -1292,12 +1307,12 @@
       const currentPins = getStoredChildPins();
       const updated = saveStoredChildPins({
         ...currentPins,
-        [childKey]: nextPin
+        [targetChild]: nextPin
       });
       if (input) input.value = "";
       renderHaeinChildPinDisplay();
-      const childLabel = childKey === "siyeol" ? "시연" : "아연";
-      showToast(`${childLabel} 비밀번호가 (${updated[childKey]})로 변경됐어요!`);
+      const childLabel = targetChild === "siyeol" ? "시연" : "아연";
+      showToast(`${childLabel} 비밀번호가 (${updated[targetChild]})로 변경됐어요!`);
     }
 
     function openChildPinModal(childKey) {
@@ -1591,6 +1606,18 @@
       const isHaein = state.mode === "haein";
       const isChild = state.mode === "ayeon" || state.mode === "siyeol";
 
+      const childPinSection = document.getElementById("child-pin-settings-section");
+      const childPinTitle = document.getElementById("child-pin-settings-title");
+      const childPinForm = document.getElementById("child-pin-change-form");
+      if (childPinSection) {
+        childPinSection.classList.toggle("hidden", !isChild);
+      }
+      if (isChild && childPinTitle && childPinForm) {
+        const label = state.mode === "siyeol" ? "시연" : "아연";
+        childPinTitle.textContent = `🔐 ${label} 비밀번호 변경`;
+        childPinForm.onsubmit = (e) => handleChangeChildPin(e, state.mode);
+      }
+
       const giftFromEl = document.getElementById("gift-from-select");
       const giftToEl = document.getElementById("gift-to-select");
       if (isChild && giftFromEl && giftToEl) {
@@ -1618,6 +1645,7 @@
       const hideOnHaeinIds = [
         "child-surprise-section",
         "child-checklist-section",
+        "child-pin-settings-section",
         "lucky-wheel-section",
         "star-gift-section",
         "child-owned-coupons-section",
@@ -1653,24 +1681,27 @@
         if (progEl) progEl.textContent = `${doneCount} / ${totalCount} 완료`;
         if (barEl) barEl.style.width = `${rate}%`;
 
-        const listEl = document.getElementById("child-checklist-container");
-        if (listEl) {
-          if (dayMissions.length === 0) {
-            listEl.innerHTML = `<div class="text-center py-6 text-sm text-purple-600 bg-white/70 rounded-2xl border border-purple-100">아직 등록된 오늘 미션이 없어요.</div>`;
-          } else {
-            listEl.innerHTML = dayMissions.map((m) => {
-              const checked = Boolean(state.checks[`${dateStr}__${m.id}`]);
-              return `
-                <button type="button" onclick="toggleChildMission('${m.id}')" class="w-full flex items-center justify-between gap-3 p-3 rounded-2xl border text-left transition ${checked ? "bg-emerald-50/90 border-emerald-200 mission-row-checked" : "bg-white/90 border-purple-100 hover:border-pink-300"}">
-                  <div class="flex items-center gap-3 min-w-0">
-                    <span class="check-box-anim w-6 h-6 rounded-lg flex items-center justify-center border-2 shrink-0 ${checked ? "is-checked bg-emerald-400 border-emerald-400 text-white" : "border-purple-300 bg-white"}">${checked ? "✓" : ""}</span>
-                    <span class="text-sm font-bold truncate ${checked ? "line-through text-purple-400" : "text-purple-950"}">${escapeHtml(m.title)}</span>
-                  </div>
-                  <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 shrink-0">+${Number(m.starReward) || 1}★</span>
-                </button>
-              `;
-            }).join("");
-          }
+        const weeklyBox = document.getElementById("child-weekly-summary-box");
+        if (weeklyBox) {
+          const weekKey = getCurrentWeekKey();
+          const now = new Date();
+          const dayOfWeek = (now.getDay() + 6) % 7;
+          const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek);
+          let completedDays = 0;
+          const dayBadges = ALL_DAYS.map((dKey, idx) => {
+            const dDate = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + idx);
+            const y = dDate.getFullYear();
+            const m = String(dDate.getMonth() + 1).padStart(2, "0");
+            const d = String(dDate.getDate()).padStart(2, "0");
+            const ds = `${y}-${m}-${d}`;
+            const dayAllDone = totalCount > 0 && dayMissions.every((mItem) => Boolean(state.checks[`${ds}__${mItem.id}`]));
+            if (dayAllDone) completedDays += 1;
+            return `<span class="px-2 py-0.5 rounded-full font-bold ${dayAllDone ? "bg-emerald-100 text-emerald-700" : "bg-purple-50 text-purple-500"}">${DAY_LABELS[dKey]}${dayAllDone ? "✓" : ""}</span>`;
+          }).join("");
+          weeklyBox.innerHTML = `
+            <span class="font-bold text-purple-900">📅 주간 달성: ${completedDays}/7일 (${weekKey.replace("week_", "")}주)</span>
+            <div class="flex items-center gap-1 flex-wrap">${dayBadges}</div>
+          `;
         }
       }
 
@@ -1759,6 +1790,7 @@
       if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
       const mission = state.missions.find((m) => m.id === missionId);
       if (!mission) return;
+      const childKey = state.mode;
       const dateStr = getTodayDateStr();
       const slotKey = `${dateStr}__${missionId}`;
       const reward = Math.max(1, Number(mission.starReward) || 1);
@@ -1768,13 +1800,51 @@
       if (nextChecked) {
         if (!state.rewardedSlots[slotKey]) {
           state.rewardedSlots[slotKey] = true;
-          state.stars[state.mode] = (Number(state.stars[state.mode]) || 0) + reward;
-          addStarHistory(state.mode, reward, `오늘 미션 완료: ${mission.title}`);
+          state.stars[childKey] = (Number(state.stars[childKey]) || 0) + reward;
+          addStarHistory(childKey, reward, `오늘 미션 완료: ${mission.title}`);
         }
       } else if (state.rewardedSlots[slotKey]) {
         delete state.rewardedSlots[slotKey];
-        state.stars[state.mode] = Math.max(0, (Number(state.stars[state.mode]) || 0) - reward);
-        addStarHistory(state.mode, -reward, `미션 체크 취소: ${mission.title}`);
+        state.stars[childKey] = Math.max(0, (Number(state.stars[childKey]) || 0) - reward);
+        addStarHistory(childKey, -reward, `미션 체크 취소: ${mission.title}`);
+      }
+
+      const childMissions = state.missions.filter((m) => m.owner === childKey);
+      const dailyBonusKey = `daily_all_${childKey}_${dateStr}`;
+      const allDailyDone = childMissions.length > 0 && childMissions.every((m) => Boolean(state.checks[`${dateStr}__${m.id}`]));
+      if (allDailyDone && !state.rewardedSlots[dailyBonusKey]) {
+        state.rewardedSlots[dailyBonusKey] = true;
+        state.stars[childKey] = (Number(state.stars[childKey]) || 0) + 5;
+        addStarHistory(childKey, 5, "오늘의 미션 전체 완료 보너스");
+        showToast("오늘 미션 올클리어! 보너스 +5★");
+      } else if (!allDailyDone && state.rewardedSlots[dailyBonusKey]) {
+        delete state.rewardedSlots[dailyBonusKey];
+        state.stars[childKey] = Math.max(0, (Number(state.stars[childKey]) || 0) - 5);
+        addStarHistory(childKey, -5, "오늘의 미션 미완료로 보너스 회수");
+      }
+
+      const weekKey = getCurrentWeekKey();
+      const weeklyBonusKey = `weekly_all_${childKey}_${weekKey}`;
+      const now = new Date();
+      const dayOfWeek = (now.getDay() + 6) % 7;
+      const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek);
+      const allWeeklyDone = childMissions.length > 0 && ALL_DAYS.every((_, idx) => {
+        const dDate = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + idx);
+        const y = dDate.getFullYear();
+        const m = String(dDate.getMonth() + 1).padStart(2, "0");
+        const d = String(dDate.getDate()).padStart(2, "0");
+        const ds = `${y}-${m}-${d}`;
+        return childMissions.every((mItem) => Boolean(state.checks[`${ds}__${mItem.id}`]));
+      });
+      if (allWeeklyDone && !state.rewardedSlots[weeklyBonusKey]) {
+        state.rewardedSlots[weeklyBonusKey] = true;
+        state.stars[childKey] = (Number(state.stars[childKey]) || 0) + 10;
+        addStarHistory(childKey, 10, "주간 올클리어 보너스");
+        showToast("주간 미션 올클리어! 보너스 +10★");
+      } else if (!allWeeklyDone && state.rewardedSlots[weeklyBonusKey]) {
+        delete state.rewardedSlots[weeklyBonusKey];
+        state.stars[childKey] = Math.max(0, (Number(state.stars[childKey]) || 0) - 10);
+        addStarHistory(childKey, -10, "주간 미완료로 보너스 회수");
       }
 
       saveState();
