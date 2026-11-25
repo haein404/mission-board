@@ -2205,6 +2205,9 @@
     import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+    // 엄마가 외부 Firebase 프로젝트를 연결할 때 아래 객체에 설정값을 채워 넣으면 폰·PC 실시간 동기화가 활성화돼요.
+    const SHARED_BOARD_CONFIG = null;
+
     window.__isRemoteSyncing = false;
     const channelName = "ayeon_siyeol_mission_board_sync_v1";
     const bc = typeof BroadcastChannel !== "undefined" ? new BroadcastChannel(channelName) : null;
@@ -2213,12 +2216,14 @@
     const appId = typeof __app_id !== "undefined" ? __app_id : "ayeon-siyeol-mission-board";
     const rawConfig =
       (typeof window.__SHARED_BOARD_CONFIG__ !== "undefined" && window.__SHARED_BOARD_CONFIG__) ||
+      SHARED_BOARD_CONFIG ||
       (typeof __firebase_config !== "undefined" ? __firebase_config : "");
     let firebaseApp = null;
     let auth = null;
     let db = null;
     let sharedDocRef = null;
     let currentUser = null;
+    let lastAppliedRemoteSignature = "";
 
     function getCurrentBoardState() {
       if (typeof state !== "undefined" && state) return state;
@@ -2227,11 +2232,15 @@
       return { mode: "ayeon", activeTab: "daily", updatedAt: Date.now() };
     }
 
-    function applyIncomingBoardState(remoteBoardState) {
+    function applyIncomingBoardState(remoteBoardState, forceApply = false) {
       if (!remoteBoardState || typeof remoteBoardState !== "object") return;
       const currentBoardState = getCurrentBoardState();
-      if ((Number(remoteBoardState.updatedAt) || 0) <= (Number(currentBoardState.updatedAt) || 0)) return;
+      const incomingUpdatedAt = Number(remoteBoardState.updatedAt) || Date.now();
+      const signature = `${incomingUpdatedAt}_${JSON.stringify(remoteBoardState.stars || {})}_${(remoteBoardState.missions || []).length}_${Object.keys(remoteBoardState.checks || {}).length}_${(remoteBoardState.ownedCoupons || []).length}_${(remoteBoardState.surpriseMissions || []).length}_${(remoteBoardState.couponSuggestions || []).length}`;
 
+      if (!forceApply && signature === lastAppliedRemoteSignature) return;
+
+      lastAppliedRemoteSignature = signature;
       window.__isRemoteSyncing = true;
       try {
         const keepMode = currentBoardState.mode || "ayeon";
@@ -2242,7 +2251,7 @@
           ...remoteBoardState,
           mode: keepMode,
           activeTab: keepTab,
-          updatedAt: Number(remoteBoardState.updatedAt) || Date.now()
+          updatedAt: Math.max(incomingUpdatedAt, Date.now())
         };
 
         if (typeof state !== "undefined") {
@@ -2267,11 +2276,15 @@
 
     window.__pushSharedBoardState = async function (nextState) {
       const stateToPush = nextState || getCurrentBoardState();
+      const pushTimestamp = Number(stateToPush?.updatedAt) || Date.now();
       try {
         if (bc) {
           bc.postMessage({
             sourceDeviceId: myDeviceId,
-            boardState: stateToPush
+            boardState: {
+              ...stateToPush,
+              updatedAt: pushTimestamp
+            }
           });
         }
       } catch (err) {
@@ -2283,8 +2296,11 @@
         const { mode, activeTab, editingMissionId, ...syncableData } = stateToPush || {};
         await setDoc(sharedDocRef, {
           sourceDeviceId: myDeviceId,
-          updatedAt: Number(stateToPush?.updatedAt) || Date.now(),
-          boardState: syncableData
+          updatedAt: pushTimestamp,
+          boardState: {
+            ...syncableData,
+            updatedAt: pushTimestamp
+          }
         }, { merge: true });
       } catch (err) {
         console.error("원격 공유 저장소 저장 오류:", err);
@@ -2296,7 +2312,7 @@
         bc.onmessage = (event) => {
           const data = event?.data;
           if (!data || !data.boardState || data.sourceDeviceId === myDeviceId) return;
-          applyIncomingBoardState(data.boardState);
+          applyIncomingBoardState(data.boardState, true);
         };
       }
     } catch (err) {
@@ -2306,7 +2322,7 @@
     (async () => {
       try {
         if (!rawConfig) {
-          console.info("외부 기기 동기화 설정(window.__SHARED_BOARD_CONFIG__)이 아직 없어 로컬 저장소만 사용합니다.");
+          console.info("외부 기기 동기화 설정(SHARED_BOARD_CONFIG)이 아직 없어 로컬 저장소만 사용합니다.");
           return;
         }
         const firebaseConfig = typeof rawConfig === "string" ? JSON.parse(rawConfig) : rawConfig;
@@ -2330,10 +2346,14 @@
           const currentBoardState = getCurrentBoardState();
           if (!snapshot.exists()) {
             const { mode, activeTab, editingMissionId, ...initialSyncData } = currentBoardState;
+            const nowTs = Number(currentBoardState.updatedAt) || Date.now();
             setDoc(sharedDocRef, {
               sourceDeviceId: myDeviceId,
-              updatedAt: Number(currentBoardState.updatedAt) || Date.now(),
-              boardState: initialSyncData
+              updatedAt: nowTs,
+              boardState: {
+                ...initialSyncData,
+                updatedAt: nowTs
+              }
             }, { merge: true }).catch((err) => console.error("초기 공유 문서 생성 오류:", err));
             return;
           }
@@ -2341,10 +2361,11 @@
           const docData = snapshot.data();
           if (!docData || !docData.boardState) return;
           if (docData.sourceDeviceId === myDeviceId) return;
+          const remoteTs = Number(docData.updatedAt) || Number(docData.boardState.updatedAt) || Date.now();
           applyIncomingBoardState({
             ...docData.boardState,
-            updatedAt: Number(docData.updatedAt) || Number(docData.boardState.updatedAt) || Date.now()
-          });
+            updatedAt: remoteTs
+          }, true);
         }, (err) => {
           console.error("공유 저장소 수신 오류:", err);
         });
