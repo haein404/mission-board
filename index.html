@@ -776,6 +776,20 @@
           <div id="haein-surprise-list-container" class="space-y-2"></div>
         </div>
       </section>
+
+      <!-- [해인 모드 전용] 해인 모드 비밀번호 변경 박스 -->
+      <section id="haein-pin-settings-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+        <div>
+          <h2 class="text-base sm:text-lg font-bold text-purple-950">🔐 해인 모드 비밀번호 변경</h2>
+          <p class="text-xs text-purple-600 mt-0.5">새 비밀번호를 입력하면 이 브라우저에 바로 저장돼요.</p>
+        </div>
+        <form onsubmit="handleChangeHaeinPin(event)" class="flex flex-col sm:flex-row gap-2">
+          <input id="new-haein-pin-input" type="password" inputmode="numeric" autocomplete="off" placeholder="새 비밀번호 (예: 5678)" class="flex-1 min-w-0 px-3.5 py-2.5 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950" />
+          <button type="submit" class="unicorn-btn px-4 py-2.5 text-xs sm:text-sm shrink-0">
+            비밀번호 변경
+          </button>
+        </form>
+      </section>
     </main>
 
     <!-- ================= 행운별 탭 ================= -->
@@ -1026,7 +1040,8 @@
 
   <script>
     // 엄마가 원하는 해인 모드 비밀번호로 변경해서 사용하세요.
-    const HAEIN_PIN = "1234";
+    const DEFAULT_HAEIN_PIN = "1234";
+    const PIN_STORAGE_KEY = "ayeon_siyeol_haein_pin_v1";
     const STORAGE_KEY = "ayeon_siyeol_weekly_mission_board_v1";
     const THEME_STORAGE_KEY = "ayeon_siyeol_theme_tone_v1";
     const ALL_DAYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
@@ -1344,42 +1359,90 @@
     }
 
     function addStarHistory(child, delta, reason) {
+      if (child !== "ayeon" && child !== "siyeol") return;
       const numDelta = Number(delta) || 0;
-      if (!numDelta) return;
+      if (numDelta === 0) return;
       state.starHistory.unshift({
         id: `sh_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
         child,
         delta: numDelta,
-        reason,
+        reason: String(reason || "별 변동"),
         date: getTodayDateStr()
       });
-      if (state.starHistory.length > 120) {
-        state.starHistory = state.starHistory.slice(0, 120);
-      }
     }
 
     function openHaeinPinModal() {
       const modal = document.getElementById("haein-pin-modal");
       const input = document.getElementById("haein-pin-input");
       const errEl = document.getElementById("haein-pin-error");
-      if (!modal || !input) return;
-      input.value = "";
+      if (!modal) return;
       if (errEl) errEl.classList.add("hidden");
+      if (input) input.value = "";
       modal.classList.remove("hidden");
       modal.classList.add("flex");
-      setTimeout(() => input.focus(), 30);
+      setTimeout(() => {
+        if (input) input.focus();
+      }, 30);
     }
 
     function closeHaeinPinModal() {
       const modal = document.getElementById("haein-pin-modal");
       const input = document.getElementById("haein-pin-input");
       const errEl = document.getElementById("haein-pin-error");
-      if (input) input.value = "";
       if (errEl) errEl.classList.add("hidden");
+      if (input) input.value = "";
       if (modal) {
         modal.classList.add("hidden");
         modal.classList.remove("flex");
       }
+    }
+
+    function loadHaeinPin() {
+      try {
+        const saved = localStorage.getItem(PIN_STORAGE_KEY);
+        if (saved && String(saved).trim().length > 0) {
+          return String(saved).trim();
+        }
+      } catch (err) {
+        console.error("비밀번호 불러오기 오류:", err);
+      }
+      return DEFAULT_HAEIN_PIN;
+    }
+
+    function saveHaeinPin(nextPin) {
+      const cleanPin = String(nextPin || "").trim();
+      if (!cleanPin) return false;
+      try {
+        localStorage.setItem(PIN_STORAGE_KEY, cleanPin);
+        return true;
+      } catch (err) {
+        console.error("비밀번호 저장 오류:", err);
+        return false;
+      }
+    }
+
+    function handleChangeHaeinPin(event) {
+      event.preventDefault();
+      if (state.mode !== "haein") return;
+      const inputEl = document.getElementById("new-haein-pin-input");
+      if (!inputEl) return;
+      const nextPin = inputEl.value.trim();
+      if (!nextPin) {
+        showToast("새 비밀번호를 입력해 주세요!");
+        inputEl.focus();
+        return;
+      }
+      if (nextPin.length < 2) {
+        showToast("비밀번호는 2자리 이상 입력해 주세요!");
+        inputEl.focus();
+        return;
+      }
+      if (!saveHaeinPin(nextPin)) {
+        showToast("비밀번호 저장 중 오류가 발생했어요.");
+        return;
+      }
+      inputEl.value = "";
+      showToast("🔐 해인 모드 비밀번호를 변경했어요!");
     }
 
     function handleHaeinPinSubmit(event) {
@@ -1387,8 +1450,9 @@
       const input = document.getElementById("haein-pin-input");
       const errEl = document.getElementById("haein-pin-error");
       const entered = (input?.value || "").trim();
+      const currentPin = loadHaeinPin();
 
-      if (entered === String(HAEIN_PIN)) {
+      if (entered === currentPin) {
         closeHaeinPinModal();
         state.mode = "haein";
         state.editingMissionId = null;
@@ -1987,6 +2051,10 @@
       document.getElementById("child-checklist-section").classList.toggle("hidden", !isChild);
       document.getElementById("haein-achievement-section").classList.toggle("hidden", !isHaein);
       document.getElementById("haein-surprise-section").classList.toggle("hidden", !isHaein);
+      const pinSettingsEl = document.getElementById("haein-pin-settings-section");
+      if (pinSettingsEl) {
+        pinSettingsEl.classList.toggle("hidden", !isHaein);
+      }
 
       if (isHaein) {
         const headingEl = document.getElementById("mission-form-heading");
