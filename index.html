@@ -89,7 +89,7 @@
       font-weight: 800;
       background: linear-gradient(135deg, #fff3b0 0%, #ffd6e0 55%, #cbf3f0 100%);
       color: #5c3a4d;
-      border: 1.5px solid rgba(255, 255, 255, 0.9);
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
       box-shadow: 0 4px 10px -4px rgba(255, 126, 165, 0.35);
       animation: starBadgePop 2.4s ease-in-out infinite;
     }
@@ -104,14 +104,6 @@
       animation: heartopiaBreeze 16s ease infinite;
       color: #4a3544;
       min-height: 100vh;
-    }
-
-    .check-box-anim {
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, border-color 0.2s ease;
-    }
-
-    .check-box-anim.is-checked {
-      animation: checkPopBounce 0.36s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .mission-row-checked {
@@ -234,104 +226,6 @@
       border: 1.5px solid #fde2e4;
     }
 
-    body.theme-tone-b {
-      background:
-        radial-gradient(circle at 18% 15%, rgba(167, 139, 250, 0.34) 0%, transparent 45%),
-        radial-gradient(circle at 82% 20%, rgba(56, 189, 248, 0.28) 0%, transparent 46%),
-        radial-gradient(circle at 50% 90%, rgba(244, 114, 182, 0.24) 0%, transparent 50%),
-        linear-gradient(155deg, #17153b 0%, #241b4e 52%, #1b2845 100%);
-      background-size: 200% 200%;
-      animation: heartopiaBreeze 16s ease infinite;
-      color: #f8f5ff;
-    }
-
-    body.theme-tone-b .unicorn-card {
-      background: linear-gradient(165deg, rgba(28, 22, 66, 0.96) 0%, rgba(40, 28, 82, 0.95) 55%, rgba(22, 36, 68, 0.96) 100%);
-      border: 2.5px solid #c4b5fd;
-      box-shadow: 0 14px 30px -10px rgba(10, 15, 35, 0.75), 0 0 0 2px rgba(255, 255, 255, 0.16) inset;
-    }
-
-    body.theme-tone-b .unicorn-subcard {
-      background: linear-gradient(135deg, rgba(44, 34, 92, 0.95) 0%, rgba(58, 40, 108, 0.94) 55%, rgba(28, 48, 86, 0.95) 100%);
-      border: 2px solid #ddd6fe;
-      box-shadow: 0 8px 18px -6px rgba(10, 15, 35, 0.6);
-    }
-
-    body.theme-tone-b h1,
-    body.theme-tone-b h2,
-    body.theme-tone-b h3,
-    body.theme-tone-b .text-purple-950,
-    body.theme-tone-b .text-purple-900,
-    body.theme-tone-b .text-purple-800 {
-      color: #ffffff !important;
-    }
-
-    body.theme-tone-b .text-purple-700,
-    body.theme-tone-b .text-purple-600,
-    body.theme-tone-b .text-purple-500 {
-      color: #e9d5ff !important;
-    }
-
-    body.theme-tone-b .mode-pill-inactive,
-    body.theme-tone-b .tab-inactive {
-      background-color: rgba(45, 36, 92, 0.94) !important;
-      color: #fdf8ff !important;
-      border-color: #9f8ce6 !important;
-    }
-
-    body.theme-tone-sunset {
-      background:
-        radial-gradient(circle at 14% 16%, rgba(255, 138, 92, 0.42) 0%, transparent 45%),
-        radial-gradient(circle at 86% 20%, rgba(251, 191, 36, 0.34) 0%, transparent 46%),
-        radial-gradient(circle at 52% 90%, rgba(192, 132, 252, 0.28) 0%, transparent 50%),
-        linear-gradient(150deg, #3b1c32 0%, #6b2d46 48%, #a84b3e 100%);
-      background-size: 200% 200%;
-      animation: heartopiaBreeze 16s ease infinite;
-      color: #fff6ee;
-    }
-
-    body.theme-tone-sunset .unicorn-card {
-      background: linear-gradient(165deg, rgba(78, 34, 58, 0.94) 0%, rgba(108, 46, 62, 0.92) 55%, rgba(124, 62, 54, 0.94) 100%);
-      border: 2.5px solid #fdba74;
-      box-shadow: 0 14px 30px -10px rgba(42, 14, 28, 0.6), 0 0 0 2px rgba(255, 237, 213, 0.16) inset;
-    }
-
-    body.theme-tone-sunset .unicorn-subcard {
-      background: linear-gradient(135deg, rgba(92, 41, 66, 0.92) 0%, rgba(120, 54, 68, 0.9) 55%, rgba(134, 70, 58, 0.92) 100%);
-      border: 2px solid #fed7aa;
-      box-shadow: 0 8px 18px -6px rgba(42, 14, 28, 0.45);
-    }
-
-    body.theme-tone-sunset h1,
-    body.theme-tone-sunset h2,
-    body.theme-tone-sunset h3,
-    body.theme-tone-sunset .text-purple-950,
-    body.theme-tone-sunset .text-purple-900,
-    body.theme-tone-sunset .text-purple-800 {
-      color: #fff7ed !important;
-    }
-
-    body.theme-tone-sunset .text-purple-700,
-    body.theme-tone-sunset .text-purple-600,
-    body.theme-tone-sunset .text-purple-500 {
-      color: #fed7aa !important;
-    }
-
-    #theme-btn-a.is-theme-active {
-      background: linear-gradient(135deg, #ff7ea5 0%, #ff9b6a 100%) !important;
-      color: #ffffff !important;
-    }
-
-    #theme-btn-b.is-theme-active {
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
-      color: #ffffff !important;
-    }
-
-    #theme-btn-sunset.is-theme-active {
-      background: linear-gradient(135deg, #f43f5e 0%, #f97316 100%) !important;
-      color: #ffffff !important;
-    }
-
     .rainbow-wheel-inner {
       width: 100%;
       height: 100%;
@@ -371,15 +265,41 @@
   </style>
 </head>
 <body class="p-3 sm:p-6">
-  <div class="max-w-2xl mx-auto space-y-4 pb-16">
+  <!-- 첫 접속 모드 선택 인트로 화면 -->
+  <section id="intro-mode-screen" class="min-h-[82vh] flex items-center justify-center p-2 sm:p-4">
+    <div class="unicorn-card w-full max-w-md p-6 sm:p-7 space-y-5 text-center">
+      <div class="space-y-1.5">
+        <div class="text-3xl">🦄✨</div>
+        <h1 class="text-2xl font-bold text-purple-950">아연·시연 주간 미션 보드</h1>
+        <p class="text-xs sm:text-sm text-purple-700">들어갈 모드를 선택해 주세요!</p>
+      </div>
+      <div class="grid grid-cols-1 gap-3">
+        <button type="button" onclick="enterFromIntro('ayeon')" class="unicorn-btn w-full py-3.5 px-4 text-base">
+          🩷 아연 모드 (비밀번호 입력)
+        </button>
+        <button type="button" onclick="enterFromIntro('siyeol')" class="unicorn-btn w-full py-3.5 px-4 text-base">
+          🩵 시연 모드 (비밀번호 입력)
+        </button>
+        <button type="button" onclick="enterFromIntro('haein')" class="soft-btn w-full py-3.5 px-4 text-base">
+          👑 해인 모드 (비밀번호 입력)
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 메인 보드 컨테이너 -->
+  <div id="main-board-wrapper" class="max-w-2xl mx-auto space-y-4 pb-16 hidden">
     <!-- 상단 헤더 & 모드 선택 -->
     <header class="unicorn-card p-4 sm:p-5 space-y-3">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div>
           <h1 id="header-title" class="text-xl sm:text-2xl font-bold text-purple-950">🦄 아연·시연 주간 미션 보드</h1>
-          <p id="header-subtitle" class="text-xs sm:text-sm text-purple-700 mt-0.5">모드를 선택해서 시작해 보세요!</p>
+          <p id="header-subtitle" class="text-xs sm:text-sm text-purple-700 mt-0.5">오늘도 차근차근 미션을 완료하고 별을 모아 봐요!</p>
         </div>
         <div class="flex items-center gap-1.5 flex-wrap">
+          <button type="button" onclick="returnToIntroScreen()" class="soft-btn px-2.5 py-1 text-xs">
+            🏠 모드 선택
+          </button>
           <span class="px-3 py-1 rounded-full text-xs sm:text-sm font-bold bg-amber-100 text-amber-800 border border-amber-200" id="header-star-badge">
             ⭐ 아연 0 · 시연 0
           </span>
@@ -400,7 +320,7 @@
       </div>
 
       <!-- 메인 탭 (데일리체크 / 행운별) -->
-      <div id="main-tabs-container" class="grid grid-cols-2 gap-2 pt-1 hidden">
+      <div class="grid grid-cols-2 gap-2 pt-1">
         <button type="button" id="tab-daily" onclick="switchTab('daily')" class="py-2.5 px-4 rounded-2xl text-sm font-bold transition">
           ✅ 데일리체크
         </button>
@@ -410,35 +330,8 @@
       </div>
     </header>
 
-    <!-- ================= 인트로 선택 화면 ================= -->
-    <section id="intro-screen" class="unicorn-card p-6 sm:p-8 text-center space-y-5">
-      <div class="space-y-1.5">
-        <div class="text-4xl">✨🌈✨</div>
-        <h2 class="text-xl sm:text-2xl font-bold text-purple-950">누구 모드로 들어갈까요?</h2>
-        <p class="text-xs sm:text-sm text-purple-700">각 모드 비밀번호를 입력하면 바로 입장할 수 있어요.</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <button type="button" onclick="setMode('ayeon')" class="unicorn-subcard p-5 flex flex-col items-center gap-2 hover:scale-[1.02] transition">
-          <span class="text-3xl">🩷</span>
-          <span class="text-base font-bold text-purple-950">아연 모드</span>
-          <span class="text-xs text-purple-600">비밀번호 입력</span>
-        </button>
-        <button type="button" onclick="setMode('siyeol')" class="unicorn-subcard p-5 flex flex-col items-center gap-2 hover:scale-[1.02] transition">
-          <span class="text-3xl">🩵</span>
-          <span class="text-base font-bold text-purple-950">시연 모드</span>
-          <span class="text-xs text-purple-600">비밀번호 입력</span>
-        </button>
-        <button type="button" onclick="setMode('haein')" class="unicorn-subcard p-5 flex flex-col items-center gap-2 hover:scale-[1.02] transition">
-          <span class="text-3xl">👑</span>
-          <span class="text-base font-bold text-purple-950">해인 모드</span>
-          <span class="text-xs text-purple-600">관리자 비밀번호</span>
-        </button>
-      </div>
-    </section>
-
     <!-- ================= 데일리체크 탭 ================= -->
-    <main id="view-daily" class="space-y-4 hidden">
+    <main id="view-daily" class="space-y-4">
       <!-- [해인 모드 전용] 새 미션 등록 박스 -->
       <section id="haein-mission-form-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
         <div class="flex items-center justify-between gap-2 flex-wrap">
@@ -471,7 +364,7 @@
           </div>
 
           <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
-            <span class="text-xs text-purple-600 font-semibold">🔄 매일(월~일) 반복 · 데일리 올클리어 +5★ · 주간 올클리어 +10★</span>
+            <span class="text-xs text-purple-600 font-semibold">🔄 매일(월~일) 반복으로 자동 등록돼요.</span>
             <button type="submit" id="mission-submit-btn" class="unicorn-btn px-5 py-2.5 text-sm shrink-0">
               미션 등록
             </button>
@@ -479,7 +372,7 @@
         </form>
       </section>
 
-      <!-- [해인 모드 전용] 주간 미션 목록 -->
+      <!-- [해인 모드 전용] 주간 미션 목록 (아코디언) -->
       <section id="haein-mission-list-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
         <button type="button" onclick="toggleAccordion('haein-mission-list-panel'); markSectionSeen('mission-list');" class="w-full flex items-center justify-between text-left">
           <div class="flex items-center gap-1.5 flex-wrap">
@@ -490,13 +383,13 @@
           <span class="text-xs font-bold text-purple-600">열기/닫기</span>
         </button>
 
-        <div id="haein-mission-list-panel" class="accordion-panel open pt-2 space-y-2">
+        <div id="haein-mission-list-panel" class="accordion-panel pt-2 space-y-2">
           <div id="haein-mission-list-container" class="space-y-2"></div>
         </div>
       </section>
 
-      <!-- [아연·시연 모드 전용] 깜짝미션 섹션 -->
-      <section id="child-surprise-section" onclick="markSectionSeen('child-surprise')" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+      <!-- [아연·시연 모드] 깜짝미션 섹션 -->
+      <section id="child-surprise-section" onclick="markSectionSeen('child-surprise')" class="unicorn-card p-4 sm:p-5 space-y-3">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2 flex-wrap">
             <h2 class="text-base sm:text-lg font-bold text-purple-950">⚡ 깜짝미션</h2>
@@ -508,8 +401,8 @@
       </section>
 
       <!-- [아연·시연 모드 전용] 당일 미션 체크리스트 -->
-      <section id="child-checklist-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
-        <div class="flex items-center justify-between gap-2">
+      <section id="child-checklist-section" class="unicorn-card p-4 sm:p-5 space-y-3">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
           <div>
             <h2 id="child-checklist-title" class="text-base sm:text-lg font-bold text-purple-950">✨ 오늘의 미션</h2>
             <p id="child-checklist-date-sub" class="text-xs text-purple-600"></p>
@@ -528,20 +421,6 @@
         </div>
         <div id="child-weekly-summary-box" class="flex items-center justify-between gap-2 flex-wrap px-3 py-2 rounded-2xl bg-white/75 border border-purple-100 text-xs"></div>
         <div id="child-checklist-container" class="space-y-2.5"></div>
-      </section>
-
-      <!-- [아연·시연 모드 전용] 비밀번호 교체 박스 -->
-      <section id="child-pin-settings-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
-        <div>
-          <h2 id="child-pin-settings-title" class="text-base sm:text-lg font-bold text-purple-950">🔐 내 비밀번호 변경</h2>
-          <p class="text-xs text-purple-600 mt-0.5">새 비밀번호를 입력하면 바로 변경돼요.</p>
-        </div>
-        <form id="child-pin-change-form" onsubmit="handleChangeChildPin(event)" class="flex flex-col sm:flex-row gap-2">
-          <input id="child-pin-change-input" type="password" inputmode="numeric" autocomplete="off" placeholder="새 비밀번호 입력" class="flex-1 min-w-0 px-3.5 py-2.5 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950" />
-          <button type="submit" class="unicorn-btn px-4 py-2.5 text-xs sm:text-sm shrink-0">
-            비밀번호 변경
-          </button>
-        </form>
       </section>
 
       <!-- [해인 모드 전용] 아연·시연 달성 현황 -->
@@ -565,7 +444,7 @@
           </button>
         </div>
 
-        <div id="haein-surprise-panel" class="accordion-panel open pt-2 space-y-3">
+        <div id="haein-surprise-panel" class="accordion-panel pt-2 space-y-3">
           <form onsubmit="handleAddSurpriseMission(event)" class="unicorn-subcard p-3 space-y-2.5">
             <div class="text-xs font-bold text-purple-900">새 깜짝미션 등록 (아연·시연 중 1명만 체크 가능)</div>
             <div class="flex flex-col sm:flex-row gap-2">
@@ -584,7 +463,7 @@
         </div>
       </section>
 
-      <!-- [해인 모드 전용] 해인 모드 비밀번호 변경 & 아연·시연 비밀번호 확인 박스 -->
+      <!-- [해인 모드 전용] 해인 모드 비밀번호 변경 + 아연·시연 비밀번호 확인 박스 -->
       <section id="haein-pin-settings-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
         <div>
           <h2 class="text-base sm:text-lg font-bold text-purple-950">🔐 해인 모드 비밀번호 변경</h2>
@@ -602,6 +481,20 @@
           <div id="haein-child-pin-display" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs"></div>
         </div>
       </section>
+
+      <!-- [아연·시연 모드 전용] 비밀번호 교체 박스 (데일리체크 맨 아래) -->
+      <section id="child-pin-settings-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+        <div>
+          <h2 id="child-pin-settings-title" class="text-base sm:text-lg font-bold text-purple-950">🔐 내 비밀번호 변경</h2>
+          <p class="text-xs text-purple-600 mt-0.5">새 비밀번호를 입력하면 바로 변경돼요.</p>
+        </div>
+        <form id="child-pin-change-form" class="flex flex-col sm:flex-row gap-2">
+          <input id="child-pin-change-input" type="password" inputmode="numeric" autocomplete="off" placeholder="새 비밀번호 입력" class="flex-1 min-w-0 px-3.5 py-2.5 rounded-xl border border-purple-200 bg-white text-sm font-bold text-purple-950" />
+          <button type="submit" class="unicorn-btn px-4 py-2.5 text-xs sm:text-sm shrink-0">
+            비밀번호 변경
+          </button>
+        </form>
+      </section>
     </main>
 
     <!-- ================= 행운별 탭 ================= -->
@@ -618,7 +511,7 @@
 
         <div id="star-balances-container" class="grid grid-cols-1 gap-3"></div>
 
-        <!-- [해인 모드 전용] 아연·시연 별 개수 수정 -->
+        <!-- [해인 모드 전용] 아연·시연 별 개수 수정 아코디언 -->
         <div id="haein-star-edit-box" class="unicorn-subcard p-3 space-y-2.5 hidden">
           <button type="button" onclick="toggleAccordion('haein-star-edit-panel'); markSectionSeen('star-edit');" class="w-full flex items-center justify-between text-left">
             <div class="flex items-center gap-1.5 flex-wrap">
@@ -627,7 +520,7 @@
             </div>
             <span class="text-xs font-bold text-purple-600">열기/닫기</span>
           </button>
-          <div id="haein-star-edit-panel" class="accordion-panel open pt-2 space-y-2.5">
+          <div id="haein-star-edit-panel" class="accordion-panel pt-2 space-y-2.5">
             <div class="flex items-center justify-between gap-2 bg-white p-2.5 rounded-xl border border-purple-100">
               <span class="text-sm font-bold text-purple-950">🩷 아연 별 개수</span>
               <div class="flex items-center gap-2">
@@ -645,7 +538,7 @@
           </div>
         </div>
 
-        <!-- 별 적립/사용 내역 -->
+        <!-- 별 적립/사용 내역 (아코디언 + 전체내역 삭제) -->
         <div class="unicorn-subcard p-3 space-y-2">
           <div class="flex items-center justify-between gap-2">
             <button type="button" onclick="toggleAccordion('star-history-panel')" class="flex items-center gap-1.5 text-left">
@@ -655,14 +548,14 @@
               전체내역 삭제
             </button>
           </div>
-          <div id="star-history-panel" class="accordion-panel open pt-1">
+          <div id="star-history-panel" class="accordion-panel pt-1">
             <div id="star-history-container" class="space-y-1.5 max-h-60 overflow-y-auto pr-1"></div>
           </div>
         </div>
       </div>
 
-      <!-- 2. 행운의 룰렛 (아연·시연 모드 전용) -->
-      <div id="lucky-wheel-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+      <!-- 2. 행운의 룰렛 (아연·시연 모드 전용 / 하루 1회 / 1~5★) -->
+      <div id="lucky-wheel-section" class="unicorn-card p-4 sm:p-5 space-y-3">
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-base sm:text-lg font-bold text-purple-950">🎡 행운의 별 룰렛</h2>
@@ -701,14 +594,14 @@
         </div>
       </div>
 
-      <!-- 3. 자매끼리 별 선물하기 (아연·시연 모드 전용) -->
-      <div id="star-gift-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+      <!-- 3. 자매끼리 별 선물하기 (아연·시연 모드 전용 - 본인만 발송 가능) -->
+      <div id="star-gift-section" class="unicorn-card p-4 sm:p-5 space-y-3">
         <div class="flex items-center justify-between gap-2 flex-wrap">
           <div class="flex items-center gap-1.5 flex-wrap">
             <h2 class="text-base sm:text-lg font-bold text-purple-950">💝 자매끼리 별 선물하기</h2>
             <span id="new-badge-star-gift" class="new-update-badge hidden">NEW</span>
           </div>
-          <span id="gift-my-star-badge" class="text-xs font-bold text-pink-600">내 별 0★</span>
+          <span class="text-xs font-bold text-pink-600">내 별을 다른 사람에게만 선물!</span>
         </div>
 
         <form onsubmit="handleSendStarGift(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 items-end">
@@ -748,12 +641,13 @@
           <span id="coupon-buyer-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-pink-100 text-pink-800"></span>
         </div>
 
+        <!-- [해인 모드 전용] 새 쿠폰 등록 아코디언 -->
         <div id="haein-coupon-create-box" class="unicorn-subcard p-3 space-y-2.5 hidden">
           <button type="button" onclick="toggleAccordion('haein-coupon-create-panel')" class="w-full flex items-center justify-between text-left">
             <span class="text-xs sm:text-sm font-bold text-purple-950">➕ 새 쿠폰 직접 등록</span>
             <span class="text-xs font-bold text-purple-600">열기/닫기</span>
           </button>
-          <div id="haein-coupon-create-panel" class="accordion-panel open pt-1">
+          <div id="haein-coupon-create-panel" class="accordion-panel pt-1">
             <form onsubmit="handleCreateCoupon(event)" class="flex flex-col sm:flex-row gap-2">
               <input id="new-coupon-title-input" type="text" placeholder="예: 아이스크림 하나 더 먹기" class="flex-1 min-w-0 px-3 py-2 rounded-xl border border-purple-200 bg-white text-sm text-purple-950" />
               <div class="flex items-center gap-2 shrink-0">
@@ -769,7 +663,7 @@
       </div>
 
       <!-- 5. 보유쿠폰함 (아연·시연 모드 전용) -->
-      <div id="child-owned-coupons-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
+      <div id="child-owned-coupons-section" class="unicorn-card p-4 sm:p-5 space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div class="flex items-center gap-1.5 flex-wrap">
             <h2 class="text-base sm:text-lg font-bold text-purple-950">👜 보유쿠폰함</h2>
@@ -783,7 +677,7 @@
         <div id="owned-coupons-container" class="space-y-2"></div>
       </div>
 
-      <!-- 6. [해인 모드 전용] 전체 쿠폰 사용 내역 -->
+      <!-- 6. [해인 모드 전용] 전체 쿠폰 사용 내역 (아코디언 + 내역전체삭제) -->
       <div id="haein-coupon-usage-section" class="unicorn-card p-4 sm:p-5 space-y-3 hidden">
         <div class="flex items-center justify-between gap-2 flex-wrap">
           <button type="button" onclick="toggleAccordion('haein-coupon-usage-panel')" class="flex items-center gap-1.5 text-left">
@@ -793,7 +687,7 @@
             내역전체삭제
           </button>
         </div>
-        <div id="haein-coupon-usage-panel" class="accordion-panel open pt-1">
+        <div id="haein-coupon-usage-panel" class="accordion-panel pt-1">
           <div id="haein-coupon-usage-container" class="space-y-2"></div>
         </div>
       </div>
@@ -874,6 +768,7 @@
   </div>
 
   <script>
+    // 기본 비밀번호 설정 (아연 1111, 시연 2222, 해인 1234)
     const DEFAULT_HAEIN_PIN = "1234";
     const DEFAULT_CHILD_PINS = { ayeon: "1111", siyeol: "2222" };
     const PIN_STORAGE_KEY = "ayeon_siyeol_haein_pin_v1";
@@ -930,19 +825,6 @@
       return `week_${y}-${m}-${d}`;
     }
 
-    function getWeekDateList() {
-      const now = new Date();
-      const dayOfWeek = (now.getDay() + 6) % 7;
-      const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek);
-      return ALL_DAYS.map((dKey, idx) => {
-        const dDate = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + idx);
-        const y = dDate.getFullYear();
-        const m = String(dDate.getMonth() + 1).padStart(2, "0");
-        const d = String(dDate.getDate()).padStart(2, "0");
-        return { dayKey: dKey, dateStr: `${y}-${m}-${d}` };
-      });
-    }
-
     function getStarTierLabel(starCount) {
       const n = Math.max(0, Number(starCount) || 0);
       if (n >= 50) return "👑 은하수 별마스터";
@@ -953,11 +835,12 @@
 
     function createDefaultState() {
       return {
-        mode: null,
+        mode: "ayeon",
         activeTab: "daily",
         editingMissionId: null,
         couponFilter: "unused",
         seenSections: {},
+        updatedAt: Date.now(),
         missions: [
           { id: "m_ay_1", owner: "ayeon", title: "아침에 일어나 이불 정리하기", starReward: 1, days: ALL_DAYS.slice() },
           { id: "m_ay_2", owner: "ayeon", title: "양치 & 세수 스스로 하기", starReward: 1, days: ALL_DAYS.slice() },
@@ -980,8 +863,7 @@
         ],
         ownedCoupons: [],
         couponUsageHistory: [],
-        couponSuggestions: [],
-        updatedAt: Date.now()
+        couponSuggestions: []
       };
     }
 
@@ -991,10 +873,13 @@
         if (!raw) return createDefaultState();
         const parsed = JSON.parse(raw);
         const def = createDefaultState();
+        const initialMode = parsed.mode === "haein" ? "ayeon" : (parsed.mode || def.mode);
         return {
           ...def,
           ...parsed,
-          mode: null,
+          mode: initialMode,
+          couponFilter: parsed.couponFilter === "used" ? "used" : "unused",
+          updatedAt: Number(parsed.updatedAt) || Date.now(),
           seenSections: parsed.seenSections && typeof parsed.seenSections === "object" ? parsed.seenSections : {},
           stars: {
             ayeon: Number(parsed.stars?.ayeon) || 0,
@@ -1012,8 +897,7 @@
           coupons: Array.isArray(parsed.coupons) ? parsed.coupons : def.coupons,
           ownedCoupons: Array.isArray(parsed.ownedCoupons) ? parsed.ownedCoupons : [],
           couponUsageHistory: Array.isArray(parsed.couponUsageHistory) ? parsed.couponUsageHistory : [],
-          couponSuggestions: Array.isArray(parsed.couponSuggestions) ? parsed.couponSuggestions : [],
-          updatedAt: Number(parsed.updatedAt) || Date.now()
+          couponSuggestions: Array.isArray(parsed.couponSuggestions) ? parsed.couponSuggestions : []
         };
       } catch (err) {
         console.error("상태 불러오기 오류:", err);
@@ -1022,6 +906,8 @@
     }
 
     let state = loadState();
+    window.__boardState = state;
+    let hasEnteredModeThisSession = false;
     let toastTimer = null;
     window.__isRemoteSyncing = false;
     let isRemoteSyncing = false;
@@ -1084,27 +970,26 @@
       const nextPin = input ? String(input.value || "").trim() : "";
       if (!nextPin) {
         showToast("새 비밀번호를 입력해 주세요.");
-        input?.focus();
+        if (input) input.focus();
         return;
       }
       try {
         localStorage.setItem(PIN_STORAGE_KEY, nextPin);
       } catch (err) {
-        console.error("해인 비밀번호 저장 오류:", err);
+        console.error("비밀번호 저장 오류:", err);
       }
       if (input) input.value = "";
       showToast("해인 모드 비밀번호가 변경됐어요!");
     }
 
-    function handleChangeChildPin(event) {
+    function handleChangeChildPin(event, childKey) {
       if (event) event.preventDefault();
-      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
-      const targetChild = state.mode;
+      const targetChild = childKey || (state.mode === "siyeol" ? "siyeol" : "ayeon");
       const input = document.getElementById("child-pin-change-input");
       const nextPin = input ? String(input.value || "").trim() : "";
       if (!nextPin) {
         showToast("새 비밀번호를 입력해 주세요.");
-        input?.focus();
+        if (input) input.focus();
         return;
       }
       const currentPins = getStoredChildPins();
@@ -1134,7 +1019,9 @@
         modal.classList.remove("hidden");
         modal.classList.add("flex");
       }
-      setTimeout(() => input?.focus(), 30);
+      setTimeout(() => {
+        if (input) input.focus();
+      }, 30);
     }
 
     function closeChildPinModal() {
@@ -1158,13 +1045,17 @@
       const errEl = document.getElementById("child-pin-error");
       const entered = input ? String(input.value || "").trim() : "";
       const pins = getStoredChildPins();
-      if (entered === pins[targetChild]) {
+      const expected = pins[targetChild];
+      if (entered === expected) {
         closeChildPinModal();
+        hasEnteredModeThisSession = true;
         applyMode(targetChild);
       } else {
         if (errEl) errEl.classList.remove("hidden");
-        input?.select();
-        input?.focus();
+        if (input) {
+          input.select();
+          input.focus();
+        }
       }
     }
 
@@ -1178,7 +1069,9 @@
         modal.classList.remove("hidden");
         modal.classList.add("flex");
       }
-      setTimeout(() => input?.focus(), 30);
+      setTimeout(() => {
+        if (input) input.focus();
+      }, 30);
     }
 
     function closeHaeinPinModal() {
@@ -1200,16 +1093,33 @@
       const entered = input ? String(input.value || "").trim() : "";
       if (entered === getStoredHaeinPin() || entered === DEFAULT_HAEIN_PIN) {
         closeHaeinPinModal();
+        hasEnteredModeThisSession = true;
         applyMode("haein");
       } else {
         if (errEl) errEl.classList.remove("hidden");
-        input?.select();
-        input?.focus();
+        if (input) {
+          input.select();
+          input.focus();
+        }
       }
+    }
+
+    function enterFromIntro(targetMode) {
+      if (targetMode === "haein") {
+        openHaeinPinModal();
+      } else if (targetMode === "ayeon" || targetMode === "siyeol") {
+        openChildPinModal(targetMode);
+      }
+    }
+
+    function returnToIntroScreen() {
+      hasEnteredModeThisSession = false;
+      renderAll();
     }
 
     function saveState() {
       state.updatedAt = Date.now();
+      window.__boardState = state;
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (err) {
@@ -1249,18 +1159,20 @@
       }
       if (mode === "ayeon" || mode === "siyeol") {
         openChildPinModal(mode);
+        return;
       }
+      applyMode(mode);
     }
 
     function applyMode(mode) {
       state.mode = mode === "haein" || mode === "siyeol" ? mode : "ayeon";
       state.editingMissionId = null;
+      hasEnteredModeThisSession = true;
       saveState();
       renderAll();
     }
 
     function switchTab(tab) {
-      if (!state.mode) return;
       state.activeTab = tab === "stars" ? "stars" : "daily";
       saveState();
       renderAll();
@@ -1268,7 +1180,9 @@
 
     function toggleAccordion(panelId) {
       const panel = document.getElementById(panelId);
-      if (panel) panel.classList.toggle("open");
+      if (panel) {
+        panel.classList.toggle("open");
+      }
     }
 
     function markSectionSeen(key) {
@@ -1281,10 +1195,10 @@
     function updateActivityNewBadges() {
       const today = getTodayDateStr();
       const map = [
-        { id: "new-badge-mission-form", key: "mission-form", active: state.missions.length > 0 },
-        { id: "new-badge-mission-list", key: "mission-list", active: state.missions.length > 0 },
+        { id: "new-badge-mission-form", key: "mission-form", active: false },
+        { id: "new-badge-mission-list", key: "mission-list", active: false },
         { id: "new-badge-child-surprise", key: "child-surprise", active: state.surpriseMissions.some((s) => !s.claimedBy) },
-        { id: "new-badge-haein-surprise", key: "haein-surprise", active: state.surpriseMissions.length > 0 },
+        { id: "new-badge-haein-surprise", key: "haein-surprise", active: state.surpriseMissions.some((s) => Boolean(s.claimedBy)) },
         { id: "new-badge-star-edit", key: "star-edit", active: false },
         { id: "new-badge-star-gift", key: "star-gift", active: false },
         { id: "new-badge-owned-coupons", key: "owned-coupons", active: state.ownedCoupons.some((c) => !c.used) },
@@ -1312,461 +1226,12 @@
       }
     }
 
-    function syncGiftRecipient() {
-      const fromEl = document.getElementById("gift-from-select");
-      const toEl = document.getElementById("gift-to-select");
-      if (!fromEl || !toEl) return;
-      if (state.mode === "ayeon" || state.mode === "siyeol") {
-        fromEl.value = state.mode;
-        fromEl.disabled = true;
-      } else {
-        fromEl.disabled = false;
-      }
-      toEl.value = fromEl.value === "ayeon" ? "siyeol" : "ayeon";
-    }
-
-    function handleMissionSubmit(event) {
-      if (event) event.preventDefault();
-      if (state.mode !== "haein") {
-        showToast("해인 관리자 모드에서만 미션을 등록할 수 있어요.");
-        return;
-      }
-      const ownerEl = document.getElementById("mission-owner-select");
-      const titleEl = document.getElementById("mission-title-input");
-      const starEl = document.getElementById("mission-star-input");
-      const owner = ownerEl && ownerEl.value === "siyeol" ? "siyeol" : "ayeon";
-      const title = titleEl ? String(titleEl.value || "").trim() : "";
-      const starReward = Math.min(50, Math.max(1, Number(starEl?.value) || 1));
-      if (!title) {
-        showToast("미션 이름을 입력해 주세요.");
-        titleEl?.focus();
-        return;
-      }
-      if (state.editingMissionId) {
-        const target = state.missions.find((m) => m.id === state.editingMissionId);
-        if (target) {
-          target.owner = owner;
-          target.title = title;
-          target.starReward = starReward;
-          target.days = ALL_DAYS.slice();
-        }
-        state.editingMissionId = null;
-        document.getElementById("cancel-edit-mission-btn")?.classList.add("hidden");
-        const heading = document.getElementById("mission-form-heading");
-        const submit = document.getElementById("mission-submit-btn");
-        if (heading) heading.textContent = "✏️ 새 미션 등록 (매일 반복)";
-        if (submit) submit.textContent = "미션 등록";
-      } else {
-        state.missions.push({
-          id: `m_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
-          owner,
-          title,
-          starReward,
-          days: ALL_DAYS.slice()
-        });
-      }
-      if (titleEl) titleEl.value = "";
-      if (starEl) starEl.value = "1";
-      saveState();
-      renderAll();
-      showToast("미션이 저장됐어요!");
-    }
-
-    function editMission(missionId) {
-      if (state.mode !== "haein") return;
-      const mission = state.missions.find((m) => m.id === missionId);
-      if (!mission) return;
-      state.editingMissionId = missionId;
-      document.getElementById("mission-owner-select").value = mission.owner;
-      const titleEl = document.getElementById("mission-title-input");
-      if (titleEl) {
-        titleEl.value = mission.title;
-        titleEl.focus();
-      }
-      document.getElementById("mission-star-input").value = mission.starReward || 1;
-      document.getElementById("cancel-edit-mission-btn")?.classList.remove("hidden");
-      document.getElementById("mission-form-heading").textContent = "✏️ 미션 수정";
-      document.getElementById("mission-submit-btn").textContent = "수정 저장";
-    }
-
-    function cancelEditMission() {
-      state.editingMissionId = null;
-      document.getElementById("mission-title-input").value = "";
-      document.getElementById("mission-star-input").value = "1";
-      document.getElementById("cancel-edit-mission-btn")?.classList.add("hidden");
-      document.getElementById("mission-form-heading").textContent = "✏️ 새 미션 등록 (매일 반복)";
-      document.getElementById("mission-submit-btn").textContent = "미션 등록";
-    }
-
-    function deleteMission(missionId) {
-      if (state.mode !== "haein") return;
-      state.missions = state.missions.filter((m) => m.id !== missionId);
-      Object.keys(state.checks).forEach((key) => {
-        if (key.endsWith(`__${missionId}`)) delete state.checks[key];
-      });
-      if (state.editingMissionId === missionId) cancelEditMission();
-      saveState();
-      renderAll();
-      showToast("미션을 삭제했어요.");
-    }
-
-    function evaluateBonusesForChild(childKey) {
-      if (childKey !== "ayeon" && childKey !== "siyeol") return;
-      const childMissions = state.missions.filter((m) => m.owner === childKey);
-      const dateStr = getTodayDateStr();
-
-      // 데일리 올클리어 (+5★)
-      const dailyBonusKey = `daily_all_${childKey}_${dateStr}`;
-      const allDailyDone = childMissions.length > 0 && childMissions.every((m) => Boolean(state.checks[`${dateStr}__${m.id}`]));
-      if (allDailyDone && !state.rewardedSlots[dailyBonusKey]) {
-        state.rewardedSlots[dailyBonusKey] = true;
-        state.stars[childKey] = (Number(state.stars[childKey]) || 0) + 5;
-        addStarHistory(childKey, 5, "오늘의 미션 올클리어 보너스 (+5★)");
-        showToast("🎉 오늘 미션 올클리어! 보너스 +5★ 지급!");
-      } else if (!allDailyDone && state.rewardedSlots[dailyBonusKey]) {
-        delete state.rewardedSlots[dailyBonusKey];
-        state.stars[childKey] = Math.max(0, (Number(state.stars[childKey]) || 0) - 5);
-        addStarHistory(childKey, -5, "오늘 미션 미완료로 올클리어 보너스 회수");
-      }
-
-      // 주간 올클리어 (+10★)
-      const weekKey = getCurrentWeekKey();
-      const weeklyBonusKey = `weekly_all_${childKey}_${weekKey}`;
-      const weekDates = getWeekDateList();
-      const allWeeklyDone = childMissions.length > 0 && weekDates.every(({ dateStr: ds }) =>
-        childMissions.every((mItem) => Boolean(state.checks[`${ds}__${mItem.id}`]))
-      );
-      if (allWeeklyDone && !state.rewardedSlots[weeklyBonusKey]) {
-        state.rewardedSlots[weeklyBonusKey] = true;
-        state.stars[childKey] = (Number(state.stars[childKey]) || 0) + 10;
-        addStarHistory(childKey, 10, "주간 미션 올클리어 보너스 (+10★)");
-        showToast("🏆 주간 미션 올클리어! 보너스 +10★ 지급!");
-      } else if (!allWeeklyDone && state.rewardedSlots[weeklyBonusKey]) {
-        delete state.rewardedSlots[weeklyBonusKey];
-        state.stars[childKey] = Math.max(0, (Number(state.stars[childKey]) || 0) - 10);
-        addStarHistory(childKey, -10, "주간 미완료로 올클리어 보너스 회수");
-      }
-    }
-
-    function toggleChildMission(missionId) {
-      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
-      const mission = state.missions.find((m) => m.id === missionId);
-      if (!mission) return;
-      const childKey = state.mode;
-      const dateStr = getTodayDateStr();
-      const slotKey = `${dateStr}__${missionId}`;
-      const reward = Math.max(1, Number(mission.starReward) || 1);
-      const nextChecked = !Boolean(state.checks[slotKey]);
-      state.checks[slotKey] = nextChecked;
-
-      if (nextChecked) {
-        if (!state.rewardedSlots[slotKey]) {
-          state.rewardedSlots[slotKey] = true;
-          state.stars[childKey] = (Number(state.stars[childKey]) || 0) + reward;
-          addStarHistory(childKey, reward, `오늘 미션 완료: ${mission.title}`);
-        }
-      } else if (state.rewardedSlots[slotKey]) {
-        delete state.rewardedSlots[slotKey];
-        state.stars[childKey] = Math.max(0, (Number(state.stars[childKey]) || 0) - reward);
-        addStarHistory(childKey, -reward, `미션 체크 취소: ${mission.title}`);
-      }
-
-      evaluateBonusesForChild(childKey);
-      saveState();
-      renderAll();
-    }
-
-    function handleAddSurpriseMission(event) {
-      if (event) event.preventDefault();
-      if (state.mode !== "haein") return;
-      const titleInput = document.getElementById("surprise-title-input");
-      const starInput = document.getElementById("surprise-star-input");
-      const title = titleInput ? String(titleInput.value || "").trim() : "";
-      const stars = Math.max(1, Number(starInput?.value) || 2);
-      if (!title) {
-        showToast("깜짝미션 내용을 입력해 주세요.");
-        return;
-      }
-      state.surpriseMissions.unshift({
-        id: `sm_${Date.now()}_${Math.random().toString(36).slice(2, 5)}`,
-        title,
-        stars,
-        claimedBy: null,
-        claimedAt: null
-      });
-      if (titleInput) titleInput.value = "";
-      saveState();
-      renderAll();
-      showToast("선착순 깜짝미션이 등록됐어요!");
-    }
-
-    function claimSurpriseMission(surpriseId) {
-      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
-      const sm = state.surpriseMissions.find((item) => item.id === surpriseId);
-      if (!sm || sm.claimedBy) {
-        showToast("이미 먼저 완료한 친구가 있어요!");
-        return;
-      }
-      const childKey = state.mode;
-      const reward = Math.max(1, Number(sm.stars) || 1);
-      sm.claimedBy = childKey;
-      sm.claimedAt = getTodayDateStr();
-      state.stars[childKey] = (Number(state.stars[childKey]) || 0) + reward;
-      addStarHistory(childKey, reward, `깜짝미션 선착순 완료: ${sm.title}`);
-      saveState();
-      renderAll();
-      showToast(`선착순 성공! 별 +${reward}★ 획득!`);
-    }
-
-    function deleteSurpriseMission(surpriseId) {
-      if (state.mode !== "haein") return;
-      state.surpriseMissions = state.surpriseMissions.filter((item) => item.id !== surpriseId);
-      saveState();
-      renderAll();
-    }
-
-    function clearAllSurpriseMissions() {
-      if (state.mode !== "haein") return;
-      state.surpriseMissions = [];
-      saveState();
-      renderAll();
-      showToast("깜짝미션 내역을 모두 삭제했어요.");
-    }
-
-    function saveChildStarCount(childKey) {
-      if (state.mode !== "haein") return;
-      const inputId = childKey === "siyeol" ? "edit-star-siyeol-input" : "edit-star-ayeon-input";
-      const input = document.getElementById(inputId);
-      const nextCount = Math.max(0, Math.min(999, Number(input?.value) || 0));
-      const prevCount = Number(state.stars[childKey]) || 0;
-      const diff = nextCount - prevCount;
-      state.stars[childKey] = nextCount;
-      if (diff !== 0) {
-        addStarHistory(childKey, diff, "해인 모드 별 개수 직접 조정");
-      }
-      saveState();
-      renderAll();
-      showToast(`${childKey === "siyeol" ? "시연" : "아연"} 별이 ${nextCount}★로 저장됐어요!`);
-    }
-
     function clearAllStarHistory() {
       if (state.mode !== "haein") return;
       state.starHistory = [];
       saveState();
       renderAll();
       showToast("별 적립·사용 내역을 삭제했어요.");
-    }
-
-    function spinWheel() {
-      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
-      const today = getTodayDateStr();
-      const childKey = state.mode;
-      if (state.lastWheelDateByChild[childKey] === today) {
-        showToast("오늘은 이미 룰렛을 돌렸어요!");
-        return;
-      }
-      const wheelVisual = document.getElementById("rainbow-wheel-visual");
-      wheelVisual?.classList.add("wheel-spinning");
-      setTimeout(() => wheelVisual?.classList.remove("wheel-spinning"), 700);
-
-      const won = Math.floor(Math.random() * 5) + 1;
-      state.lastWheelDateByChild[childKey] = today;
-      state.stars[childKey] = (Number(state.stars[childKey]) || 0) + won;
-      addStarHistory(childKey, won, "행운의 별 룰렛 당첨");
-      const resEl = document.getElementById("wheel-result-text");
-      if (resEl) resEl.textContent = `🎉 축하해요! 오늘 행운 별 +${won}★ 당첨!`;
-      saveState();
-      renderAll();
-    }
-
-    function handleSendStarGift(event) {
-      if (event) event.preventDefault();
-      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
-      const giftFromEl = document.getElementById("gift-from-select");
-      if (giftFromEl && giftFromEl.value !== state.mode) {
-        giftFromEl.value = state.mode;
-        syncGiftRecipient();
-        showToast("본인 모드에서만 다른 아이에게 별을 보낼 수 있어요!");
-        return;
-      }
-      const fromChild = state.mode;
-      const toChild = fromChild === "ayeon" ? "siyeol" : "ayeon";
-      const amountInput = document.getElementById("gift-amount-input");
-      const amount = Math.max(1, Number(amountInput?.value) || 1);
-      if ((state.stars[fromChild] || 0) < amount) {
-        showToast("선물할 별이 부족해요!");
-        return;
-      }
-      state.stars[fromChild] -= amount;
-      state.stars[toChild] = (Number(state.stars[toChild]) || 0) + amount;
-      const fromLabel = fromChild === "siyeol" ? "시연" : "아연";
-      const toLabel = toChild === "siyeol" ? "시연" : "아연";
-      addStarHistory(fromChild, -amount, `${toLabel}에게 별 선물`);
-      addStarHistory(toChild, amount, `${fromLabel}에게 받은 별 선물`);
-      if (amountInput) amountInput.value = "1";
-      saveState();
-      renderAll();
-      showToast(`${toLabel}에게 별 ${amount}개를 선물했어요!`);
-    }
-
-    function handleCreateCoupon(event) {
-      if (event) event.preventDefault();
-      if (state.mode !== "haein") return;
-      const titleInput = document.getElementById("new-coupon-title-input");
-      const costInput = document.getElementById("new-coupon-cost-input");
-      const title = titleInput ? String(titleInput.value || "").trim() : "";
-      const cost = Math.max(1, Number(costInput?.value) || 5);
-      if (!title) {
-        showToast("쿠폰 이름을 입력해 주세요.");
-        return;
-      }
-      state.coupons.unshift({
-        id: `cp_${Date.now()}_${Math.random().toString(36).slice(2, 5)}`,
-        title,
-        cost
-      });
-      if (titleInput) titleInput.value = "";
-      saveState();
-      renderAll();
-      showToast("새 쿠폰이 등록됐어요!");
-    }
-
-    function deleteCoupon(couponId) {
-      if (state.mode !== "haein") return;
-      state.coupons = state.coupons.filter((c) => c.id !== couponId);
-      saveState();
-      renderAll();
-    }
-
-    function redeemCoupon(couponId) {
-      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
-      const cp = state.coupons.find((c) => c.id === couponId);
-      if (!cp) return;
-      const cost = Math.max(1, Number(cp.cost) || 1);
-      if ((state.stars[state.mode] || 0) < cost) {
-        showToast("별이 부족해요!");
-        return;
-      }
-      state.stars[state.mode] -= cost;
-      state.ownedCoupons.unshift({
-        id: `oc_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-        owner: state.mode,
-        title: cp.title,
-        cost,
-        used: false,
-        acquiredAt: getTodayDateStr()
-      });
-      addStarHistory(state.mode, -cost, `쿠폰 교환: ${cp.title}`);
-      saveState();
-      renderAll();
-      showToast(`'${cp.title}' 쿠폰을 교환했어요!`);
-    }
-
-    function setCouponFilter(filterKey) {
-      state.couponFilter = filterKey === "used" ? "used" : "unused";
-      saveState();
-      renderAll();
-    }
-
-    function useOwnedCoupon(ownedId) {
-      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
-      const item = state.ownedCoupons.find((c) => c.id === ownedId && c.owner === state.mode);
-      if (!item || item.used) return;
-      item.used = true;
-      item.usedAt = getTodayDateStr();
-      state.couponUsageHistory.unshift({
-        id: `uh_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-        owner: item.owner,
-        title: item.title,
-        cost: item.cost || 1,
-        usedAt: item.usedAt
-      });
-      saveState();
-      renderAll();
-      showToast(`'${item.title}' 쿠폰을 사용했어요!`);
-    }
-
-    function deleteCouponUsageItem(usageId) {
-      if (state.mode !== "haein") return;
-      state.couponUsageHistory = state.couponUsageHistory.filter((u) => u.id !== usageId);
-      saveState();
-      renderAll();
-    }
-
-    function clearCouponUsageHistory() {
-      if (state.mode !== "haein") return;
-      state.couponUsageHistory = [];
-      saveState();
-      renderAll();
-      showToast("전체 쿠폰 사용 내역을 삭제했어요.");
-    }
-
-    function handleCouponSuggestion(event) {
-      if (event) event.preventDefault();
-      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
-      const titleInput = document.getElementById("suggest-coupon-title-input");
-      const costInput = document.getElementById("suggest-coupon-cost-input");
-      const title = titleInput ? String(titleInput.value || "").trim() : "";
-      const suggestedCost = Math.max(1, Number(costInput?.value) || 5);
-      if (!title) {
-        showToast("건의할 쿠폰 이름을 입력해 주세요.");
-        return;
-      }
-      state.couponSuggestions.unshift({
-        id: `sg_${Date.now()}_${Math.random().toString(36).slice(2, 5)}`,
-        child: state.mode,
-        title,
-        suggestedCost,
-        status: "pending",
-        createdAt: getTodayDateStr()
-      });
-      if (titleInput) titleInput.value = "";
-      saveState();
-      renderAll();
-      showToast("쿠폰 건의를 보냈어요!");
-    }
-
-    function approveCouponSuggestion(suggestionId) {
-      if (state.mode !== "haein") return;
-      const sg = state.couponSuggestions.find((s) => s.id === suggestionId);
-      if (!sg) return;
-      const costInput = document.getElementById(`approve-cost-${suggestionId}`);
-      const finalCost = Math.max(1, Number(costInput?.value) || Number(sg.suggestedCost) || 5);
-      sg.status = "approved";
-      sg.finalCost = finalCost;
-      state.coupons.unshift({
-        id: `cp_${Date.now()}_${Math.random().toString(36).slice(2, 5)}`,
-        title: sg.title,
-        cost: finalCost
-      });
-      saveState();
-      renderAll();
-      showToast(`'${sg.title}' 쿠폰을 승인해 교환소에 등록했어요!`);
-    }
-
-    function rejectCouponSuggestion(suggestionId) {
-      if (state.mode !== "haein") return;
-      const sg = state.couponSuggestions.find((s) => s.id === suggestionId);
-      if (!sg) return;
-      sg.status = "rejected";
-      saveState();
-      renderAll();
-      showToast("쿠폰 건의를 반려했어요.");
-    }
-
-    function deleteCouponSuggestion(suggestionId) {
-      if (state.mode !== "haein") return;
-      state.couponSuggestions = state.couponSuggestions.filter((s) => s.id !== suggestionId);
-      saveState();
-      renderAll();
-    }
-
-    function clearDecidedCouponSuggestions() {
-      if (state.mode !== "haein") return;
-      state.couponSuggestions = state.couponSuggestions.filter((s) => s.status === "pending");
-      saveState();
-      renderAll();
-      showToast("처리된 건의 내역을 삭제했어요.");
     }
 
     function renderHeaderAndTabs() {
@@ -1786,9 +1251,6 @@
         btn.classList.add(state.mode === m ? "mode-pill-active" : "mode-pill-inactive");
       });
 
-      const tabsBox = document.getElementById("main-tabs-container");
-      if (tabsBox) tabsBox.classList.toggle("hidden", !state.mode);
-
       const tabDaily = document.getElementById("tab-daily");
       const tabStars = document.getElementById("tab-stars");
       if (tabDaily) {
@@ -1800,12 +1262,14 @@
         tabStars.classList.add(state.activeTab === "stars" ? "tab-active" : "tab-inactive");
       }
 
+      const viewDaily = document.getElementById("view-daily");
+      const viewStars = document.getElementById("view-stars");
+      if (viewDaily) viewDaily.classList.toggle("hidden", state.activeTab !== "daily");
+      if (viewStars) viewStars.classList.toggle("hidden", state.activeTab !== "stars");
+
       const titleEl = document.getElementById("header-title");
       const subEl = document.getElementById("header-subtitle");
-      if (!state.mode) {
-        if (titleEl) titleEl.textContent = "🦄 아연·시연 주간 미션 보드";
-        if (subEl) subEl.textContent = "모드를 선택해서 시작해 보세요!";
-      } else if (state.mode === "haein") {
+      if (state.mode === "haein") {
         if (titleEl) titleEl.textContent = "👑 해인 관리자 모드";
         if (subEl) subEl.textContent = "미션·별·쿠폰·비밀번호를 관리할 수 있어요.";
       } else if (state.mode === "siyeol") {
@@ -1815,6 +1279,103 @@
         if (titleEl) titleEl.textContent = "🩷 아연 주간 미션 보드";
         if (subEl) subEl.textContent = "오늘 미션을 완료하고 반짝이는 별을 모아 봐요!";
       }
+    }
+
+    function syncGiftRecipient() {
+      const fromEl = document.getElementById("gift-from-select");
+      const toEl = document.getElementById("gift-to-select");
+      if (!fromEl || !toEl) return;
+      toEl.value = fromEl.value === "ayeon" ? "siyeol" : "ayeon";
+    }
+
+    function cancelEditMission() {
+      state.editingMissionId = null;
+      const titleEl = document.getElementById("mission-title-input");
+      const starEl = document.getElementById("mission-star-input");
+      const heading = document.getElementById("mission-form-heading");
+      const submit = document.getElementById("mission-submit-btn");
+      const cancelBtn = document.getElementById("cancel-edit-mission-btn");
+      if (titleEl) titleEl.value = "";
+      if (starEl) starEl.value = "1";
+      if (heading) heading.textContent = "✏️ 새 미션 등록 (매일 반복)";
+      if (submit) submit.textContent = "미션 등록";
+      if (cancelBtn) cancelBtn.classList.add("hidden");
+    }
+
+    function handleMissionSubmit(event) {
+      if (event) event.preventDefault();
+      if (state.mode !== "haein") {
+        showToast("해인 관리자 모드에서만 미션을 등록할 수 있어요.");
+        return;
+      }
+      const ownerEl = document.getElementById("mission-owner-select");
+      const titleEl = document.getElementById("mission-title-input");
+      const starEl = document.getElementById("mission-star-input");
+      const owner = ownerEl && ownerEl.value === "siyeol" ? "siyeol" : "ayeon";
+      const title = titleEl ? String(titleEl.value || "").trim() : "";
+      const starReward = Math.min(50, Math.max(1, Number(starEl && starEl.value) || 1));
+      if (!title) {
+        showToast("미션 이름을 입력해 주세요.");
+        if (titleEl) titleEl.focus();
+        return;
+      }
+      if (state.editingMissionId) {
+        const target = state.missions.find((m) => m.id === state.editingMissionId);
+        if (target) {
+          target.owner = owner;
+          target.title = title;
+          target.starReward = starReward;
+          target.days = ALL_DAYS.slice();
+        }
+        cancelEditMission();
+      } else {
+        state.missions.push({
+          id: `m_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+          owner,
+          title,
+          starReward,
+          days: ALL_DAYS.slice()
+        });
+      }
+      if (titleEl) titleEl.value = "";
+      if (starEl) starEl.value = "1";
+      saveState();
+      renderAll();
+      showToast("미션이 저장됐어요.");
+    }
+
+    function editMission(missionId) {
+      if (state.mode !== "haein") return;
+      const mission = state.missions.find((m) => m.id === missionId);
+      if (!mission) return;
+      state.editingMissionId = missionId;
+      const ownerEl = document.getElementById("mission-owner-select");
+      const titleEl = document.getElementById("mission-title-input");
+      const starEl = document.getElementById("mission-star-input");
+      const heading = document.getElementById("mission-form-heading");
+      const submit = document.getElementById("mission-submit-btn");
+      const cancelBtn = document.getElementById("cancel-edit-mission-btn");
+      if (ownerEl) ownerEl.value = mission.owner;
+      if (titleEl) titleEl.value = mission.title;
+      if (starEl) starEl.value = mission.starReward || 1;
+      if (heading) heading.textContent = "✏️ 미션 수정";
+      if (submit) submit.textContent = "수정 저장";
+      if (cancelBtn) cancelBtn.classList.remove("hidden");
+      titleEl?.focus();
+    }
+
+    function deleteMission(missionId) {
+      if (state.mode !== "haein") return;
+      const mission = state.missions.find((m) => m.id === missionId);
+      if (!mission) return;
+      state.missions = state.missions.filter((m) => m.id !== missionId);
+      Object.keys(state.checks).forEach((key) => {
+        if (key.endsWith(`__${missionId}`)) delete state.checks[key];
+      });
+      if (state.editingMissionId === missionId) state.editingMissionId = null;
+      saveState();
+      renderAll();
+      showToast("미션을 삭제했어요.");
     }
 
     function renderMissionViews() {
@@ -1828,19 +1389,13 @@
           listEl.innerHTML = '<p class="text-xs text-purple-600 py-2">등록된 미션이 없어요.</p>';
         } else {
           listEl.innerHTML = allMissions.map((m) => {
-            const childName = m.owner === "siyeol" ? "🩵 시연" : "🩷 아연";
-            return `
-              <div class="unicorn-subcard p-3 flex items-center justify-between gap-2">
-                <div class="min-w-0">
-                  <div class="text-sm font-bold text-purple-950">${escapeHtml(m.title)}</div>
-                  <div class="text-xs text-purple-600">${childName} · 매일 반복 · ${Math.max(1, Number(m.starReward) || 1)}★</div>
-                </div>
-                <div class="flex gap-1 shrink-0">
-                  <button type="button" onclick="editMission('${m.id}')" class="unicorn-btn px-2.5 py-1 text-xs">수정</button>
-                  <button type="button" onclick="deleteMission('${m.id}')" class="danger-pill-btn px-2.5 py-1 text-xs">삭제</button>
-                </div>
-              </div>
-            `;
+            const childName = m.owner === "siyeol" ? "시연" : "아연";
+            return `<div class="unicorn-subcard p-3 flex items-center justify-between gap-2">
+              <div class="min-w-0"><div class="text-sm font-bold text-purple-950">${escapeHtml(m.title)}</div>
+              <div class="text-xs text-purple-600">${childName} · 매일 반복 · ${Math.max(1, Number(m.starReward) || 1)}★</div></div>
+              <div class="flex gap-1 shrink-0"><button type="button" onclick="editMission('${m.id}')" class="unicorn-btn px-2.5 py-1 text-xs">수정</button>
+              <button type="button" onclick="deleteMission('${m.id}')" class="danger-pill-btn px-2.5 py-1 text-xs">삭제</button></div>
+            </div>`;
           }).join("");
         }
       }
@@ -1853,55 +1408,448 @@
         } else {
           childEl.innerHTML = dayMissions.map((m) => {
             const checked = Boolean(state.checks[`${dateStr}__${m.id}`]);
+            return `<button type="button" onclick="toggleChildMission('${m.id}')" class="w-full text-left unicorn-subcard p-3 flex items-center gap-3 ${checked ? 'mission-row-checked' : ''}">
+              <span class="w-6 h-6 rounded-lg border-2 ${checked ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-purple-300 bg-white'} flex items-center justify-center font-bold">${checked ? '✓' : ''}</span>
+              <span class="min-w-0 flex-1"><span class="block text-sm font-bold text-purple-950 ${checked ? 'line-through opacity-70' : ''}">${escapeHtml(m.title)}</span>
+              <span class="block text-xs text-amber-600 font-bold">완료하면 ${Math.max(1, Number(m.starReward) || 1)}★</span></span></button>`;
+          }).join("");
+        }
+      }
+    }
+
+    function handleAddSurpriseMission(event) {
+      if (event) event.preventDefault();
+      if (state.mode !== "haein") return;
+      const titleInput = document.getElementById("surprise-title-input");
+      const starInput = document.getElementById("surprise-star-input");
+      const title = titleInput ? String(titleInput.value || "").trim() : "";
+      const starReward = Math.min(50, Math.max(1, Number(starInput?.value) || 2));
+      if (!title) {
+        showToast("깜짝미션 내용을 입력해 주세요.");
+        return;
+      }
+      state.surpriseMissions.unshift({
+        id: `sp_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        title,
+        starReward,
+        claimedBy: null,
+        claimedAt: null
+      });
+      if (titleInput) titleInput.value = "";
+      if (starInput) starInput.value = "2";
+      saveState();
+      renderAll();
+      showToast("깜짝미션이 등록됐어요!");
+    }
+
+    function claimSurpriseMission(surpriseId) {
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const item = state.surpriseMissions.find((s) => s.id === surpriseId);
+      if (!item || item.claimedBy) {
+        showToast("이미 다른 친구가 먼저 완료했어요!");
+        return;
+      }
+      const reward = Math.max(1, Number(item.starReward) || 1);
+      item.claimedBy = state.mode;
+      item.claimedAt = getTodayDateStr();
+      state.stars[state.mode] = (Number(state.stars[state.mode]) || 0) + reward;
+      addStarHistory(state.mode, reward, `깜짝미션 선착순 완료: ${item.title}`);
+      saveState();
+      renderAll();
+      showToast(`선착순 성공! +${reward}★ 획득!`);
+    }
+
+    function deleteSurpriseMission(surpriseId) {
+      if (state.mode !== "haein") return;
+      state.surpriseMissions = state.surpriseMissions.filter((s) => s.id !== surpriseId);
+      saveState();
+      renderAll();
+    }
+
+    function clearAllSurpriseMissions() {
+      if (state.mode !== "haein") return;
+      state.surpriseMissions = [];
+      saveState();
+      renderAll();
+      showToast("깜짝미션 내역을 모두 삭제했어요.");
+    }
+
+    function renderSurpriseViews() {
+      const childBox = document.getElementById("child-surprise-container");
+      const haeinBox = document.getElementById("haein-surprise-list-container");
+      const list = Array.isArray(state.surpriseMissions) ? state.surpriseMissions : [];
+
+      if (childBox) {
+        if (list.length === 0) {
+          childBox.innerHTML = `<div class="text-xs text-purple-600 py-1">진행 중인 깜짝미션이 없어요.</div>`;
+        } else {
+          childBox.innerHTML = list.map((s) => {
+            const reward = Math.max(1, Number(s.starReward) || 1);
+            const isClaimed = Boolean(s.claimedBy);
+            const whoText = s.claimedBy === "siyeol" ? "🩵 시연 완료" : "🩷 아연 완료";
             return `
-              <button type="button" onclick="toggleChildMission('${m.id}')" class="w-full text-left unicorn-subcard p-3 flex items-center gap-3 ${checked ? "mission-row-checked" : ""}">
-                <span class="check-box-anim w-6 h-6 rounded-lg border-2 ${checked ? "bg-emerald-500 border-emerald-500 text-white is-checked" : "border-purple-300 bg-white"} flex items-center justify-center font-bold">${checked ? "✓" : ""}</span>
-                <span class="min-w-0 flex-1">
-                  <span class="block text-sm font-bold text-purple-950 ${checked ? "line-through opacity-70" : ""}">${escapeHtml(m.title)}</span>
-                  <span class="block text-xs text-amber-600 font-bold">완료하면 ${Math.max(1, Number(m.starReward) || 1)}★</span>
-                </span>
-              </button>
+              <div class="unicorn-subcard p-3 flex items-center justify-between gap-2">
+                <div class="min-w-0">
+                  <div class="text-sm font-bold text-purple-950">${escapeHtml(s.title)}</div>
+                  <div class="text-xs font-bold text-amber-600">보상 ${reward}★</div>
+                </div>
+                ${isClaimed
+                  ? `<span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 shrink-0">${whoText}</span>`
+                  : `<button type="button" onclick="claimSurpriseMission('${s.id}')" class="unicorn-btn px-3.5 py-1.5 text-xs shrink-0">내가 먼저 완료!</button>`
+                }
+              </div>
+            `;
+          }).join("");
+        }
+      }
+
+      if (haeinBox) {
+        if (list.length === 0) {
+          haeinBox.innerHTML = `<div class="text-xs text-purple-600 py-1">등록된 깜짝미션이 없어요.</div>`;
+        } else {
+          haeinBox.innerHTML = list.map((s) => {
+            const reward = Math.max(1, Number(s.starReward) || 1);
+            const statusText = s.claimedBy
+              ? `${s.claimedBy === "siyeol" ? "시연" : "아연"} 선착순 완료`
+              : "대기 중";
+            return `
+              <div class="bg-white/85 rounded-xl p-2.5 border border-purple-100 flex items-center justify-between gap-2 text-xs">
+                <div class="min-w-0">
+                  <span class="font-bold text-purple-950">${escapeHtml(s.title)}</span>
+                  <span class="text-amber-600 font-bold ml-1">${reward}★</span>
+                  <span class="text-purple-600 ml-1.5">(${statusText})</span>
+                </div>
+                <button type="button" onclick="deleteSurpriseMission('${s.id}')" class="danger-pill-btn px-2.5 py-1 text-xs shrink-0">삭제</button>
+              </div>
             `;
           }).join("");
         }
       }
     }
 
-    function renderAll() {
-      renderHeaderAndTabs();
-      updateActivityNewBadges();
-      renderHaeinChildPinDisplay();
+    function renderHaeinAchievement() {
+      const box = document.getElementById("haein-achievement-container");
+      const todayLabel = document.getElementById("haein-today-label");
+      const todayKey = getTodayDayKey();
+      const dateStr = getTodayDateStr();
+      if (todayLabel) todayLabel.textContent = `${dateStr} (${DAY_LABELS[todayKey]}요일)`;
+      if (!box) return;
 
-      const introScreen = document.getElementById("intro-screen");
-      const viewDaily = document.getElementById("view-daily");
-      const viewStars = document.getElementById("view-stars");
+      const children = [
+        { key: "ayeon", label: "🩷 아연" },
+        { key: "siyeol", label: "🩵 시연" }
+      ];
 
-      if (!state.mode) {
-        introScreen?.classList.remove("hidden");
-        viewDaily?.classList.add("hidden");
-        viewStars?.classList.add("hidden");
+      box.innerHTML = children.map((ch) => {
+        const list = state.missions.filter((m) => m.owner === ch.key && (!Array.isArray(m.days) || m.days.includes(todayKey)));
+        const done = list.filter((m) => Boolean(state.checks[`${dateStr}__${m.id}`])).length;
+        const total = list.length;
+        const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+        return `
+          <div class="unicorn-subcard p-3.5 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-purple-950">${ch.label}</span>
+              <span class="text-xs font-bold text-pink-700">${done} / ${total} (${pct}%)</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-white/80 overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-pink-400 to-emerald-400" style="width:${pct}%"></div>
+            </div>
+            <div class="text-xs font-bold text-amber-700">보유 별: ${state.stars[ch.key] || 0} ★</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function saveChildStarCount(childKey) {
+      if (state.mode !== "haein") return;
+      const input = document.getElementById(childKey === "siyeol" ? "edit-star-siyeol-input" : "edit-star-ayeon-input");
+      const nextCount = Math.max(0, Math.min(999, Number(input?.value) || 0));
+      const prevCount = Number(state.stars[childKey]) || 0;
+      const diff = nextCount - prevCount;
+      state.stars[childKey] = nextCount;
+      if (diff !== 0) {
+        addStarHistory(childKey, diff, `해인 모드 별 개수 조정 (${prevCount}★ → ${nextCount}★)`);
+      }
+      saveState();
+      renderAll();
+      showToast(`${childKey === "siyeol" ? "시연" : "아연"} 별 개수가 ${nextCount}★로 저장됐어요.`);
+    }
+
+    function setCouponFilter(filterName) {
+      state.couponFilter = filterName === "used" ? "used" : "unused";
+      saveState();
+      renderAll();
+    }
+
+    function useOwnedCoupon(ownedId) {
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const item = state.ownedCoupons.find((c) => c.id === ownedId && c.owner === state.mode);
+      if (!item || item.used) return;
+      item.used = true;
+      item.usedAt = getTodayDateStr();
+      state.couponUsageHistory.unshift({
+        id: `uh_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        ownedId: item.id,
+        owner: item.owner,
+        title: item.title,
+        cost: Number(item.cost) || 1,
+        usedAt: item.usedAt
+      });
+      saveState();
+      renderAll();
+      showToast(`'${item.title}' 쿠폰을 사용했어요!`);
+    }
+
+    function deleteUsedCouponItem(usageId) {
+      if (state.mode !== "haein") return;
+      const idx = state.couponUsageHistory.findIndex((u) => u.id === usageId);
+      if (idx === -1) return;
+      const target = state.couponUsageHistory[idx];
+      state.couponUsageHistory.splice(idx, 1);
+      if (target && target.ownedId) {
+        state.ownedCoupons = state.ownedCoupons.filter((oc) => oc.id !== target.ownedId);
+      }
+      saveState();
+      renderAll();
+      showToast("쿠폰 사용 내역을 삭제했어요.");
+    }
+
+    function clearCouponUsageHistory() {
+      if (state.mode !== "haein") return;
+      const removedOwnedIds = new Set(state.couponUsageHistory.map((u) => u.ownedId).filter(Boolean));
+      state.couponUsageHistory = [];
+      state.ownedCoupons = state.ownedCoupons.filter((oc) => !oc.used && !removedOwnedIds.has(oc.id));
+      saveState();
+      renderAll();
+      showToast("전체 쿠폰 사용 내역을 삭제했어요.");
+    }
+
+    function renderOwnedAndUsageCoupons() {
+      const ownedContainer = document.getElementById("owned-coupons-container");
+      const unusedBtn = document.getElementById("coupon-filter-unused");
+      const usedBtn = document.getElementById("coupon-filter-used");
+      const activeChild = state.mode === "siyeol" ? "siyeol" : "ayeon";
+      const childCoupons = state.ownedCoupons.filter((c) => c.owner === activeChild);
+      const unusedList = childCoupons.filter((c) => !c.used);
+      const usedList = childCoupons.filter((c) => c.used);
+
+      if (unusedBtn) {
+        unusedBtn.textContent = `사용가능 (${unusedList.length})`;
+        unusedBtn.className = `px-3 py-1 rounded-full text-xs font-bold transition ${state.couponFilter === "unused" ? "mode-pill-active" : "mode-pill-inactive"}`;
+      }
+      if (usedBtn) {
+        usedBtn.textContent = `사용쿠폰완료 (${usedList.length})`;
+        usedBtn.className = `px-3 py-1 rounded-full text-xs font-bold transition ${state.couponFilter === "used" ? "mode-pill-active" : "mode-pill-inactive"}`;
+      }
+
+      if (ownedContainer) {
+        const listToShow = state.couponFilter === "used" ? usedList : unusedList;
+        if (listToShow.length === 0) {
+          ownedContainer.innerHTML = `<div class="text-xs text-purple-600 py-2">${state.couponFilter === "used" ? "사용 완료한 쿠폰이 없어요." : "보유 중인 쿠폰이 없어요."}</div>`;
+        } else {
+          ownedContainer.innerHTML = listToShow.map((oc) => `
+            <div class="unicorn-subcard p-3 flex items-center justify-between gap-2">
+              <div class="min-w-0">
+                <div class="text-sm font-bold text-purple-950">${escapeHtml(oc.title)}</div>
+                <div class="text-xs text-purple-600">${oc.used ? `사용 완료 (${oc.usedAt || ""})` : `교환일: ${oc.acquiredAt || ""}`}</div>
+              </div>
+              ${oc.used
+                ? `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 shrink-0">완료</span>`
+                : `<button type="button" onclick="useOwnedCoupon('${oc.id}')" class="unicorn-btn px-3 py-1.5 text-xs shrink-0">사용하기</button>`
+              }
+            </div>
+          `).join("");
+        }
+      }
+
+      const usageContainer = document.getElementById("haein-coupon-usage-container");
+      if (usageContainer) {
+        if (state.couponUsageHistory.length === 0) {
+          usageContainer.innerHTML = `<div class="text-xs text-purple-600 py-2">쿠폰 사용 내역이 없어요.</div>`;
+        } else {
+          usageContainer.innerHTML = state.couponUsageHistory.map((u) => {
+            const who = u.owner === "siyeol" ? "🩵 시연" : "🩷 아연";
+            return `
+              <div class="unicorn-subcard p-3 flex items-center justify-between gap-2 text-xs">
+                <div class="min-w-0">
+                  <span class="font-bold text-purple-950">${who} · ${escapeHtml(u.title)}</span>
+                  <span class="text-purple-600 ml-1.5">(${u.usedAt || ""})</span>
+                </div>
+                <button type="button" onclick="deleteUsedCouponItem('${u.id}')" class="danger-pill-btn px-2.5 py-1 text-xs shrink-0">삭제</button>
+              </div>
+            `;
+          }).join("");
+        }
+      }
+    }
+
+    function handleCouponSuggestion(event) {
+      if (event) event.preventDefault();
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const titleInput = document.getElementById("suggest-coupon-title-input");
+      const costInput = document.getElementById("suggest-coupon-cost-input");
+      const title = titleInput ? String(titleInput.value || "").trim() : "";
+      const cost = Math.max(1, Number(costInput?.value) || 5);
+      if (!title) {
+        showToast("건의할 쿠폰 이름을 입력해 주세요.");
+        return;
+      }
+      state.couponSuggestions.unshift({
+        id: `cs_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        author: state.mode,
+        title,
+        cost,
+        status: "pending",
+        createdAt: getTodayDateStr()
+      });
+      if (titleInput) titleInput.value = "";
+      if (costInput) costInput.value = "5";
+      saveState();
+      renderAll();
+      showToast("쿠폰 건의를 해인에게 보냈어요!");
+    }
+
+    function decideCouponSuggestion(suggestionId, decision) {
+      if (state.mode !== "haein") return;
+      const item = state.couponSuggestions.find((s) => s.id === suggestionId);
+      if (!item) return;
+      if (decision === "approved") {
+        item.status = "approved";
+        state.coupons.unshift({
+          id: `cp_${Date.now()}_${Math.random().toString(36).slice(2, 5)}`,
+          title: item.title,
+          cost: Math.max(1, Number(item.cost) || 5)
+        });
+        showToast(`'${item.title}' 쿠폰을 승인해 교환소에 등록했어요!`);
+      } else {
+        item.status = "rejected";
+        showToast("쿠폰 건의를 반려했어요.");
+      }
+      saveState();
+      renderAll();
+    }
+
+    function clearDecidedCouponSuggestions() {
+      if (state.mode !== "haein") return;
+      state.couponSuggestions = state.couponSuggestions.filter((s) => s.status === "pending");
+      saveState();
+      renderAll();
+      showToast("처리 완료된 건의 내역을 삭제했어요.");
+    }
+
+    function renderCouponSuggestions() {
+      const container = document.getElementById("coupon-suggestions-container");
+      if (!container) return;
+      const isHaein = state.mode === "haein";
+      const list = isHaein
+        ? state.couponSuggestions
+        : state.couponSuggestions.filter((s) => s.author === state.mode);
+
+      if (!list || list.length === 0) {
+        container.innerHTML = `<div class="text-xs text-purple-600 py-1">등록된 쿠폰 건의가 없어요.</div>`;
         return;
       }
 
-      introScreen?.classList.add("hidden");
-      viewDaily?.classList.toggle("hidden", state.activeTab !== "daily");
-      viewStars?.classList.toggle("hidden", state.activeTab !== "stars");
+      container.innerHTML = list.map((s) => {
+        const who = s.author === "siyeol" ? "🩵 시연" : "🩷 아연";
+        let statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">검토 중</span>`;
+        if (s.status === "approved") {
+          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">승인됨</span>`;
+        } else if (s.status === "rejected") {
+          statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700">반려됨</span>`;
+        }
 
+        const actionButtons = isHaein && s.status === "pending"
+          ? `<div class="flex items-center gap-1.5 shrink-0">
+               <button type="button" onclick="decideCouponSuggestion('${s.id}', 'approved')" class="unicorn-btn px-2.5 py-1 text-xs">승인</button>
+               <button type="button" onclick="decideCouponSuggestion('${s.id}', 'rejected')" class="danger-pill-btn px-2.5 py-1 text-xs">반려</button>
+             </div>`
+          : statusBadge;
+
+        return `
+          <div class="unicorn-subcard p-3 flex items-center justify-between gap-2">
+            <div class="min-w-0">
+              <div class="text-sm font-bold text-purple-950">${escapeHtml(s.title)} <span class="text-xs text-amber-600">(${Number(s.cost) || 5}★)</span></div>
+              <div class="text-xs text-purple-600">${who} · ${s.createdAt || ""}</div>
+            </div>
+            ${actionButtons}
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderWheelStatus() {
+      const badge = document.getElementById("wheel-status-badge");
+      const btn = document.getElementById("spin-wheel-btn");
+      if (!badge || !btn) return;
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const today = getTodayDateStr();
+      const alreadySpun = state.lastWheelDateByChild[state.mode] === today;
+      if (alreadySpun) {
+        badge.textContent = "오늘 참여 완료";
+        badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700";
+        btn.disabled = true;
+        btn.classList.add("opacity-50", "cursor-not-allowed");
+      } else {
+        badge.textContent = "오늘 도전 가능";
+        badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800";
+        btn.disabled = false;
+        btn.classList.remove("opacity-50", "cursor-not-allowed");
+      }
+    }
+
+    function renderAll() {
+      window.__boardState = state;
+      const introScreen = document.getElementById("intro-mode-screen");
+      const mainWrapper = document.getElementById("main-board-wrapper");
+
+      if (!hasEnteredModeThisSession) {
+        if (introScreen) introScreen.classList.remove("hidden");
+        if (mainWrapper) mainWrapper.classList.add("hidden");
+        return;
+      }
+
+      if (introScreen) introScreen.classList.add("hidden");
+      if (mainWrapper) mainWrapper.classList.remove("hidden");
+
+      renderHeaderAndTabs();
       renderMissionViews();
+      renderSurpriseViews();
+      renderHaeinAchievement();
+      renderOwnedAndUsageCoupons();
+      renderCouponSuggestions();
+      renderWheelStatus();
+      updateActivityNewBadges();
+      renderHaeinChildPinDisplay();
 
       const isHaein = state.mode === "haein";
       const isChild = state.mode === "ayeon" || state.mode === "siyeol";
 
-      const childPinSection = document.getElementById("child-pin-settings-section");
-      const childPinTitle = document.getElementById("child-pin-settings-title");
-      if (childPinSection) childPinSection.classList.toggle("hidden", !isChild);
-      if (isChild && childPinTitle) {
-        childPinTitle.textContent = `🔐 ${state.mode === "siyeol" ? "시연" : "아연"} 비밀번호 변경`;
-      }
+      const editAyeonInput = document.getElementById("edit-star-ayeon-input");
+      const editSiyeolInput = document.getElementById("edit-star-siyeol-input");
+      if (editAyeonInput) editAyeonInput.value = state.stars.ayeon;
+      if (editSiyeolInput) editSiyeolInput.value = state.stars.siyeol;
 
-      syncGiftRecipient();
-
-      const haeinOnlyIds = [
+      const allModeSpecificIds = [
+        "haein-mission-form-section",
+        "haein-mission-list-section",
+        "haein-achievement-section",
+        "haein-surprise-section",
+        "haein-pin-settings-section",
+        "haein-star-edit-box",
+        "haein-coupon-create-box",
+        "haein-coupon-usage-section",
+        "clear-star-history-btn",
+        "clear-decided-suggestions-btn",
+        "child-surprise-section",
+        "child-checklist-section",
+        "child-pin-settings-section",
+        "lucky-wheel-section",
+        "star-gift-section",
+        "child-owned-coupons-section",
+        "coupon-suggest-form"
+      ];
+      const haeinOnlyIds = new Set([
         "haein-mission-form-section",
         "haein-mission-list-section",
         "haein-achievement-section",
@@ -1912,8 +1860,8 @@
         "haein-coupon-usage-section",
         "clear-star-history-btn",
         "clear-decided-suggestions-btn"
-      ];
-      const childOnlyIds = [
+      ]);
+      const childOnlyIds = new Set([
         "child-surprise-section",
         "child-checklist-section",
         "child-pin-settings-section",
@@ -1921,138 +1869,78 @@
         "star-gift-section",
         "child-owned-coupons-section",
         "coupon-suggest-form"
-      ];
+      ]);
 
-      haeinOnlyIds.forEach((id) => {
-        document.getElementById(id)?.classList.toggle("hidden", !isHaein);
+      allModeSpecificIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const shouldShow = isHaein ? haeinOnlyIds.has(id) : childOnlyIds.has(id);
+        el.classList.toggle("hidden", !shouldShow);
       });
-      childOnlyIds.forEach((id) => {
-        document.getElementById(id)?.classList.toggle("hidden", !isChild);
-      });
 
-      if (isHaein) {
-        const todayLabel = document.getElementById("haein-today-label");
-        if (todayLabel) todayLabel.textContent = `${getTodayDateStr()} (${DAY_LABELS[getTodayDayKey()]})`;
+      const childPinTitle = document.getElementById("child-pin-settings-title");
+      const childPinForm = document.getElementById("child-pin-change-form");
+      if (isChild && childPinTitle && childPinForm) {
+        const label = state.mode === "siyeol" ? "시연" : "아연";
+        childPinTitle.textContent = `🔐 ${label} 비밀번호 변경`;
+        childPinForm.onsubmit = (e) => handleChangeChildPin(e, state.mode);
+      }
 
-        const achEl = document.getElementById("haein-achievement-container");
-        if (achEl) {
-          const todayKey = getTodayDayKey();
-          const dateStr = getTodayDateStr();
-          achEl.innerHTML = ["ayeon", "siyeol"].map((ck) => {
-            const label = ck === "siyeol" ? "🩵 시연" : "🩷 아연";
-            const cMissions = state.missions.filter((m) => m.owner === ck && (!Array.isArray(m.days) || m.days.includes(todayKey)));
-            const done = cMissions.filter((m) => Boolean(state.checks[`${dateStr}__${m.id}`])).length;
-            const total = cMissions.length;
-            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-            return `
-              <div class="unicorn-subcard p-3.5 space-y-1.5">
-                <div class="flex items-center justify-between">
-                  <span class="text-sm font-bold text-purple-950">${label}</span>
-                  <span class="text-xs font-bold text-amber-600">${state.stars[ck]} ★</span>
-                </div>
-                <div class="text-xs text-purple-700">오늘 미션: ${done} / ${total} (${pct}%)</div>
-              </div>
-            `;
-          }).join("");
-        }
-
-        const hSurpEl = document.getElementById("haein-surprise-list-container");
-        if (hSurpEl) {
-          hSurpEl.innerHTML = state.surpriseMissions.length === 0
-            ? `<div class="text-xs text-purple-600 py-1">등록된 깜짝미션이 없어요.</div>`
-            : state.surpriseMissions.map((sm) => `
-              <div class="unicorn-subcard p-2.5 flex items-center justify-between gap-2 text-xs">
-                <div>
-                  <span class="font-bold text-purple-950">${escapeHtml(sm.title)}</span>
-                  <span class="text-amber-600 font-bold ml-1">+${sm.stars}★</span>
-                  <span class="text-purple-600 ml-1">${sm.claimedBy ? `(${sm.claimedBy === "siyeol" ? "시연" : "아연"} 완료)` : "(대기중)"}</span>
-                </div>
-                <button type="button" onclick="deleteSurpriseMission('${sm.id}')" class="danger-pill-btn px-2 py-0.5 text-xs">삭제</button>
-              </div>
-            `).join("");
-        }
-
-        const editAyeonInput = document.getElementById("edit-star-ayeon-input");
-        const editSiyeolInput = document.getElementById("edit-star-siyeol-input");
-        if (editAyeonInput && document.activeElement !== editAyeonInput) editAyeonInput.value = state.stars.ayeon;
-        if (editSiyeolInput && document.activeElement !== editSiyeolInput) editSiyeolInput.value = state.stars.siyeol;
+      const giftFromEl = document.getElementById("gift-from-select");
+      const giftToEl = document.getElementById("gift-to-select");
+      if (isChild && giftFromEl && giftToEl) {
+        giftFromEl.value = state.mode;
+        giftFromEl.disabled = true;
+        giftToEl.value = state.mode === "ayeon" ? "siyeol" : "ayeon";
+      } else if (giftFromEl) {
+        giftFromEl.disabled = false;
       }
 
       if (isChild) {
         const titleEl = document.getElementById("child-checklist-title");
         const dateSubEl = document.getElementById("child-checklist-date-sub");
         const todayKey = getTodayDayKey();
-        const childName = state.mode === "siyeol" ? "시연" : "아연";
-        if (titleEl) titleEl.textContent = `✨ ${childName}의 오늘 미션`;
+        if (titleEl) titleEl.textContent = `✨ ${state.mode === "siyeol" ? "시연" : "아연"}의 오늘 미션`;
         if (dateSubEl) dateSubEl.textContent = `${getTodayDateStr()} (${DAY_LABELS[todayKey]}요일)`;
 
-        const dayMissions = state.missions.filter((m) => m.owner === state.mode && (!Array.isArray(m.days) || m.days.includes(todayKey)));
+        const dayKeyForMissions = getTodayDayKey();
+        const dayMissions = state.missions.filter((m) => m.owner === state.mode && (!Array.isArray(m.days) || m.days.includes(dayKeyForMissions)));
         const dateStr = getTodayDateStr();
         const doneCount = dayMissions.filter((m) => Boolean(state.checks[`${dateStr}__${m.id}`])).length;
         const totalCount = dayMissions.length;
         const rate = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
 
-        document.getElementById("child-checklist-rate").textContent = `${rate}%`;
-        document.getElementById("child-checklist-progress").textContent = `${doneCount} / ${totalCount} 완료`;
-        document.getElementById("child-checklist-bar").style.width = `${rate}%`;
+        const rateEl = document.getElementById("child-checklist-rate");
+        const progEl = document.getElementById("child-checklist-progress");
+        const barEl = document.getElementById("child-checklist-bar");
+        if (rateEl) rateEl.textContent = `${rate}%`;
+        if (progEl) progEl.textContent = `${doneCount} / ${totalCount} 완료`;
+        if (barEl) barEl.style.width = `${rate}%`;
 
         const weeklyBox = document.getElementById("child-weekly-summary-box");
         if (weeklyBox) {
-          const weekDates = getWeekDateList();
+          const weekKey = getCurrentWeekKey();
+          const now = new Date();
+          const dayOfWeek = (now.getDay() + 6) % 7;
+          const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek);
           let completedDays = 0;
-          const dayBadges = weekDates.map(({ dayKey, dateStr: ds }) => {
+          const dayBadges = ALL_DAYS.map((dKey, idx) => {
+            const dDate = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + idx);
+            const y = dDate.getFullYear();
+            const m = String(dDate.getMonth() + 1).padStart(2, "0");
+            const d = String(dDate.getDate()).padStart(2, "0");
+            const ds = `${y}-${m}-${d}`;
             const dayAllDone = totalCount > 0 && dayMissions.every((mItem) => Boolean(state.checks[`${ds}__${mItem.id}`]));
             if (dayAllDone) completedDays += 1;
-            return `<span class="px-2 py-0.5 rounded-full font-bold ${dayAllDone ? "bg-emerald-100 text-emerald-700" : "bg-purple-50 text-purple-500"}">${DAY_LABELS[dayKey]}${dayAllDone ? "✓" : ""}</span>`;
+            return `<span class="px-2 py-0.5 rounded-full font-bold ${dayAllDone ? "bg-emerald-100 text-emerald-700" : "bg-purple-50 text-purple-500"}">${DAY_LABELS[dKey]}${dayAllDone ? "✓" : ""}</span>`;
           }).join("");
           weeklyBox.innerHTML = `
-            <span class="font-bold text-purple-900">📅 주간 달성: ${completedDays}/7일 · 올클리어 데일리 +5★ / 주간 +10★</span>
+            <span class="font-bold text-purple-900">📅 주간 달성: ${completedDays}/7일 (${weekKey.replace("week_", "")}주)</span>
             <div class="flex items-center gap-1 flex-wrap">${dayBadges}</div>
           `;
         }
-
-        const cSurpEl = document.getElementById("child-surprise-container");
-        if (cSurpEl) {
-          cSurpEl.innerHTML = state.surpriseMissions.length === 0
-            ? `<p class="text-xs text-purple-600 py-1">진행 중인 깜짝미션이 없어요.</p>`
-            : state.surpriseMissions.map((sm) => {
-              const claimedLabel = sm.claimedBy
-                ? `${sm.claimedBy === "siyeol" ? "🩵 시연" : "🩷 아연"} 선착순 완료!`
-                : null;
-              return `
-                <div class="unicorn-subcard p-3 flex items-center justify-between gap-2">
-                  <div class="min-w-0">
-                    <div class="text-sm font-bold text-purple-950">${escapeHtml(sm.title)}</div>
-                    <div class="text-xs font-bold text-amber-600">보상 +${sm.stars}★</div>
-                  </div>
-                  ${claimedLabel
-                    ? `<span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 shrink-0">${claimedLabel}</span>`
-                    : `<button type="button" onclick="claimSurpriseMission('${sm.id}')" class="unicorn-btn px-3 py-1.5 text-xs shrink-0">선착순 완료</button>`
-                  }
-                </div>
-              `;
-            }).join("");
-        }
-
-        const wheelBadge = document.getElementById("wheel-status-badge");
-        const spinBtn = document.getElementById("spin-wheel-btn");
-        const alreadySpun = state.lastWheelDateByChild[state.mode] === getTodayDateStr();
-        if (wheelBadge) {
-          wheelBadge.textContent = alreadySpun ? "오늘 참여 완료" : "오늘 도전 가능";
-        }
-        if (spinBtn) {
-          spinBtn.disabled = alreadySpun;
-          spinBtn.classList.toggle("opacity-50", alreadySpun);
-          spinBtn.classList.toggle("cursor-not-allowed", alreadySpun);
-        }
-
-        const myStarBadge = document.getElementById("gift-my-star-badge");
-        if (myStarBadge) {
-          myStarBadge.textContent = `내 별 ${state.stars[state.mode]}★`;
-        }
       }
 
-      // 보유 별 현황
       const balancesEl = document.getElementById("star-balances-container");
       if (balancesEl) {
         const cards = isHaein
@@ -2084,13 +1972,13 @@
         tierBadge.textContent = getStarTierLabel(targetCount);
       }
 
-      // 별 적립/사용 내역
       const historyEl = document.getElementById("star-history-container");
       if (historyEl) {
         const items = isHaein ? state.starHistory : state.starHistory.filter((h) => h.child === state.mode);
-        historyEl.innerHTML = !items || items.length === 0
-          ? `<div class="text-xs text-purple-600 py-2">아직 별 내역이 없어요.</div>`
-          : items.map((h) => {
+        if (!items || items.length === 0) {
+          historyEl.innerHTML = `<div class="text-xs text-purple-600 py-2">아직 별 내역이 없어요.</div>`;
+        } else {
+          historyEl.innerHTML = items.map((h) => {
             const deltaNum = Number(h.delta) || 0;
             const sign = deltaNum >= 0 ? `+${deltaNum}` : `${deltaNum}`;
             const who = h.child === "siyeol" ? "시연" : "아연";
@@ -2101,15 +1989,16 @@
               </div>
             `;
           }).join("");
+        }
       }
 
-      // 쿠폰 교환소
       const shopEl = document.getElementById("coupon-shop-container");
       if (shopEl) {
         const activeChild = isHaein ? "ayeon" : state.mode;
-        shopEl.innerHTML = state.coupons.length === 0
-          ? `<div class="text-xs text-purple-600 py-2">등록된 쿠폰이 없어요.</div>`
-          : state.coupons.map((cp) => {
+        if (state.coupons.length === 0) {
+          shopEl.innerHTML = `<div class="text-xs text-purple-600 py-2">등록된 쿠폰이 없어요.</div>`;
+        } else {
+          shopEl.innerHTML = state.coupons.map((cp) => {
             const canAfford = (state.stars[activeChild] || 0) >= (Number(cp.cost) || 0);
             return `
               <div class="unicorn-subcard p-3 flex items-center justify-between gap-2">
@@ -2124,134 +2013,277 @@
               </div>
             `;
           }).join("");
+        }
       }
 
       const buyerBadge = document.getElementById("coupon-buyer-badge");
       if (buyerBadge) {
         buyerBadge.textContent = isHaein ? "해인 관리 중" : `${state.mode === "siyeol" ? "🩵 시연" : "🩷 아연"} 보유 ${state.stars[state.mode]}★`;
       }
+    }
 
-      // 보유쿠폰함 (아연·시연)
-      if (isChild) {
-        const myAll = state.ownedCoupons.filter((c) => c.owner === state.mode);
-        const unusedList = myAll.filter((c) => !c.used);
-        const usedList = myAll.filter((c) => Boolean(c.used));
-        const unusedBtn = document.getElementById("coupon-filter-unused");
-        const usedBtn = document.getElementById("coupon-filter-used");
-        if (unusedBtn) {
-          unusedBtn.textContent = `사용가능 (${unusedList.length})`;
-          unusedBtn.className = `px-3 py-1 rounded-full text-xs font-bold transition ${state.couponFilter === "unused" ? "mode-pill-active" : "mode-pill-inactive"}`;
-        }
-        if (usedBtn) {
-          usedBtn.textContent = `사용완료 (${usedList.length})`;
-          usedBtn.className = `px-3 py-1 rounded-full text-xs font-bold transition ${state.couponFilter === "used" ? "mode-pill-active" : "mode-pill-inactive"}`;
-        }
+    function toggleChildMission(missionId) {
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const mission = state.missions.find((m) => m.id === missionId);
+      if (!mission) return;
+      const childKey = state.mode;
+      const dateStr = getTodayDateStr();
+      const slotKey = `${dateStr}__${missionId}`;
+      const reward = Math.max(1, Number(mission.starReward) || 1);
+      const nextChecked = !Boolean(state.checks[slotKey]);
+      state.checks[slotKey] = nextChecked;
 
-        const shownCoupons = state.couponFilter === "used" ? usedList : unusedList;
-        const ownedContainer = document.getElementById("owned-coupons-container");
-        if (ownedContainer) {
-          ownedContainer.innerHTML = shownCoupons.length === 0
-            ? `<div class="text-xs text-purple-600 py-2">${state.couponFilter === "used" ? "사용 완료된 쿠폰이 없어요." : "보유 중인 쿠폰이 없어요."}</div>`
-            : shownCoupons.map((oc) => `
-              <div class="unicorn-subcard p-3 flex items-center justify-between gap-2">
-                <div class="min-w-0">
-                  <div class="text-sm font-bold text-purple-950">${escapeHtml(oc.title)}</div>
-                  <div class="text-xs text-purple-600">${oc.used ? `사용완료 (${oc.usedAt || ""})` : `교환일: ${oc.acquiredAt || ""}`}</div>
-                </div>
-                ${oc.used
-                  ? `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 shrink-0">사용됨</span>`
-                  : `<button type="button" onclick="useOwnedCoupon('${oc.id}')" class="unicorn-btn px-3 py-1.5 text-xs shrink-0">사용하기</button>`
-                }
-              </div>
-            `).join("");
+      if (nextChecked) {
+        if (!state.rewardedSlots[slotKey]) {
+          state.rewardedSlots[slotKey] = true;
+          state.stars[childKey] = (Number(state.stars[childKey]) || 0) + reward;
+          addStarHistory(childKey, reward, `오늘 미션 완료: ${mission.title}`);
         }
+      } else if (state.rewardedSlots[slotKey]) {
+        delete state.rewardedSlots[slotKey];
+        state.stars[childKey] = Math.max(0, (Number(state.stars[childKey]) || 0) - reward);
+        addStarHistory(childKey, -reward, `미션 체크 취소: ${mission.title}`);
       }
 
-      // 전체 쿠폰 사용 내역 (해인)
-      if (isHaein) {
-        const usageContainer = document.getElementById("haein-coupon-usage-container");
-        if (usageContainer) {
-          usageContainer.innerHTML = state.couponUsageHistory.length === 0
-            ? `<div class="text-xs text-purple-600 py-2">사용된 쿠폰 내역이 없어요.</div>`
-            : state.couponUsageHistory.map((u) => {
-              const who = u.owner === "siyeol" ? "🩵 시연" : "🩷 아연";
-              return `
-                <div class="unicorn-subcard p-2.5 flex items-center justify-between gap-2 text-xs">
-                  <div class="min-w-0">
-                    <span class="font-bold text-purple-950">[${who}] ${escapeHtml(u.title)}</span>
-                    <span class="text-purple-600 ml-1">(${u.usedAt || ""})</span>
-                  </div>
-                  <button type="button" onclick="deleteCouponUsageItem('${u.id}')" class="danger-pill-btn px-2 py-0.5 text-xs shrink-0">삭제</button>
-                </div>
-              `;
-            }).join("");
-        }
+      const childMissions = state.missions.filter((m) => m.owner === childKey);
+      const dailyBonusKey = `daily_all_${childKey}_${dateStr}`;
+      const allDailyDone = childMissions.length > 0 && childMissions.every((m) => Boolean(state.checks[`${dateStr}__${m.id}`]));
+      if (allDailyDone && !state.rewardedSlots[dailyBonusKey]) {
+        state.rewardedSlots[dailyBonusKey] = true;
+        state.stars[childKey] = (Number(state.stars[childKey]) || 0) + 5;
+        addStarHistory(childKey, 5, "오늘의 미션 전체 완료 보너스");
+        showToast("오늘 미션 올클리어! 보너스 +5★");
+      } else if (!allDailyDone && state.rewardedSlots[dailyBonusKey]) {
+        delete state.rewardedSlots[dailyBonusKey];
+        state.stars[childKey] = Math.max(0, (Number(state.stars[childKey]) || 0) - 5);
+        addStarHistory(childKey, -5, "오늘의 미션 미완료로 보너스 회수");
       }
 
-      // 쿠폰 건의함
-      const sugContainer = document.getElementById("coupon-suggestions-container");
-      if (sugContainer) {
-        const list = isHaein
-          ? state.couponSuggestions
-          : state.couponSuggestions.filter((s) => s.child === state.mode);
-        sugContainer.innerHTML = list.length === 0
-          ? `<div class="text-xs text-purple-600 py-2">등록된 쿠폰 건의가 없어요.</div>`
-          : list.map((sg) => {
-            const who = sg.child === "siyeol" ? "🩵 시연" : "🩷 아연";
-            const statusBadge = sg.status === "approved"
-              ? `<span class="px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">승인됨 (${sg.finalCost || sg.suggestedCost || 5}★)</span>`
-              : sg.status === "rejected"
-                ? `<span class="px-2 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-700">반려됨</span>`
-                : `<span class="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">검토중</span>`;
-
-            const adminActionHtml = isHaein ? `
-              <div class="flex flex-wrap items-center gap-1.5 mt-2 pt-2 border-t border-purple-100">
-                ${sg.status === "pending" ? `
-                  <input id="approve-cost-${sg.id}" type="number" min="1" max="200" value="${Number(sg.suggestedCost) || 5}" class="w-16 px-2 py-1 rounded-lg border border-purple-200 bg-white text-xs font-bold text-purple-950" />
-                  <button type="button" onclick="approveCouponSuggestion('${sg.id}')" class="unicorn-btn px-2.5 py-1 text-xs">승인</button>
-                  <button type="button" onclick="rejectCouponSuggestion('${sg.id}')" class="soft-btn px-2.5 py-1 text-xs">반려</button>
-                ` : ""}
-                <button type="button" onclick="deleteCouponSuggestion('${sg.id}')" class="danger-pill-btn px-2 py-1 text-xs">삭제</button>
-              </div>
-            ` : "";
-
-            return `
-              <div class="unicorn-subcard p-3">
-                <div class="flex items-center justify-between gap-2">
-                  <div class="text-sm font-bold text-purple-950">${who} · ${escapeHtml(sg.title)} <span class="text-xs text-amber-600">(희망 ${Number(sg.suggestedCost) || 5}★)</span></div>
-                  ${statusBadge}
-                </div>
-                <div class="text-xs text-purple-500 mt-0.5">${sg.createdAt || ""}</div>
-                ${adminActionHtml}
-              </div>
-            `;
-          }).join("");
+      const weekKey = getCurrentWeekKey();
+      const weeklyBonusKey = `weekly_all_${childKey}_${weekKey}`;
+      const now = new Date();
+      const dayOfWeek = (now.getDay() + 6) % 7;
+      const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek);
+      const allWeeklyDone = childMissions.length > 0 && ALL_DAYS.every((_, idx) => {
+        const dDate = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + idx);
+        const y = dDate.getFullYear();
+        const m = String(dDate.getMonth() + 1).padStart(2, "0");
+        const d = String(dDate.getDate()).padStart(2, "0");
+        const ds = `${y}-${m}-${d}`;
+        return childMissions.every((mItem) => Boolean(state.checks[`${ds}__${mItem.id}`]));
+      });
+      if (allWeeklyDone && !state.rewardedSlots[weeklyBonusKey]) {
+        state.rewardedSlots[weeklyBonusKey] = true;
+        state.stars[childKey] = (Number(state.stars[childKey]) || 0) + 10;
+        addStarHistory(childKey, 10, "주간 올클리어 보너스");
+        showToast("주간 미션 올클리어! 보너스 +10★");
+      } else if (!allWeeklyDone && state.rewardedSlots[weeklyBonusKey]) {
+        delete state.rewardedSlots[weeklyBonusKey];
+        state.stars[childKey] = Math.max(0, (Number(state.stars[childKey]) || 0) - 10);
+        addStarHistory(childKey, -10, "주간 미완료로 보너스 회수");
       }
+
+      saveState();
+      renderAll();
+    }
+
+    function redeemCoupon(couponId) {
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const cp = state.coupons.find((c) => c.id === couponId);
+      if (!cp) return;
+      const cost = Math.max(1, Number(cp.cost) || 1);
+      if ((state.stars[state.mode] || 0) < cost) {
+        showToast("별이 부족해요!");
+        return;
+      }
+      state.stars[state.mode] -= cost;
+      state.ownedCoupons.unshift({
+        id: `oc_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+        owner: state.mode,
+        title: cp.title,
+        cost,
+        used: false,
+        acquiredAt: getTodayDateStr()
+      });
+      addStarHistory(state.mode, -cost, `쿠폰 교환: ${cp.title}`);
+      saveState();
+      renderAll();
+      showToast(`'${cp.title}' 쿠폰을 교환했어요!`);
+    }
+
+    function deleteCoupon(couponId) {
+      if (state.mode !== "haein") return;
+      state.coupons = state.coupons.filter((c) => c.id !== couponId);
+      saveState();
+      renderAll();
+    }
+
+    function handleCreateCoupon(event) {
+      if (event) event.preventDefault();
+      if (state.mode !== "haein") return;
+      const titleInput = document.getElementById("new-coupon-title-input");
+      const costInput = document.getElementById("new-coupon-cost-input");
+      const title = titleInput ? String(titleInput.value || "").trim() : "";
+      const cost = Math.max(1, Number(costInput?.value) || 5);
+      if (!title) {
+        showToast("쿠폰 이름을 입력해 주세요.");
+        return;
+      }
+      state.coupons.unshift({
+        id: `cp_${Date.now()}`,
+        title,
+        cost
+      });
+      if (titleInput) titleInput.value = "";
+      saveState();
+      renderAll();
+      showToast("새 쿠폰이 등록됐어요!");
+    }
+
+    function handleSendStarGift(event) {
+      if (event) event.preventDefault();
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const giftFromEl = document.getElementById("gift-from-select");
+      if (giftFromEl && giftFromEl.value !== state.mode) {
+        giftFromEl.value = state.mode;
+        syncGiftRecipient();
+        showToast("본인 계정에서만 다른 사람에게 별을 보낼 수 있어요!");
+        return;
+      }
+      const fromChild = state.mode;
+      const toChild = fromChild === "ayeon" ? "siyeol" : "ayeon";
+      const amountInput = document.getElementById("gift-amount-input");
+      const amount = Math.max(1, Number(amountInput?.value) || 1);
+      if ((state.stars[fromChild] || 0) < amount) {
+        showToast("선물할 별이 부족해요!");
+        return;
+      }
+      state.stars[fromChild] -= amount;
+      state.stars[toChild] = (Number(state.stars[toChild]) || 0) + amount;
+      const fromLabel = fromChild === "siyeol" ? "시연" : "아연";
+      const toLabel = toChild === "siyeol" ? "시연" : "아연";
+      addStarHistory(fromChild, -amount, `${toLabel}에게 별 선물`);
+      addStarHistory(toChild, amount, `${fromLabel}에게 받은 별 선물`);
+      if (amountInput) amountInput.value = "1";
+      saveState();
+      renderAll();
+      showToast(`${toLabel}에게 별 ${amount}개를 선물했어요!`);
+    }
+
+    function spinWheel() {
+      if (state.mode !== "ayeon" && state.mode !== "siyeol") return;
+      const today = getTodayDateStr();
+      if (state.lastWheelDateByChild[state.mode] === today) {
+        showToast("오늘은 이미 룰렛을 돌렸어요!");
+        return;
+      }
+      const wheelEl = document.getElementById("rainbow-wheel-visual");
+      if (wheelEl) {
+        wheelEl.classList.remove("wheel-spinning");
+        void wheelEl.offsetWidth;
+        wheelEl.classList.add("wheel-spinning");
+      }
+      const won = Math.floor(Math.random() * 5) + 1;
+      state.lastWheelDateByChild[state.mode] = today;
+      state.stars[state.mode] = (Number(state.stars[state.mode]) || 0) + won;
+      addStarHistory(state.mode, won, "행운의 별 룰렛 당첨");
+      const resEl = document.getElementById("wheel-result-text");
+      if (resEl) resEl.textContent = `🎉 축하해요! 오늘 행운 별 +${won}★ 당첨!`;
+      saveState();
+      renderAll();
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      document.body.classList.remove("theme-tone-b", "theme-tone-sunset");
+      hasEnteredModeThisSession = false;
       renderAll();
     });
   </script>
 
-  <!-- 공유 저장소 동기화 모듈 (탭/브라우저 실시간 브로드캐스트 안전 연결) -->
+  <!-- 공유 저장소 동기화 모듈 (폰·PC 및 여러 기기 간 실시간 동기화 연결) -->
   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
     window.__isRemoteSyncing = false;
     const channelName = "ayeon_siyeol_mission_board_sync_v1";
     const bc = typeof BroadcastChannel !== "undefined" ? new BroadcastChannel(channelName) : null;
     const myDeviceId = typeof window.getDeviceId === "function" ? window.getDeviceId() : "dev_local";
 
-    window.__pushSharedBoardState = function (nextState) {
+    const appId = typeof __app_id !== "undefined" ? __app_id : "ayeon-siyeol-mission-board";
+    const rawConfig = typeof __firebase_config !== "undefined" ? __firebase_config : "";
+    let db = null;
+    let sharedDocRef = null;
+    let currentUser = null;
+
+    function getCurrentBoardState() {
+      if (typeof state !== "undefined" && state) return state;
+      if (window.__boardState && typeof window.__boardState === "object") return window.__boardState;
+      if (typeof createDefaultState === "function") return createDefaultState();
+      return { mode: "ayeon", activeTab: "daily", updatedAt: Date.now() };
+    }
+
+    function applyIncomingBoardState(remoteBoardState) {
+      if (!remoteBoardState || typeof remoteBoardState !== "object") return;
+      const currentBoardState = getCurrentBoardState();
+      if ((Number(remoteBoardState.updatedAt) || 0) <= (Number(currentBoardState.updatedAt) || 0)) return;
+
+      window.__isRemoteSyncing = true;
+      try {
+        const keepMode = currentBoardState.mode || "ayeon";
+        const keepTab = currentBoardState.activeTab || "daily";
+        const baseState = typeof createDefaultState === "function" ? createDefaultState() : {};
+        const mergedState = {
+          ...baseState,
+          ...remoteBoardState,
+          mode: keepMode,
+          activeTab: keepTab,
+          updatedAt: Number(remoteBoardState.updatedAt) || Date.now()
+        };
+
+        if (typeof state !== "undefined") {
+          state = mergedState;
+        }
+        window.__boardState = mergedState;
+
+        try {
+          const storageKey = typeof STORAGE_KEY === "string" ? STORAGE_KEY : "ayeon_siyeol_weekly_board_v1";
+          localStorage.setItem(storageKey, JSON.stringify(mergedState));
+        } catch (err) {
+          console.error("로컬 동기화 저장 오류:", err);
+        }
+
+        if (typeof renderAll === "function") {
+          renderAll();
+        }
+      } finally {
+        window.__isRemoteSyncing = false;
+      }
+    }
+
+    window.__pushSharedBoardState = async function (nextState) {
+      const stateToPush = nextState || getCurrentBoardState();
       try {
         if (bc) {
           bc.postMessage({
             sourceDeviceId: myDeviceId,
-            boardState: nextState
+            boardState: stateToPush
           });
         }
       } catch (err) {
         console.error("공유 저장소 전송 오류:", err);
+      }
+
+      if (!sharedDocRef || !currentUser) return;
+      try {
+        const { mode, activeTab, editingMissionId, ...syncableData } = stateToPush || {};
+        await setDoc(sharedDocRef, {
+          sourceDeviceId: myDeviceId,
+          updatedAt: Number(stateToPush?.updatedAt) || Date.now(),
+          boardState: syncableData
+        }, { merge: true });
+      } catch (err) {
+        console.error("원격 공유 저장소 저장 오류:", err);
       }
     };
 
@@ -2260,24 +2292,60 @@
         bc.onmessage = (event) => {
           const data = event?.data;
           if (!data || !data.boardState || data.sourceDeviceId === myDeviceId) return;
-          if ((Number(data.boardState.updatedAt) || 0) <= (Number(state.updatedAt) || 0)) return;
-          window.__isRemoteSyncing = true;
-          const keepMode = state.mode;
-          const keepTab = state.activeTab;
-          state = {
-            ...createDefaultState(),
-            ...data.boardState,
-            mode: keepMode,
-            activeTab: keepTab
-          };
-          saveState();
-          renderAll();
-          window.__isRemoteSyncing = false;
+          applyIncomingBoardState(data.boardState);
         };
       }
     } catch (err) {
       console.error("공유 저장소 초기화 오류:", err);
     }
+
+    (async () => {
+      try {
+        if (!rawConfig) return;
+        const firebaseConfig = typeof rawConfig === "string" ? JSON.parse(rawConfig) : rawConfig;
+        if (!firebaseConfig || !firebaseConfig.apiKey) return;
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        db = getFirestore(app);
+
+        if (typeof __initial_auth_token !== "undefined" && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+
+        currentUser = auth.currentUser;
+        if (!currentUser) return;
+
+        sharedDocRef = doc(db, "artifacts", appId, "public", "data", "missionBoardShared", "mainBoard");
+
+        onSnapshot(sharedDocRef, (snapshot) => {
+          const currentBoardState = getCurrentBoardState();
+          if (!snapshot.exists()) {
+            const { mode, activeTab, editingMissionId, ...initialSyncData } = currentBoardState;
+            setDoc(sharedDocRef, {
+              sourceDeviceId: myDeviceId,
+              updatedAt: Number(currentBoardState.updatedAt) || Date.now(),
+              boardState: initialSyncData
+            }, { merge: true }).catch((err) => console.error("초기 공유 문서 생성 오류:", err));
+            return;
+          }
+
+          const docData = snapshot.data();
+          if (!docData || !docData.boardState) return;
+          if (docData.sourceDeviceId === myDeviceId) return;
+          applyIncomingBoardState({
+            ...docData.boardState,
+            updatedAt: Number(docData.updatedAt) || Number(docData.boardState.updatedAt) || Date.now()
+          });
+        }, (err) => {
+          console.error("공유 저장소 수신 오류:", err);
+        });
+      } catch (err) {
+        console.error("공유 저장소 초기화 오류:", err);
+      }
+    })();
   </script>
 </body>
 </html>
